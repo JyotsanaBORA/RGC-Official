@@ -1,9 +1,12 @@
+import Link from 'next/link';
+import { SERVICES } from '../lib/services-data';
+
 export default function SiteFooter() {
   return (
     <footer className="footer">
       <div className="container footer__grid">
         <div className="footer__brand">
-          <img src="/assets/img/rgc-logo.png" alt="Reddington Global" className="logo-img logo-img--footer" />
+          <img src="/assets/img/rgc-logo-opt.png" alt="Reddington Global" className="logo-img logo-img--footer" />
           <p>We focus on the needs of small to middle-market businesses to improve and grow their return.</p>
           <div className="footer__cert">
             <span>Certified by</span>
@@ -12,18 +15,16 @@ export default function SiteFooter() {
         </div>
         <nav className="footer__col" aria-label="Useful links">
           <h4>Useful Links</h4>
-          <a href="/about">About Us</a>
-          <a href="/#services">Our Services</a>
-          <a href="/team">Our Team</a>
-          <a href="/careers">Careers</a>
+          <Link href="/about">About Us</Link>
+          <Link href="/#services">Our Services</Link>
+          <Link href="/team">Our Team</Link>
+          <Link href="/careers">Careers</Link>
         </nav>
         <nav className="footer__col" aria-label="Services">
           <h4>Services</h4>
-          <a href="/services/financial-services">Financial Services</a>
-          <a href="/services/recruitment">Recruitment &amp; Staffing</a>
-          <a href="/services/immergix-bpo">IMMERGIX BPO</a>
-          <a href="/services/management-consultancy">Management Consultancy</a>
-          <a href="/services/retail">Retail Requirements</a>
+          {SERVICES.map(s => (
+            <Link key={s.slug} href={`/services/${s.slug}`}>{s.title}</Link>
+          ))}
         </nav>
         <div className="footer__col">
           <h4>Contact</h4>
@@ -34,7 +35,15 @@ export default function SiteFooter() {
       </div>
       <div className="container footer__bar">
         <p>© 2026 Reddington Global. All rights reserved.</p>
-        <p>RG Consultancy · Reddington Group Inc · RG Care Foundation</p>
+        <div className="footer__social">
+          <a href="https://www.linkedin.com/company/immergixthefuture/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:sales@reddingtonglobal.com" aria-label="Email us" className="footer__social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
+          </a>
+        </div>
+        <p className="footer__tagline">RG Consultancy · Reddington Group Inc · RG Care Foundation</p>
       </div>
     </footer>
   );

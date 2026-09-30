@@ -6,7 +6,7 @@ import CareerForm from './CareerForm';
 export const metadata = {
   title: 'Careers — Reddington Global Consultancy',
   description:
-    'Join Reddington Global Consultancy. Discover rewarding career opportunities across BPO, recruitment, financial services, and operational consulting.',
+    'Join Reddington Global Consultancy. Discover rewarding career opportunities across BPO, recruitment, performance consulting, SaaS, and financial operations.',
   openGraph: {
     title: 'Careers at Reddington Global',
     description: 'Build your career with an industry-leading global consultancy and BPO firm.',
@@ -96,7 +96,7 @@ export default async function CareerPage() {
         <section className="svc-hero">
           <div
             className="svc-hero__bg"
-            style={{ backgroundImage: 'url(/assets/img/gal-hiring.jpg)' }}
+            style={{ backgroundImage: 'url(/assets/img/svc-recruitment-opt.webp)' }}
           ></div>
           <div className="svc-hero__veil"></div>
           <div className="container svc-hero__content">

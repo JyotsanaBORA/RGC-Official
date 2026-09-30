@@ -1,29 +1,13 @@
-'use client';
-import { motion } from 'framer-motion';
-
-const ease = [0.22, 1, 0.36, 1];
-
-const stepVariant = {
-  hidden: { opacity: 0, y: 44, scale: 0.95 },
-  show: (i) => ({
-    opacity: 1, y: 0, scale: 1,
-    transition: { delay: i * 0.14, duration: 0.72, ease },
-  }),
-};
-
-const iconVariant = {
-  hidden: { opacity: 0, scale: 0.5, rotate: -20 },
-  show: (i) => ({
-    opacity: 1, scale: 1, rotate: 0,
-    transition: { delay: i * 0.14 + 0.28, duration: 0.5, type: 'spring', stiffness: 180 },
-  }),
-};
+import React from 'react';
 
 const STEPS = [
   {
     num: '01',
-    title: 'Discover',
-    desc: 'A focused consultation to understand your operations, pain points, and growth goals.',
+    phase: 'Phase 01',
+    badge: 'Discovery Sprint',
+    title: 'Discover & Diagnose',
+    desc: 'Deep-dive operational audit mapping workflows, SLA baselines, headcount bottlenecks, and technical friction.',
+    deliverables: ['Workflow Diagnostic', 'Capacity Audit', 'SLA Framework Scope'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="6.5" />
@@ -35,8 +19,11 @@ const STEPS = [
   },
   {
     num: '02',
-    title: 'Design',
-    desc: 'We engineer a precision solution — staffing model, compliance architecture, and KPI framework.',
+    phase: 'Phase 02',
+    badge: 'Precision Architecture',
+    title: 'Design & Solution',
+    desc: 'Engineering your dedicated delivery engine — custom talent matrix, compliance protocols, and dual-shore architecture.',
+    deliverables: ['Custom Talent Radar', 'Dual-Shore Setup', 'KPI & QA Scorecards'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3.5" y="4" width="17" height="15.5" rx="2.5" />
@@ -49,8 +36,11 @@ const STEPS = [
   },
   {
     num: '03',
-    title: 'Deploy',
-    desc: 'Our trained on-site team goes live — aligned with your brand, culture, and service standards.',
+    phase: 'Phase 03',
+    badge: 'Structured Staging',
+    title: 'Deploy & Execute',
+    desc: 'Pre-vetted operators and engineers onboard through an encrypted bridge, validated via structured pilot workflows before full scaling.',
+    deliverables: ['Phased Pilot Ramp-Up', 'AES-256 Secure Bridge', 'Floor Team Supervision'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 3v10" />
@@ -62,8 +52,11 @@ const STEPS = [
   },
   {
     num: '04',
-    title: 'Optimise',
-    desc: 'Continuous performance loops, quality audits, and data insights to keep your outcomes sharp.',
+    phase: 'Phase 04',
+    badge: '99.8% Precision',
+    title: 'Optimise & Scale',
+    desc: 'Continuous performance feedback, calibrated QA scoring, and data-driven audits to permanently eliminate error rates.',
+    deliverables: ['Real-Time QA Scoring', 'Monthly Financial Packs', 'Zero-Variance Audits'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5h16" />
@@ -79,31 +72,28 @@ const STEPS = [
 export default function MotionProcess() {
   return (
     <div className="process__grid">
-      {STEPS.map((step, i) => (
-        <motion.div
-          key={step.num}
-          className="process__step"
-          variants={stepVariant}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-          custom={i}
-        >
-          <motion.div
-            className="process__icon-wrap"
-            aria-hidden="true"
-            variants={iconVariant}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={i}
-          >
-            {step.icon}
-          </motion.div>
-          <span className="process__num">{step.num}</span>
+      {STEPS.map((step) => (
+        <div key={step.num} className="process__step reveal">
+          <div className="process__step-header">
+            <div className="process__icon-wrap" aria-hidden="true">
+              {step.icon}
+            </div>
+            <div className="process__step-badges">
+              <span className="process__phase">{step.phase}</span>
+              <span className="process__badge-pill">{step.badge}</span>
+            </div>
+          </div>
           <h3 className="process__title">{step.title}</h3>
           <p className="process__desc">{step.desc}</p>
-        </motion.div>
+          <div className="process__deliverables">
+            {step.deliverables.map((d, i) => (
+              <span key={i} className="process__deliv-chip">
+                <span className="process__deliv-dot"></span>
+                {d}
+              </span>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );

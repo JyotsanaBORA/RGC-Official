@@ -25,7 +25,7 @@ export default function FaqPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/gal-seminar.png)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">FAQ</p>
@@ -39,7 +39,7 @@ export default function FaqPage() {
             <div className="faq__list reveal">
               <details className="faq__item">
                 <summary>Which industries do you primarily support?</summary>
-                <p>We support organisations across financial services, retail, contact centre operations, and growth-stage enterprises that require structured operational scale.</p>
+                <p>We support organisations across contact centre operations, SaaS and technology enterprises, recruitment and staffing, and growth-stage businesses that require structured operational and financial scale.</p>
               </details>
               <details className="faq__item">
                 <summary>Can you provide on-site and managed delivery models?</summary>

@@ -21,4 +21,17 @@ pnpm-debug.log*
 # misc
 .DS_Store
 *.pem
+
+# AI agent rules & Ponytail
 .agents/
+.agent/
+_agents/
+_agent/
+AGENTS.md
+GEMINI.md
+*ponytail*
+.claude/
+.cursor/
+.windsurf/
+.clinerules/
+scratch/

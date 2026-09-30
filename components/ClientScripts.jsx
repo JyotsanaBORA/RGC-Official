@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import anime from 'animejs';
 
 export default function ClientScripts() {
   useEffect(() => {
@@ -143,20 +142,22 @@ export default function ClientScripts() {
        ANIME.JS — counters · edge stagger · about reveal
     ═══════════════════════════════════════════════════════ */
 
-    // Stats counters — expo easing via anime.js
+    // Stats counters — native easeOutExpo countup
     document.querySelectorAll('.stat__num').forEach(el => {
       const obs = new IntersectionObserver(entries => {
         if (!entries[0].isIntersecting) return;
         obs.disconnect();
-        const obj = { val: 0 };
-        anime({
-          targets: obj,
-          val: parseInt(el.dataset.count, 10),
-          duration: 1900,
-          easing: 'easeOutExpo',
-          round: 1,
-          update() { el.textContent = obj.val; },
-        });
+        const target = parseInt(el.dataset.count, 10);
+        if (isNaN(target)) return;
+        const duration = 1800;
+        const start = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          el.textContent = Math.round(target * ease);
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
       }, { threshold: 0.6 });
       obs.observe(el);
     });

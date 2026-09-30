@@ -26,7 +26,7 @@ export default function ContactPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/gal-talking.png)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Get In Touch</p>

@@ -5,7 +5,7 @@ import MotionAbout from '../../components/MotionAbout';
 
 export const metadata = {
   title: 'About Us — Reddington Global',
-  description: 'Learn about Reddington Global Consultancy — operational intelligence, compliance, and quality assurance delivered as one integrated on-site model.',
+  description: 'Learn about Reddington Global — specialized talent, 24/7 BPO operations, SaaS engineering, and statutory financial compliance under one unified partner.',
 };
 
 export default function AboutPage() {
@@ -26,12 +26,12 @@ export default function AboutPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are.png)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Who We Are</p>
-            <h1 className="svc-hero__title">An on-site model with a clear <span className="gold-italic">strategic edge.</span></h1>
-            <p className="svc-hero__tagline">Reddington Global&apos;s on-site consultancy centre is built for execution at enterprise standards.</p>
+            <h1 className="svc-hero__title">Integrated execution with an <span className="gold-italic">enterprise edge.</span></h1>
+            <p className="svc-hero__tagline">Reddington Global provides the operational backbone, technology integration, and compliance muscle for scaling businesses.</p>
           </div>
         </section>
 
@@ -43,7 +43,7 @@ export default function AboutPage() {
               <p className="muted">We partner with small to middle-market organisations to improve outcomes through operational intelligence, compliance, and quality assurance delivered as one integrated model.</p>
               <a href="/contact" className="link-arrow">Start a conversation <span aria-hidden="true">→</span></a>
               <figure className="about__photo img-reveal">
-                <img src="/assets/img/who-we-are.png" alt="The Reddington Global team at work" loading="lazy" />
+                <img src="/assets/img/who-we-are-opt.webp" alt="The Reddington Global team at work" loading="lazy" />
               </figure>
             </div>
             <MotionAbout />

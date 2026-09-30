@@ -26,7 +26,7 @@ export default function ProcessPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/gal-seminar.png)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">How We Work</p>
@@ -48,15 +48,55 @@ export default function ProcessPage() {
               <h2 className="section__title">Bring these strengths together, and you <span className="gold-italic">outperform the ordinary.</span></h2>
             </div>
             <div className="edge__layout">
-              <div className="edge__media reveal" aria-hidden="true">
-                <img className="edge__photo edge__photo--1" src="/assets/img/gal-seminar.png" alt="" loading="lazy" />
-                <img className="edge__photo edge__photo--2" src="/assets/img/group.png" alt="" loading="lazy" />
-                <img className="edge__photo edge__photo--3" src="/assets/img/gal-talking.png" alt="" loading="lazy" />
-                <div className="edge__badge">
-                  <span className="edge__badge-num">24/7</span>
-                  <span className="edge__badge-label">On-site excellence</span>
+                          <div className="edge__media reveal" aria-hidden="true">
+              <div className="edge__blueprint">
+                <div className="edge__blueprint-header">
+                  <div className="edge__blueprint-tag">Operating Architecture</div>
+                  <span className="edge__blueprint-pill">Dual-Shore Network</span>
+                </div>
+
+                <div className="edge__blueprint-flow">
+                  <div className="edge__blueprint-node">
+                    <span className="node-icon">🏢</span>
+                    <div className="node-info">
+                      <strong>Client Headquarters</strong>
+                      <span>US · UK · Canada · Global</span>
+                    </div>
+                  </div>
+                  <div className="edge__blueprint-connector">
+                    <span className="connector-line"></span>
+                    <span className="connector-badge">AES-256 Bridge</span>
+                  </div>
+                  <div className="edge__blueprint-node edge__blueprint-node--rg">
+                    <span className="node-icon">⚡</span>
+                    <div className="node-info">
+                      <strong>Reddington Delivery Hub</strong>
+                      <span>Gurugram &amp; Sheridan · 24/7 Floor</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="edge__blueprint-stats">
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">99.8%</span>
+                    <span className="bp-stat__lbl">SLA Precision</span>
+                  </div>
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">24/7</span>
+                    <span className="bp-stat__lbl">Continuous Uptime</span>
+                  </div>
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">100%</span>
+                    <span className="bp-stat__lbl">Audit Compliance</span>
+                  </div>
+                </div>
+
+                <div className="edge__blueprint-footer">
+                  <span className="status-dot"></span>
+                  <span>Active Institutional Delivery Pipeline</span>
                 </div>
               </div>
+            </div>
               <div className="edge__grid">
                 <div className="edge__item reveal"><span className="edge__num">01</span><div><h3>Cost Efficiency</h3><p>Lower infrastructure and overhead costs translated into commercially efficient delivery through a high-performing on-site team.</p></div></div>
                 <div className="edge__item reveal"><span className="edge__num">02</span><div><h3>Built-In Security</h3><p>From confidentiality protocols to cyber-risk controls, security is embedded into every layer of execution.</p></div></div>

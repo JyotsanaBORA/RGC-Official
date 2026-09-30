@@ -1,30 +1,6 @@
 'use client';
-import { motion } from 'framer-motion';
-
-const ease = [0.22, 1, 0.36, 1];
-
-const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 36 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.75, ease, delay } },
-});
-
-const slideLeft = (delay = 0) => ({
-  hidden: { opacity: 0, x: -50 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.8, ease, delay } },
-});
-
-const slideRight = (delay = 0) => ({
-  hidden: { opacity: 0, x: 50 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.8, ease, delay } },
-});
-
-const staggerCard = {
-  hidden: { opacity: 0, y: 24, scale: 0.96 },
-  show: (i) => ({
-    opacity: 1, y: 0, scale: 1,
-    transition: { delay: 0.1 + i * 0.1, duration: 0.65, ease },
-  }),
-};
+import React from 'react';
+import { trackLeadSubmission, trackContactClick } from '../lib/analytics/events';
 
 /* ── SVG icons ── */
 const IconEmail = () => (
@@ -58,7 +34,7 @@ const OFFICES = [
 ];
 
 /* ── Floating-label field ── */
-function FloatField({ id, name, label, type = 'text', autoComplete, required, rows }) {
+function FloatField({ id, name, label, type = 'text', required = false, rows, autoComplete }) {
   const Tag = rows ? 'textarea' : 'input';
   return (
     <div className={`ff${rows ? ' ff--textarea' : ''}`}>
@@ -87,54 +63,42 @@ export default function MotionContact() {
 
       <div className="container ct-grid">
         {/* ════ LEFT — info panel ════ */}
-        <motion.div
-          className="ct-info"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          <motion.p className="eyebrow" variants={fadeUp(0)}>Get in Touch</motion.p>
-          <motion.h2 className="section__title ct-info__title" variants={fadeUp(0.08)}>
+        <div className="ct-info reveal">
+          <p className="eyebrow">Get in Touch</p>
+          <h2 className="section__title ct-info__title">
             Let&apos;s build something<br /><span className="gold-italic">great together.</span>
-          </motion.h2>
-          <motion.p className="ct-info__sub" variants={fadeUp(0.14)}>
+          </h2>
+          <p className="ct-info__sub">
             Tell us what you&apos;re solving for, and our team will respond within one business day with a clear, practical next step.
-          </motion.p>
+          </p>
 
           {/* Contact pills */}
           <div className="ct-channels">
-            {CONTACTS.map((c, i) => (
-              <motion.a
+            {CONTACTS.map((c) => (
+              <a
                 key={c.href}
                 href={c.href}
                 className="ct-channel"
-                variants={staggerCard}
-                custom={i}
-                whileHover={{ y: -3 }}
+                onClick={() => trackContactClick(c.label.toLowerCase().includes('call') ? 'phone' : 'email', c.value)}
               >
                 <span className="ct-channel__icon"><c.Icon /></span>
                 <span className="ct-channel__text">
                   <span className="ct-channel__label">{c.label}</span>
                   <span className="ct-channel__value">{c.value}</span>
                 </span>
-              </motion.a>
+              </a>
             ))}
           </div>
 
           {/* Offices */}
-          <motion.div className="ct-offices" variants={fadeUp(0.38)}>
+          <div className="ct-offices">
             <p className="ct-offices__head">
               <span className="ct-offices__line" aria-hidden="true"></span>
               Our Offices
             </p>
             <div className="ct-offices__grid">
-              {OFFICES.map((o, i) => (
-                <motion.div
-                  key={o.name}
-                  className="ct-office"
-                  variants={staggerCard}
-                  custom={i + 3}
-                >
+              {OFFICES.map((o) => (
+                <div key={o.name} className="ct-office">
                   <span className="ct-office__icon"><IconPin /></span>
                   <div>
                     <strong>
@@ -146,20 +110,14 @@ export default function MotionContact() {
                     </strong>
                     <p>{o.addr}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* ════ RIGHT — form ════ */}
-        <motion.div
-          className="ct-form-wrap"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.12 }}
-          variants={slideRight(0.18)}
-        >
+        <div className="ct-form-wrap reveal">
           <div className="ct-form-header">
             <p className="ct-form-header__eyebrow">Free Consultation</p>
             <h3 className="ct-form-header__title">Share your requirements</h3>
@@ -172,6 +130,10 @@ export default function MotionContact() {
             action="mailto:sales@reddingtonglobal.com"
             method="post"
             encType="text/plain"
+            onSubmit={(e) => {
+              const service = e.currentTarget.elements.service?.value;
+              trackLeadSubmission({ service });
+            }}
           >
             <div className="ct-form__row">
               <FloatField id="fName"    name="name"    label="Full Name"     autoComplete="name"         required />
@@ -183,13 +145,12 @@ export default function MotionContact() {
               <div className="ff ct-form__select-wrap">
                 <select id="fService" name="service" defaultValue="">
                   <option value="" disabled hidden></option>
-                  <option>Financial Services</option>
                   <option>Recruitment &amp; Staffing</option>
-                  <option>IMMERGIX BPO</option>
-                  <option>Management Consultancy</option>
-                  <option>Retail Requirements</option>
-                  <option>Performance Management</option>
-                  <option>On-Site Contact Centre</option>
+                  <option>Immergix BPO</option>
+                  <option>Performance Management Consultancy</option>
+                  <option>Payroll &amp; Compensation Management</option>
+                  <option>SaaS &amp; Digital Solutions</option>
+                  <option>Bookkeeping &amp; Statutory Compliance</option>
                   <option>Other</option>
                 </select>
                 <label htmlFor="fService">Service Interested In</label>
@@ -198,17 +159,15 @@ export default function MotionContact() {
             </div>
             <FloatField id="fMsg" name="message" label="How can we help you?" required rows={4} />
 
-            <motion.button
+            <button
               type="submit"
               className="btn btn--gold ct-form__submit"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
             >
               Send Message
               <svg className="ct-form__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M4 10h12M11 5l5 5-5 5"/>
               </svg>
-            </motion.button>
+            </button>
 
             <p className="ct-form__note">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -217,7 +176,7 @@ export default function MotionContact() {
               Our team typically responds within one business day.
             </p>
           </form>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

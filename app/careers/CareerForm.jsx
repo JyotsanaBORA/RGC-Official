@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { trackCareerSubmission } from '../../lib/analytics/events';
 
 export default function CareerForm({ jobs = [] }) {
   const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
@@ -88,6 +88,7 @@ export default function CareerForm({ jobs = [] }) {
       if (!res.ok) {
         throw new Error(data.message || 'Failed to submit your application. Please try again.');
       }
+      trackCareerSubmission(selectedJob);
       setStatus('success');
     } catch (err) {
       setErrorMessage(err.message || 'Submission failed. Please check your network and try again.');
@@ -113,16 +114,8 @@ export default function CareerForm({ jobs = [] }) {
         </p>
       </div>
 
-      <AnimatePresence mode="wait">
         {status === 'success' ? (
-          <motion.div
-            key="success"
-            className="career-status career-status--success"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
-          >
+          <div key="success" className="career-status career-status--success">
             <div className="career-status__icon-wrap">
               <svg className="career-status__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
@@ -136,16 +129,9 @@ export default function CareerForm({ jobs = [] }) {
             <button type="button" onClick={handleReset} className="btn btn--gold" style={{ marginTop: '20px' }}>
               Submit Another Application
             </button>
-          </motion.div>
+          </div>
         ) : (
-          <motion.form
-            key="form"
-            onSubmit={handleSubmit}
-            className="ct-form career-form"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <form key="form" onSubmit={handleSubmit} className="ct-form career-form">
             {/* Error Notification */}
             {status === 'error' && errorMessage && (
               <div className="career-error-banner" role="alert">
@@ -324,13 +310,7 @@ export default function CareerForm({ jobs = [] }) {
             />
 
             {/* Submit Button */}
-            <motion.button
-              type="submit"
-              disabled={status === 'submitting'}
-              className="btn btn--gold career-submit-btn"
-              whileHover={{ scale: status === 'submitting' ? 1 : 1.02, y: status === 'submitting' ? 0 : -2 }}
-              whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}
-            >
+            <button type="submit" disabled={status === 'submitting'} className="btn btn--gold ct-form__submit">
               {status === 'submitting' ? (
                 <>
                   <span className="career-spinner" aria-hidden="true"></span>
@@ -344,7 +324,7 @@ export default function CareerForm({ jobs = [] }) {
                   </svg>
                 </>
               )}
-            </motion.button>
+            </button>
 
             <p className="ct-form__note">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -352,9 +332,8 @@ export default function CareerForm({ jobs = [] }) {
               </svg>
               Your data is processed securely in accordance with our strict privacy and confidentiality standards.
             </p>
-          </motion.form>
+          </form>
         )}
-      </AnimatePresence>
     </div>
   );
 }

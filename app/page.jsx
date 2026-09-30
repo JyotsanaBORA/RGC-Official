@@ -4,6 +4,8 @@ import MotionServices from '../components/MotionServices';
 import MotionAbout from '../components/MotionAbout';
 import MotionContact from '../components/MotionContact';
 import MotionProcess from '../components/MotionProcess';
+import SiteNav from '../components/SiteNav';
+import SiteFooter from '../components/SiteFooter';
 
 export default function Home() {
   return (
@@ -26,75 +28,43 @@ export default function Home() {
       <div className="progress" id="progressBar" aria-hidden="true"></div>
 
       {/* ══════════ NAVIGATION ══════════ */}
-      <header className="nav" id="nav">
-        <div className="container nav__inner">
-          <div className="nav__brand-group">
-            <a href="#top" className="nav__brand" aria-label="Reddington Global Consultancy home">
-              <img src="/assets/img/rgc-logo.png" alt="Reddington Global" className="logo-img" />
-            </a>
-            <span className="nav__brand-text">
-              <span className="nav__brand-line">REDDINGTON GLOBAL</span>
-              <span className="nav__brand-line nav__brand-line--sub">CONSULTANCY</span>
-            </span>
-          </div>
-          <nav className="nav__links" id="navLinks" aria-label="Primary">
-            <a href="/about">Who We Are</a>
-            <div className="nav__dropdown" id="navServicesDropdown">
-              <a href="#services" className="nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-                Services <span className="nav__dropdown-arrow" aria-hidden="true">▾</span>
-              </a>
-              <ul className="nav__dropdown-menu" role="menu">
-                <li role="none"><a href="/services/financial-services" role="menuitem">Financial Services</a></li>
-                <li role="none"><a href="/services/recruitment" role="menuitem">Recruitment and Staffing Services</a></li>
-                <li role="none"><a href="/services/immergix-bpo" role="menuitem">IMMERGIX BPO</a></li>
-                <li role="none"><a href="/services/management-consultancy" role="menuitem">Management Consultancy</a></li>
-                <li role="none"><a href="/services/retail" role="menuitem">Retail Requirements</a></li>
-                <li role="none"><a href="/services/performance-management" role="menuitem">Performance Management</a></li>
-                <li role="none"><a href="/services/contact-centre" role="menuitem">On-Site Contact Centre</a></li>
-              </ul>
-            </div>
-            <a href="/process">Our Edge</a>
-            <a href="/team">Team</a>
-            <a href="/testimonials">Testimonials</a>
-            <a href="/contact" className="btn btn--gold btn--sm">Book Consultation</a>
-          </nav>
-          <button className="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
-      </header>
+      <SiteNav />
 
       {/* ══════════ HERO ══════════ */}
       <section className="hero" id="top">
         <div className="hero__bg" aria-hidden="true">
-          <video className="hero__video" autoPlay muted loop playsInline poster="/assets/img/hero-poster.png">
-            <source src="/assets/video/hero.mp4" type="video/mp4" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="hero__video"
+          >
+            <source src="/assets/video/hero-casual-backup.mp4" type="video/mp4" />
+            <source src="/assets/video/hero_casual_backup.mp4" type="video/mp4" />
           </video>
           <div className="hero__veil"></div>
-          <div className="hero__orb hero__orb--1"></div>
-          <div className="hero__orb hero__orb--2"></div>
-          <div className="hero__orb hero__orb--3"></div>
-          <div className="hero__glow" id="heroGlow"></div>
           <svg className="hero__grid" width="100%" height="100%" aria-hidden="true">
             <defs>
               <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
-                <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(200,169,126,0.07)" strokeWidth="1" />
+                <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(212,159,45,0.08)" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
           </svg>
         </div>
         <div className="container hero__content">
-          <p className="eyebrow reveal">RG Consultancy · Reddington Group Inc · RG Care</p>
+          <p className="eyebrow reveal">Talent · Customer Operations · SaaS Engineering · Statutory Compliance</p>
           <h1 className="hero__title">
-            <span className="w">Consulting</span>{' '}
-            <span className="w">that</span>{' '}
-            <span className="w">moves</span>{' '}
-            <span className="w gold-italic">business</span>{' '}
-            <span className="w">forward.</span>
+            <span className="w">Operational</span>{' '}
+            <span className="w">scale,</span>{' '}
+            <span className="w">engineered</span>{' '}
+            <span className="w">for</span>{' '}
+            <span className="w">enterprise.</span>
           </h1>
           <p className="hero__sub reveal">
-            From recruitment and performance management to fully managed on-site contact centres, we help small and middle-market businesses streamline operations, scale with confidence, and improve measurable returns.
+            From specialized staffing and 24/7 BPO to full-stack digital solutions and statutory tax compliance, we deliver integrated operational muscle to scale your business with confidence.
           </p>
           <div className="hero__cta reveal">
             <a href="#contact" className="btn btn--gold">Get a Free Consultation</a>
@@ -102,10 +72,9 @@ export default function Home() {
           </div>
           <div className="hero__trust reveal">
             <span className="hero__trust-badge">NASSCOM Certified</span>
-            <span className="hero__trust-sep" aria-hidden="true">·</span>
-            <span>Trusted by Airtel, Kajaria, Credilio &amp; more</span>
-            <span className="hero__trust-sep" aria-hidden="true">·</span>
-            <span>India &amp; USA Operations</span>
+            <span className="hero__trust-item">GSTN &amp; MCA Ready</span>
+            <span className="hero__trust-item">PCI-DSS &amp; AES-256</span>
+            <span className="hero__trust-item">Dual-Shore (India &amp; USA)</span>
           </div>
           <div className="hero__stats reveal">
             <div className="stat">
@@ -136,18 +105,18 @@ export default function Home() {
       {/* ══════════ CAPABILITY MARQUEE ══════════ */}
       <div className="marquee" aria-hidden="true">
         <div className="marquee__track">
-          <span className="marquee__word">Recruitment</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Performance Management</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Financial Services</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Contact Centres</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Compliance &amp; QA</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Retail Operations</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Recruitment</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Performance Management</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Financial Services</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Contact Centres</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Compliance &amp; QA</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Retail Operations</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Recruitment &amp; Staffing</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Immergix BPO</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Performance Management Consultancy</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Payroll &amp; Compensation</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Bookkeeping &amp; Statutory Compliance</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Recruitment &amp; Staffing</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Immergix BPO</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Performance Management Consultancy</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Payroll &amp; Compensation</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Bookkeeping &amp; Statutory Compliance</span><span className="marquee__dot">/</span>
         </div>
       </div>
 
@@ -156,12 +125,12 @@ export default function Home() {
         <div className="container about__grid">
           <div className="about__left reveal">
             <p className="eyebrow">Who We Are</p>
-            <h2 className="section__title">An on-site model with a clear <span className="gold-italic">strategic edge.</span></h2>
-            <p className="lead">Reddington Global&apos;s on-site consultancy centre is built for execution at enterprise standards. Backed by decades of operational leadership and long-standing client relationships, we help businesses unlock durable value through practical, high-impact consultancy.</p>
-            <p className="muted">We partner with small to middle-market organisations to improve outcomes through operational intelligence, compliance, and quality assurance delivered as one integrated model.</p>
+            <h2 className="section__title">An integrated model with a clear <span className="gold-italic">strategic edge.</span></h2>
+            <p className="lead">Reddington Global is built for execution at enterprise standards. Backed by executive leadership with decades of operational mastery and global credentials, we combine specialized talent, customer operations, digital solutions, and statutory compliance into one integrated scaling partner.</p>
+            <p className="muted">We partner with growth-stage enterprises and middle-market organizations to improve outcomes through operational intelligence, technological integration, and audit-ready governance.</p>
             <a href="#contact" className="link-arrow">Start a conversation <span aria-hidden="true">→</span></a>
             <figure className="about__photo img-reveal">
-              <img src="/assets/img/who-we-are.png" alt="The Reddington Global team at work" loading="lazy" />
+              <img src="/assets/img/who-we-are-opt.webp" alt="Reddington Global leadership strategy briefing" loading="lazy" />
             </figure>
           </div>
           <MotionAbout />
@@ -227,19 +196,59 @@ export default function Home() {
           </div>
           <div className="edge__layout">
             <div className="edge__media reveal" aria-hidden="true">
-              <img className="edge__photo edge__photo--1" src="/assets/img/gal-seminar.png" alt="" loading="lazy" />
-              <img className="edge__photo edge__photo--2" src="/assets/img/group.png" alt="" loading="lazy" />
-              <img className="edge__photo edge__photo--3" src="/assets/img/gal-talking.png" alt="" loading="lazy" />
-              <div className="edge__badge">
-                <span className="edge__badge-num">24/7</span>
-                <span className="edge__badge-label">On-site excellence</span>
+              <div className="edge__blueprint">
+                <div className="edge__blueprint-header">
+                  <div className="edge__blueprint-tag">Operating Architecture</div>
+                  <span className="edge__blueprint-pill">Dual-Shore Network</span>
+                </div>
+
+                <div className="edge__blueprint-flow">
+                  <div className="edge__blueprint-node">
+                    <span className="node-icon">🏢</span>
+                    <div className="node-info">
+                      <strong>Client Headquarters</strong>
+                      <span>US · UK · Canada · Global</span>
+                    </div>
+                  </div>
+                  <div className="edge__blueprint-connector">
+                    <span className="connector-line"></span>
+                    <span className="connector-badge">AES-256 Bridge</span>
+                  </div>
+                  <div className="edge__blueprint-node edge__blueprint-node--rg">
+                    <span className="node-icon">⚡</span>
+                    <div className="node-info">
+                      <strong>Reddington Delivery Hub</strong>
+                      <span>Gurugram &amp; Sheridan · 24/7 Floor</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="edge__blueprint-stats">
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">99.8%</span>
+                    <span className="bp-stat__lbl">SLA Precision</span>
+                  </div>
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">24/7</span>
+                    <span className="bp-stat__lbl">Continuous Uptime</span>
+                  </div>
+                  <div className="bp-stat">
+                    <span className="bp-stat__val">100%</span>
+                    <span className="bp-stat__lbl">Audit Compliance</span>
+                  </div>
+                </div>
+
+                <div className="edge__blueprint-footer">
+                  <span className="status-dot"></span>
+                  <span>Active Institutional Delivery Pipeline</span>
+                </div>
               </div>
             </div>
             <div className="edge__grid">
-              <div className="edge__item reveal"><span className="edge__num">01</span><div><h3>Cost Efficiency</h3><p>Lower infrastructure and overhead costs translated into commercially efficient delivery through a high-performing on-site team.</p></div></div>
+              <div className="edge__item reveal"><span className="edge__num">01</span><div><h3>Cost Efficiency</h3><p>Lower infrastructure and overhead costs translated into commercially efficient delivery through high-performing specialized teams.</p></div></div>
               <div className="edge__item reveal"><span className="edge__num">02</span><div><h3>Built-In Security</h3><p>From confidentiality protocols to cyber-risk controls, security is embedded into every layer of execution.</p></div></div>
               <div className="edge__item reveal"><span className="edge__num">03</span><div><h3>Precision Staffing</h3><p>Specialist teams aligned to your operating model, designed to elevate customer experience beyond local constraints.</p></div></div>
-              <div className="edge__item reveal"><span className="edge__num">04</span><div><h3>Higher Productivity</h3><p>Our on-site contact centre operations help organisations increase throughput, quality, and consistency across teams.</p></div></div>
+              <div className="edge__item reveal"><span className="edge__num">04</span><div><h3>Higher Productivity</h3><p>Integrated delivery across BPO, digital systems, and financial back-office operations helps organizations increase throughput, quality, and consistency.</p></div></div>
               <div className="edge__item reveal"><span className="edge__num">05</span><div><h3>Operational Flexibility</h3><p>Built for seamless 24/7 coverage with adaptable execution models that evolve with your business requirements.</p></div></div>
               <div className="edge__item reveal"><span className="edge__num">06</span><div><h3>Stronger Customer Relationships</h3><p>Durable customer loyalty developed through consistent support, faster resolution cycles, and dependable service standards.</p></div></div>
             </div>
@@ -251,8 +260,9 @@ export default function Home() {
       <section className="section team" id="team">
         <div className="container">
           <div className="section__head reveal">
-            <p className="eyebrow">Leadership</p>
-            <h2 className="section__title"><span className="gold-italic">Founders.</span></h2>
+            <p className="eyebrow">Executive Leadership</p>
+            <h2 className="section__title">Led by builders & <span className="gold-italic">enterprise operators.</span></h2>
+            <p className="lead">Decades of operational scale, executive talent acquisition, and institutional advisory.</p>
           </div>
           <MotionTeam />
         </div>
@@ -268,45 +278,30 @@ export default function Home() {
           </div>
           <div className="projects__grid reveal">
             <article className="project-card">
-              <img src="/assets/img/gal-seminar.png" alt="Team seminar at Reddington Global" loading="lazy" />
+              <img src="/assets/img/svc-bpo-opt.webp" alt="24/7 Enterprise BPO Operations Floor" loading="lazy" />
               <div className="project-card__body">
-                <h3>Operational Workshops</h3>
-                <p>Structured strategy sessions that align teams on delivery standards, workflows, and performance goals.</p>
+                <h3>24/7 Operations Command</h3>
+                <p>Real-time queue monitoring, floor supervision, and KPI tracking calibrated for high-volume enterprise SLAs.</p>
               </div>
             </article>
             <article className="project-card">
-              <img src="/assets/img/gal-hiring.jpg" alt="Interviewing new talent" loading="lazy" />
+              <img src="/assets/img/svc-saas-opt.webp" alt="Cloud Architecture & Digital Solutions" loading="lazy" />
               <div className="project-card__body">
-                <h3>Talent Acquisition</h3>
-                <p>Focused recruitment and onboarding initiatives designed to build role-ready teams quickly and reliably.</p>
+                <h3>Cloud Systems &amp; SaaS Delivery</h3>
+                <p>Full-stack web engineering, resilient REST/GraphQL API fabrics, and microservices automated for high concurrency.</p>
               </div>
             </article>
             <article className="project-card">
-              <img src="/assets/img/gal-staffing.jpg" alt="Staffing consultation" loading="lazy" />
+              <img src="/assets/img/svc-performance-opt.webp" alt="Operational KPI Intelligence" loading="lazy" />
               <div className="project-card__body">
-                <h3>On-Site Delivery Setup</h3>
-                <p>End-to-end launch support across staffing, process management, and customer experience operations.</p>
+                <h3>Quality &amp; Process Governance</h3>
+                <p>Structured QA frameworks, compliance audits, and daily performance calibration to eliminate delivery friction.</p>
               </div>
             </article>
           </div>
         </div>
 
-        <div className="gallery" aria-label="Life at Reddington Global">
-          <div className="gallery__track">
-            <img src="/assets/img/gal-seminar.png" alt="Team seminar at Reddington Global" loading="lazy" />
-            <img src="/assets/img/gal-hiring.jpg" alt="Interviewing new talent" loading="lazy" />
-            <img src="/assets/img/group.png" alt="Team gathering" loading="lazy" />
-            <img src="/assets/img/gal-staffing.jpg" alt="Staffing consultation" loading="lazy" />
-            <img src="/assets/img/gal-talking.png" alt="Colleagues in conversation" loading="lazy" />
-            <img src="/assets/img/gal-walking.png" alt="On the move at the office" loading="lazy" />
-            <img src="/assets/img/gal-seminar.png" alt="" loading="lazy" />
-            <img src="/assets/img/gal-hiring.jpg" alt="" loading="lazy" />
-            <img src="/assets/img/group.png" alt="" loading="lazy" />
-            <img src="/assets/img/gal-staffing.jpg" alt="" loading="lazy" />
-            <img src="/assets/img/gal-talking.png" alt="" loading="lazy" />
-            <img src="/assets/img/gal-walking.png" alt="" loading="lazy" />
-          </div>
-        </div>
+        
       </section>
 
       {/* ══════════ TESTIMONIALS ══════════ */}
@@ -343,7 +338,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ FAQ ══════════ */}
+      {/* ══════════ CONTACT ══════════ */}
+      <section className="contact-section" id="contact">
+        <MotionContact />
+      </section>
+
+      {/* ══════════ FAQ (LAST SECTION) ══════════ */}
       <section className="section faq" id="faq" aria-label="Frequently asked questions">
         <div className="container">
           <div className="section__head reveal">
@@ -353,7 +353,7 @@ export default function Home() {
           <div className="faq__list reveal">
             <details className="faq__item">
               <summary>Which industries do you primarily support?</summary>
-              <p>We support organisations across financial services, retail, contact centre operations, and growth-stage enterprises that require structured operational scale.</p>
+              <p>We support organisations across contact centre operations, SaaS and technology enterprises, recruitment and staffing, and growth-stage businesses that require structured operational and financial scale.</p>
             </details>
             <details className="faq__item">
               <summary>Can you provide on-site and managed delivery models?</summary>
@@ -371,56 +371,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ CONTACT ══════════ */}
-      <section className="contact-section" id="contact">
-        <MotionContact />
-      </section>
-
       {/* ══════════ FOOTER ══════════ */}
-      <footer className="footer">
-        <div className="container footer__grid">
-          <div className="footer__brand">
-            <img src="/assets/img/rgc-logo.png" alt="Reddington Global" className="logo-img logo-img--footer" />
-            <p>We partner with small to middle-market businesses to improve performance, strengthen customer operations, and drive sustainable growth.</p>
-            <div className="footer__cert">
-              <span>Certified by</span>
-              <img src="/assets/img/nasscom.png" alt="NASSCOM" loading="lazy" />
-            </div>
-          </div>
-          <nav className="footer__col" aria-label="Useful links">
-            <h4>Useful Links</h4>
-            <a href="/about">About Us</a>
-            <a href="#services">Our Services</a>
-            <a href="/team">Our Team</a>
-            <a href="/contact">Consultation</a>
-          </nav>
-          <nav className="footer__col" aria-label="Company">
-            <h4>Company</h4>
-            <a href="/testimonials">Testimonials</a>
-            <a href="/process">Why Us</a>
-            <a href="/faq">FAQ</a>
-            <a href="/contact">Contact Us</a>
-          </nav>
-          <div className="footer__col">
-            <h4>Contact</h4>
-            <a href="mailto:sales@reddingtonglobal.com">sales@reddingtonglobal.com</a>
-            <a href="tel:+919818224495">+91 98182 24495</a>
-            <a href="tel:+19497794978">+1 (949) 779-4978</a>
-          </div>
-        </div>
-        <div className="container footer__bar">
-          <p>© 2026 Reddington Global. All rights reserved.</p>
-          <div className="footer__social">
-            <a href="https://www.linkedin.com/company/immergixthefuture/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-link">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="mailto:sales@reddingtonglobal.com" aria-label="Email us" className="footer__social-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
-            </a>
-          </div>
-          <p className="footer__tagline">RG Consultancy · Reddington Group Inc · RG Care Foundation</p>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <button className="totop" id="toTop" aria-label="Back to top">↑</button>
 

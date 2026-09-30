@@ -5,7 +5,10 @@ import SiteFooter from '../../../components/SiteFooter';
 import ClientScripts from '../../../components/ClientScripts';
 
 export async function generateStaticParams() {
-  return SERVICES.map(s => ({ slug: s.slug }));
+  return SERVICES.flatMap(s => [
+    { slug: s.slug },
+    ...(s.aliases ? s.aliases.map(a => ({ slug: a })) : []),
+  ]);
 }
 
 export async function generateMetadata({ params }) {
@@ -131,6 +134,29 @@ export default function ServicePage({ params }) {
             </div>
           </div>
         </section>
+
+        {/* ══════════ SLA & ASSURANCE ══════════ */}
+        {svc.slas && (
+          <section className="section section--dark svc-slas">
+            <div className="container">
+              <div className="section__head reveal">
+                <p className="eyebrow">Service Level Commitment</p>
+                <h2 className="section__title">
+                  Guaranteed <span className="gold-italic">standards &amp; SLAs.</span>
+                </h2>
+              </div>
+              <div className="svc-slas__grid">
+                {svc.slas.map((s, i) => (
+                  <div className="svc-sla__card reveal" key={i}>
+                    <div className="svc-sla__metric">{s.metric}</div>
+                    <div className="svc-sla__label">{s.label}</div>
+                    <p className="svc-sla__detail">{s.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ══════════ CTA BAND ══════════ */}
         <section className="svc-cta">

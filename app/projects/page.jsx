@@ -25,7 +25,7 @@ export default function ProjectsPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/gal-hiring.jpg)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/svc-bpo-opt.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Projects</p>
@@ -38,45 +38,30 @@ export default function ProjectsPage() {
           <div className="container">
             <div className="projects__grid reveal">
               <article className="project-card">
-                <img src="/assets/img/gal-seminar.png" alt="Team seminar at Reddington Global" loading="lazy" />
+                <img src="/assets/img/svc-bpo-opt.webp" alt="24/7 Enterprise BPO Operations Floor" loading="lazy" />
                 <div className="project-card__body">
-                  <h3>Operational Workshops</h3>
-                  <p>Structured strategy sessions that align teams on delivery standards, workflows, and performance goals.</p>
+                  <h3>24/7 Operations Command</h3>
+                  <p>Real-time queue monitoring, floor supervision, and KPI tracking calibrated for high-volume enterprise SLAs.</p>
                 </div>
               </article>
               <article className="project-card">
-                <img src="/assets/img/gal-hiring.jpg" alt="Interviewing new talent" loading="lazy" />
+                <img src="/assets/img/svc-saas-opt.webp" alt="Cloud Architecture & Digital Solutions" loading="lazy" />
                 <div className="project-card__body">
-                  <h3>Talent Acquisition</h3>
-                  <p>Focused recruitment and onboarding initiatives designed to build role-ready teams quickly and reliably.</p>
+                  <h3>Cloud Systems &amp; SaaS Delivery</h3>
+                  <p>Full-stack web engineering, resilient REST/GraphQL API fabrics, and microservices automated for high concurrency.</p>
                 </div>
               </article>
               <article className="project-card">
-                <img src="/assets/img/gal-staffing.jpg" alt="Staffing consultation" loading="lazy" />
+                <img src="/assets/img/svc-compliance-opt.webp" alt="Operational Compliance & Audit Governance" loading="lazy" />
                 <div className="project-card__body">
-                  <h3>On-Site Delivery Setup</h3>
-                  <p>End-to-end launch support across staffing, process management, and customer experience operations.</p>
+                  <h3>Regulatory &amp; Statutory Governance</h3>
+                  <p>Multi-jurisdiction tax and ledger reconciliation frameworks ensuring zero-penalty operational compliance.</p>
                 </div>
               </article>
             </div>
           </div>
 
-          <div className="gallery" aria-label="Life at Reddington Global">
-            <div className="gallery__track">
-              <img src="/assets/img/gal-seminar.png" alt="Team seminar at Reddington Global" loading="lazy" />
-              <img src="/assets/img/gal-hiring.jpg" alt="Interviewing new talent" loading="lazy" />
-              <img src="/assets/img/group.png" alt="Team gathering" loading="lazy" />
-              <img src="/assets/img/gal-staffing.jpg" alt="Staffing consultation" loading="lazy" />
-              <img src="/assets/img/gal-talking.png" alt="Colleagues in conversation" loading="lazy" />
-              <img src="/assets/img/gal-walking.png" alt="On the move at the office" loading="lazy" />
-              <img src="/assets/img/gal-seminar.png" alt="" loading="lazy" />
-              <img src="/assets/img/gal-hiring.jpg" alt="" loading="lazy" />
-              <img src="/assets/img/group.png" alt="" loading="lazy" />
-              <img src="/assets/img/gal-staffing.jpg" alt="" loading="lazy" />
-              <img src="/assets/img/gal-talking.png" alt="" loading="lazy" />
-              <img src="/assets/img/gal-walking.png" alt="" loading="lazy" />
-            </div>
-          </div>
+          
         </section>
       </main>
 
