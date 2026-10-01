@@ -5,7 +5,8 @@ const NAV_ITEM_SUBS = {
   'bpo-sales': 'Inbound & outbound pipeline',
   'bpo-backoffice': 'Data operations & KYC/AML',
   'bpo-customer-service': 'By Vishal Sir · 24/7 care',
-  'recruitment-staffing': 'High-volume headcount',
+  'recruitment-hiring': 'IT, marketing & corporate talent',
+  'recruitment-staffing': 'IT, marketing & corporate talent',
   'saas-digital-solutions': 'Web, APIs & payment gateways',
   'digital-marketing': 'Paid media, SEO & CRO funnels',
   'performance-management-consultancy': 'Floor efficiency & QA systems',
@@ -18,8 +19,8 @@ export default function SiteNav() {
   const techServices = SERVICES.filter((s) =>
     ['saas-digital-solutions', 'digital-marketing', 'performance-management-consultancy'].includes(s.slug)
   );
-  const financeServices = SERVICES.filter((s) =>
-    ['bookkeeping-accountancy', 'payroll-compensation'].includes(s.slug)
+  const financeAndTalentServices = SERVICES.filter((s) =>
+    ['bookkeeping-accountancy', 'payroll-compensation', 'recruitment-hiring', 'recruitment-staffing'].includes(s.slug)
   );
 
   return (
@@ -72,10 +73,10 @@ export default function SiteNav() {
                 ))}
               </div>
 
-              {/* 3. Finance & Governance */}
+              {/* 3. Finance & Talent */}
               <div className="nav__dropdown-col">
-                <span className="nav__dropdown-header">Finance &amp; HR</span>
-                {financeServices.map((s) => (
+                <span className="nav__dropdown-header">Finance &amp; Talent</span>
+                {financeAndTalentServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
                     <span className="nav__dropdown-item-sub">{NAV_ITEM_SUBS[s.slug] || s.tagline}</span>
