@@ -1,10 +1,26 @@
 import Link from 'next/link';
-import { getServicesByCategory } from '../lib/services-data';
+import { SERVICES } from '../lib/services-data';
+
+const NAV_ITEM_SUBS = {
+  'bpo-sales': 'Inbound & outbound pipeline',
+  'bpo-backoffice': 'Data operations & KYC/AML',
+  'bpo-customer-service': 'By Vishal Sir · 24/7 care',
+  'recruitment-staffing': 'High-volume headcount',
+  'saas-digital-solutions': 'Web, APIs & payment gateways',
+  'digital-marketing': 'Paid media, SEO & CRO funnels',
+  'performance-management-consultancy': 'Floor efficiency & QA systems',
+  'bookkeeping-accountancy': 'GST, TDS & monthly MIS',
+  'payroll-compensation': 'Disbursements & tax compliance',
+};
 
 export default function SiteNav() {
-  const bpoServices = getServicesByCategory('bpo');
-  const consultancyServices = getServicesByCategory('consultancy');
-  const marketingServices = getServicesByCategory('marketing');
+  const bpoServices = SERVICES.filter((s) => s.category === 'bpo');
+  const techServices = SERVICES.filter((s) =>
+    ['saas-digital-solutions', 'digital-marketing', 'performance-management-consultancy'].includes(s.slug)
+  );
+  const financeServices = SERVICES.filter((s) =>
+    ['bookkeeping-accountancy', 'payroll-compensation'].includes(s.slug)
+  );
 
   return (
     <header className="nav" id="nav">
@@ -18,8 +34,10 @@ export default function SiteNav() {
             <span className="nav__brand-line nav__brand-line--sub">CONSULTANCY</span>
           </span>
         </Link>
+
         <nav className="nav__links" id="navLinks" aria-label="Primary">
           <Link href="/about">Who We Are</Link>
+
           <div className="nav__dropdown" id="navServicesDropdown">
             <button
               type="button"
@@ -30,6 +48,7 @@ export default function SiteNav() {
             >
               Services <span className="nav__dropdown-arrow" aria-hidden="true">▾</span>
             </button>
+
             <div className="nav__dropdown-menu nav__dropdown-menu--3col" role="menu">
               {/* 1. BPO Services */}
               <div className="nav__dropdown-col">
@@ -37,41 +56,29 @@ export default function SiteNav() {
                 {bpoServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">
-                      {s.slug === 'bpo-sales'
-                        ? 'Inbound & outbound pipeline'
-                        : s.slug === 'bpo-backoffice'
-                        ? 'Data operations & KYC/AML'
-                        : '24/7 Omnichannel support'}
-                    </span>
+                    <span className="nav__dropdown-item-sub">{NAV_ITEM_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
               </div>
 
-              {/* 2. Consultancy Services */}
+              {/* 2. Tech & Growth Consultancy */}
               <div className="nav__dropdown-col">
-                <span className="nav__dropdown-header">Consultancy Services</span>
-                {consultancyServices.map((s) => (
+                <span className="nav__dropdown-header">Tech &amp; Growth</span>
+                {techServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">
-                      {s.slug === 'saas-digital-solutions'
-                        ? 'Cloud platforms & engineering'
-                        : s.slug === 'bookkeeping-accountancy'
-                        ? 'Statutory tax & audit books'
-                        : 'Managed IT & infrastructure'}
-                    </span>
+                    <span className="nav__dropdown-item-sub">{NAV_ITEM_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
               </div>
 
-              {/* 3. Digital Marketing */}
+              {/* 3. Finance & Governance */}
               <div className="nav__dropdown-col">
-                <span className="nav__dropdown-header">Digital Marketing</span>
-                {marketingServices.map((s) => (
+                <span className="nav__dropdown-header">Finance &amp; HR</span>
+                {financeServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">Paid media, SEO &amp; funnels</span>
+                    <span className="nav__dropdown-item-sub">{NAV_ITEM_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
                 <div className="nav__dropdown-callout">
@@ -81,11 +88,13 @@ export default function SiteNav() {
               </div>
             </div>
           </div>
+
           <Link href="/process">Our Edge</Link>
           <Link href="/team">Team</Link>
           <Link href="/testimonials">Testimonials</Link>
           <Link href="/contact" className="btn btn--gold btn--sm">Get Consultation</Link>
         </nav>
+
         <button className="nav__toggle nav__burger" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>

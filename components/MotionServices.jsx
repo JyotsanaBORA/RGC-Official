@@ -10,6 +10,8 @@ export default function MotionServices() {
   const filteredServices =
     activeCategory === 'all'
       ? SERVICES
+      : activeCategory === 'marketing'
+      ? SERVICES.filter((s) => s.slug === 'digital-marketing')
       : SERVICES.filter((s) => s.category === activeCategory);
 
   return (
@@ -23,7 +25,7 @@ export default function MotionServices() {
           className={`svc-showcase__tab ${activeCategory === 'all' ? 'is-active' : ''}`}
           onClick={() => setActiveCategory('all')}
         >
-          All Capabilities <span className="svc-showcase__tab-count">7</span>
+          All Capabilities <span className="svc-showcase__tab-count">{SERVICES.length}</span>
         </button>
 
         {SERVICE_CATEGORIES.map((cat) => {
@@ -41,6 +43,16 @@ export default function MotionServices() {
             </button>
           );
         })}
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeCategory === 'marketing'}
+          className={`svc-showcase__tab ${activeCategory === 'marketing' ? 'is-active' : ''}`}
+          onClick={() => setActiveCategory('marketing')}
+        >
+          Digital Marketing <span className="svc-showcase__tab-count">1</span>
+        </button>
       </div>
 
       {/* ── Capabilities Grid ── */}

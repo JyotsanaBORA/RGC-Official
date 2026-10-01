@@ -107,15 +107,15 @@ export default function Home() {
           <a href="#services" className="division-pill">
             <span className="division-pill__tag">Division 01</span>
             <strong className="division-pill__title">BPO Services</strong>
-            <span className="division-pill__sub">Sales Pipeline · Back Office · Customer Care 24/7</span>
+            <span className="division-pill__sub">Sales Pipeline · Back Office · Customer Care 24/7 · Staffing</span>
           </a>
           <a href="#services" className="division-pill">
             <span className="division-pill__tag">Division 02</span>
             <strong className="division-pill__title">Consultancy Services</strong>
-            <span className="division-pill__sub">SaaS Engineering · Bookkeeping &amp; Tax · Managed IT</span>
+            <span className="division-pill__sub">SaaS &amp; IT · Bookkeeping &amp; Tax · Payroll · Performance</span>
           </a>
           <a href="#services" className="division-pill">
-            <span className="division-pill__tag">Division 03</span>
+            <span className="division-pill__tag">Specialized Practice</span>
             <strong className="division-pill__title">Digital Marketing</strong>
             <span className="division-pill__sub">Paid Media (Meta/Google) · Technical SEO · CRO</span>
           </a>
