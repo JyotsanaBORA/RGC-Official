@@ -36,7 +36,7 @@ export default function SiteFooter() {
       <div className="container footer__bar">
         <p>© 2026 Reddington Global. All rights reserved.</p>
         <div className="footer__social">
-          <a href="https://www.linkedin.com/company/immergixthefuture/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-link">
+          <a href="https://www.linkedin.com/company/reddingtonglobal/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-link">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
           <a href="mailto:sales@reddingtonglobal.com" aria-label="Email us" className="footer__social-link">

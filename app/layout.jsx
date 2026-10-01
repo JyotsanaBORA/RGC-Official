@@ -33,7 +33,7 @@ const jsonLd = {
     postalCode: '122016',
     addressCountry: 'IN',
   },
-  sameAs: ['https://www.linkedin.com/company/immergixthefuture/'],
+  sameAs: ['https://www.linkedin.com/company/reddingtonglobal/'],
 };
 
 export default function RootLayout({ children }) {

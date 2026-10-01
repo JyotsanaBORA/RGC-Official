@@ -73,6 +73,19 @@ export default function ServicePage({ params }) {
 
                 <p className="svc-dash__overview reveal">{svc.overview}</p>
 
+                {/* Realistic Practice Operations Photography */}
+                <figure className="svc-dash__hero-photo reveal">
+                  <img
+                    src={svc.image}
+                    alt={`${svc.title} dedicated practice floor at Reddington Global`}
+                    className="svc-dash__hero-img"
+                  />
+                  <figcaption className="svc-dash__hero-caption">
+                    <span className="svc-dash__live-badge">Dedicated Practice Floor</span>
+                    <span>Reddington Global Enterprise Delivery Hubs · Dual-Shore (India &amp; USA)</span>
+                  </figcaption>
+                </figure>
+
                 {/* Proof Telemetry Stats Cards */}
                 {svc.stats && svc.stats.length > 0 && (
                   <div className="svc-dash__stats-row reveal">

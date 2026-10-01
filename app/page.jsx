@@ -102,25 +102,26 @@ export default function Home() {
         <a href="#about" className="hero__scroll" aria-label="Scroll to content"><span></span></a>
       </section>
 
-      {/* ══════════ CAPABILITY MARQUEE ══════════ */}
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee__track">
-          <span className="marquee__word">BPO Sales &amp; Revenue</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Back Office Operations</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Customer Services</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Bookkeeping &amp; Accountancy</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">IT Services &amp; Infrastructure</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Digital Marketing &amp; Growth</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">BPO Sales &amp; Revenue</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Back Office Operations</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Customer Services</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Bookkeeping &amp; Accountancy</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">IT Services &amp; Infrastructure</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Digital Marketing &amp; Growth</span><span className="marquee__dot">/</span>
+      {/* ══════════ 3 STRATEGIC DIVISIONS (Deloitte Architecture Standard) ══════════ */}
+      <section className="divisions-bar reveal" aria-label="Operating Divisions">
+        <div className="container divisions-bar__container">
+          <a href="#services" className="division-pill">
+            <span className="division-pill__tag">Division 01</span>
+            <strong className="division-pill__title">BPO Services</strong>
+            <span className="division-pill__sub">Sales Pipeline · Back Office · Customer Care 24/7</span>
+          </a>
+          <a href="#services" className="division-pill">
+            <span className="division-pill__tag">Division 02</span>
+            <strong className="division-pill__title">Consultancy Services</strong>
+            <span className="division-pill__sub">SaaS Engineering · Bookkeeping &amp; Tax · Managed IT</span>
+          </a>
+          <a href="#services" className="division-pill">
+            <span className="division-pill__tag">Division 03</span>
+            <strong className="division-pill__title">Digital Marketing</strong>
+            <span className="division-pill__sub">Paid Media (Meta/Google) · Technical SEO · CRO</span>
+          </a>
         </div>
-      </div>
+      </section>
 
       {/* ══════════ ABOUT ══════════ */}
       <section className="section about" id="about">
