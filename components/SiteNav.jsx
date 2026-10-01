@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import { getServicesByCategory } from '../lib/services-data';
 
+const NAV_SUBS = {
+  'bpo-sales': 'Inbound & outbound SDR pipeline',
+  'bpo-backoffice': 'KYC, claims & transaction data',
+  'bpo-customer-service': '24/7 omnichannel care & helpdesk',
+  'saas-digital-solutions': 'Cloud architecture & web platforms',
+  'bookkeeping-accountancy': 'Statutory tax & audit-ready books',
+  'it-services': 'Managed IT & network infrastructure',
+  'digital-marketing': 'Paid media & performance SEO',
+};
+
 export default function SiteNav() {
   const bpoServices = getServicesByCategory('bpo');
   const consultancyServices = getServicesByCategory('consultancy');
@@ -37,7 +47,7 @@ export default function SiteNav() {
                 {bpoServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
+                    <span className="nav__dropdown-item-sub">{NAV_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
               </div>
@@ -48,7 +58,7 @@ export default function SiteNav() {
                 {consultancyServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
+                    <span className="nav__dropdown-item-sub">{NAV_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
               </div>
@@ -59,7 +69,7 @@ export default function SiteNav() {
                 {marketingServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
                     <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
-                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
+                    <span className="nav__dropdown-item-sub">{NAV_SUBS[s.slug] || s.tagline}</span>
                   </Link>
                 ))}
                 <div className="nav__dropdown-callout">

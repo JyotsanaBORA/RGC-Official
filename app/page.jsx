@@ -1,5 +1,4 @@
 import ClientScripts from '../components/ClientScripts';
-import MotionTeam from '../components/MotionTeam';
 import MotionServices from '../components/MotionServices';
 import MotionAbout from '../components/MotionAbout';
 import MotionContact from '../components/MotionContact';
@@ -259,17 +258,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ TEAM ══════════ */}
-      <section className="section team" id="team">
-        <div className="container">
-          <div className="section__head reveal">
-            <p className="eyebrow">Executive Leadership</p>
-            <h2 className="section__title">Led by builders & <span className="gold-italic">enterprise operators.</span></h2>
-            <p className="lead">Decades of operational scale, executive talent acquisition, and institutional advisory.</p>
-          </div>
-          <MotionTeam />
-        </div>
-      </section>
 
       {/* ══════════ PROJECTS & LIFE AT REDDINGTON ══════════ */}
       <section className="section projects" id="projects" aria-label="Recent projects and life at Reddington Global">
