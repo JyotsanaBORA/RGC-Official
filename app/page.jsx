@@ -105,18 +105,20 @@ export default function Home() {
       {/* ══════════ CAPABILITY MARQUEE ══════════ */}
       <div className="marquee" aria-hidden="true">
         <div className="marquee__track">
-          <span className="marquee__word">Recruitment &amp; Staffing</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Immergix BPO</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Performance Management Consultancy</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Payroll &amp; Compensation</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">BPO Sales &amp; Revenue</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Back Office Operations</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Customer Services</span><span className="marquee__dot">/</span>
           <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Bookkeeping &amp; Statutory Compliance</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Recruitment &amp; Staffing</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Immergix BPO</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Performance Management Consultancy</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Payroll &amp; Compensation</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Bookkeeping &amp; Accountancy</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">IT Services &amp; Infrastructure</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Digital Marketing &amp; Growth</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">BPO Sales &amp; Revenue</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Back Office Operations</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Customer Services</span><span className="marquee__dot">/</span>
           <span className="marquee__word">SaaS &amp; Digital Solutions</span><span className="marquee__dot">/</span>
-          <span className="marquee__word">Bookkeeping &amp; Statutory Compliance</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Bookkeeping &amp; Accountancy</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">IT Services &amp; Infrastructure</span><span className="marquee__dot">/</span>
+          <span className="marquee__word">Digital Marketing &amp; Growth</span><span className="marquee__dot">/</span>
         </div>
       </div>
 

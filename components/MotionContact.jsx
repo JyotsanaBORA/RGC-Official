@@ -29,7 +29,7 @@ const OFFICES = [
   { name: 'RG Consultancy', addr: 'Tulip Ivory T-D, FL-G002, Sector 70, Gurugram, Haryana 122016, India', href: 'https://www.reddingtonglobal.com/' },
   { name: 'RG Group Inc', addr: '30 N Gould St, Ste R, Sheridan, WY 82801, USA', href: 'https://www.rgdebtrelief.com/' },
   { name: 'MyCashBridge Fintech Pvt Ltd', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://mycashbridge.com/' },
-  { name: 'IMMERGIX BPO', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://www.reddingtonglobal.com/' },
+  { name: 'BPO Operations Floor', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://www.reddingtonglobal.com/' },
   { name: 'RG Care Foundation', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://rgcare.in/' },
 ];
 
@@ -145,13 +145,14 @@ export default function MotionContact() {
               <div className="ff ct-form__select-wrap">
                 <select id="fService" name="service" defaultValue="">
                   <option value="" disabled hidden></option>
-                  <option>Recruitment &amp; Staffing</option>
-                  <option>Immergix BPO</option>
-                  <option>Performance Management Consultancy</option>
-                  <option>Payroll &amp; Compensation Management</option>
-                  <option>SaaS &amp; Digital Solutions</option>
-                  <option>Bookkeeping &amp; Statutory Compliance</option>
-                  <option>Other</option>
+                  <option>BPO — Sales &amp; Revenue Operations</option>
+                  <option>BPO — Back Office Operations</option>
+                  <option>BPO — Customer Services by Experts</option>
+                  <option>Consultancy — SaaS &amp; Digital Solutions</option>
+                  <option>Consultancy — Bookkeeping &amp; Accountancy</option>
+                  <option>Consultancy — IT Services &amp; Infrastructure</option>
+                  <option>Digital Marketing &amp; Growth</option>
+                  <option>Other Enterprise Inquiries</option>
                 </select>
                 <label htmlFor="fService">Service Interested In</label>
                 <span className="ff__bar" aria-hidden="true"></span>

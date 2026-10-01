@@ -1,13 +1,10 @@
 import Link from 'next/link';
-import { SERVICES } from '../lib/services-data';
+import { getServicesByCategory } from '../lib/services-data';
 
 export default function SiteNav() {
-  const colTalentOps = SERVICES.filter(s =>
-    ['recruitment', 'immergix-bpo', 'performance-management-consultancy'].includes(s.slug)
-  );
-  const colTechFinance = SERVICES.filter(s =>
-    ['saas-digital-solutions', 'payroll-compensation', 'bookkeeping-statutory-compliance'].includes(s.slug)
-  );
+  const bpoServices = getServicesByCategory('bpo');
+  const consultancyServices = getServicesByCategory('consultancy');
+  const marketingServices = getServicesByCategory('marketing');
 
   return (
     <header className="nav" id="nav">
@@ -33,24 +30,42 @@ export default function SiteNav() {
             >
               Services <span className="nav__dropdown-arrow" aria-hidden="true">▾</span>
             </button>
-            <div className="nav__dropdown-menu" role="menu">
+            <div className="nav__dropdown-menu nav__dropdown-menu--3col" role="menu">
+              {/* 1. BPO Services */}
               <div className="nav__dropdown-col">
-                <span className="nav__dropdown-header">Operations &amp; Talent</span>
-                {colTalentOps.map(s => (
+                <span className="nav__dropdown-header">BPO Services</span>
+                {bpoServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
-                    <span className="nav__dropdown-item-title">{s.title}</span>
-                    <span className="nav__dropdown-item-sub">{s.eyebrow}</span>
+                    <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
+                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
                   </Link>
                 ))}
               </div>
+
+              {/* 2. Consultancy Services */}
               <div className="nav__dropdown-col">
-                <span className="nav__dropdown-header">Technology &amp; Finance</span>
-                {colTechFinance.map(s => (
+                <span className="nav__dropdown-header">Consultancy Services</span>
+                {consultancyServices.map((s) => (
                   <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
-                    <span className="nav__dropdown-item-title">{s.title}</span>
-                    <span className="nav__dropdown-item-sub">{s.eyebrow}</span>
+                    <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
+                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
                   </Link>
                 ))}
+              </div>
+
+              {/* 3. Digital Marketing */}
+              <div className="nav__dropdown-col">
+                <span className="nav__dropdown-header">Growth &amp; Media</span>
+                {marketingServices.map((s) => (
+                  <Link key={s.slug} href={`/services/${s.slug}`} role="menuitem">
+                    <span className="nav__dropdown-item-title">{s.shortTitle || s.title}</span>
+                    <span className="nav__dropdown-item-sub">{s.tagline.slice(0, 52)}...</span>
+                  </Link>
+                ))}
+                <div className="nav__dropdown-callout">
+                  <span className="nav__dropdown-callout-badge">Fast-Track Delivery</span>
+                  <p>Enterprise SLA guaranteed by contract.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -59,11 +74,10 @@ export default function SiteNav() {
           <Link href="/testimonials">Testimonials</Link>
           <Link href="/contact" className="btn btn--gold btn--sm">Get Consultation</Link>
         </nav>
-        <button className="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <button className="nav__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
   );
 }
-

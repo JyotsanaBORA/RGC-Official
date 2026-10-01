@@ -5,11 +5,11 @@ export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
   title: 'Reddington Global — Consulting That Moves Business Forward',
   description:
-    'Reddington Global delivers recruitment & staffing, Immergix BPO, performance management consultancy, payroll, SaaS solutions, and bookkeeping services for businesses worldwide.',
-  keywords: 'BPO, recruitment, staffing, Immergix, performance management consultancy, payroll, SaaS, bookkeeping, compliance, India, USA',
+    'Reddington Global delivers enterprise BPO services (Sales, Back Office, Customer Care), strategic consultancy (SaaS, Bookkeeping & Accountancy, IT Services), and performance Digital Marketing for businesses worldwide.',
+  keywords: 'BPO services, sales outsourcing, back office operations, customer services, SaaS solutions, bookkeeping, accountancy, IT services, digital marketing, consultancy, India, USA',
   openGraph: {
     title: 'Reddington Global Consultancy',
-    description: 'Premium BPO & Staffing Solutions — India & USA',
+    description: 'Enterprise BPO Services, Strategic Consultancy & Digital Marketing — India & USA',
     type: 'website',
   },
 };
@@ -18,11 +18,11 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: 'Reddington Global',
-  alternateName: ['RG Consultancy', 'Immergix BPO'],
+  alternateName: ['RG Consultancy', 'Reddington Global BPO'],
   url: 'https://www.reddingtonglobal.com',
   logo: 'https://www.reddingtonglobal.com/assets/img/rgc-logo-opt.png',
   description:
-    'Reddington Global delivers recruitment & staffing, Immergix BPO, performance management consultancy, payroll, SaaS solutions, and bookkeeping services for businesses worldwide.',
+    'Reddington Global delivers enterprise BPO services (Sales, Back Office, Customer Care), strategic consultancy (SaaS, Bookkeeping & Accountancy, IT Services), and performance Digital Marketing for businesses worldwide.',
   telephone: '+919818224495',
   email: 'sales@reddingtonglobal.com',
   address: {

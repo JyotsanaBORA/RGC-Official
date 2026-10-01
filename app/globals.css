@@ -4678,3 +4678,707 @@ body {
   color: #FFFFFF !important;
   box-shadow: 0 6px 20px rgba(212, 159, 45, 0.32) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   TIER-1 ENTERPRISE SERVICE DASHBOARD & 3-COLUMN MEGA MENU (TCS/DELOITTE)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── 3-Column Navigation Mega-Menu ── */
+.nav__dropdown-menu--3col {
+  display: grid !important;
+  grid-template-columns: 1.1fr 1.1fr 1fr !important;
+  min-width: 820px !important;
+  gap: 20px !important;
+  padding: 24px 28px !important;
+  background: rgba(14, 8, 4, 0.96) !important;
+  border: 1px solid rgba(212, 159, 45, 0.28) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 25px rgba(212, 159, 45, 0.12) !important;
+  border-radius: 14px !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+.nav__dropdown-callout {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(212, 159, 45, 0.08);
+  border: 1px solid rgba(212, 159, 45, 0.22);
+  border-radius: 8px;
+}
+
+.nav__dropdown-callout-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #FBE5A2;
+  margin-bottom: 4px;
+}
+
+.nav__dropdown-callout p {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.service__badge-category {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #D49F2D;
+  margin-bottom: 6px;
+}
+
+/* ── Service Dashboard Page ── */
+.svc-dash {
+  background: #0B0604;
+  color: #F5EFEB;
+  min-height: 100vh;
+}
+
+/* 1. Hero Section */
+.svc-dash__hero {
+  position: relative;
+  padding: 120px 0 70px;
+  background: radial-gradient(circle at 15% 20%, rgba(212, 159, 45, 0.12) 0%, transparent 50%),
+              linear-gradient(180deg, #120905 0%, #0B0604 100%);
+  border-bottom: 1px solid rgba(212, 159, 45, 0.15);
+}
+
+.svc-dash__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.svc-dash__breadcrumb a {
+  color: rgba(255, 255, 255, 0.70);
+  transition: color 0.2s ease;
+}
+
+.svc-dash__breadcrumb a:hover {
+  color: #FBE5A2;
+}
+
+.svc-dash__sep {
+  color: rgba(212, 159, 45, 0.4);
+}
+
+.svc-dash__cat {
+  color: #E8BC52;
+}
+
+.svc-dash__current {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.svc-dash__hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.svc-dash__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(212, 159, 45, 0.12);
+  border: 1px solid rgba(212, 159, 45, 0.35);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #FBE5A2;
+  margin-bottom: 18px;
+}
+
+.svc-dash__pill-dot {
+  width: 6px;
+  height: 6px;
+  background: #D49F2D;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #FBE5A2;
+}
+
+.svc-dash__title {
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+
+.svc-dash__tagline {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: #E8BC52;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.svc-dash__overview {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: rgba(255, 246, 240, 0.80);
+  margin-bottom: 30px;
+}
+
+.svc-dash__stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.svc-dash__stat-card {
+  padding: 16px 14px;
+  background: rgba(22, 12, 8, 0.70);
+  border: 1px solid rgba(212, 159, 45, 0.22);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.svc-dash__stat-num {
+  font-size: 1.45rem;
+  font-weight: 850;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #FFF 30%, #FBE5A2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.svc-dash__stat-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.svc-dash__hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.svc-dash__quick-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #25D366;
+  padding: 10px 16px;
+  background: rgba(37, 211, 102, 0.10);
+  border: 1px solid rgba(37, 211, 102, 0.30);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.svc-dash__quick-wa:hover {
+  background: rgba(37, 211, 102, 0.20);
+  border-color: #25D366;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* ── Interactive Lead Form Card (Right Column) ── */
+.svc-form-card {
+  background: rgba(18, 10, 6, 0.90);
+  border: 1px solid rgba(212, 159, 45, 0.38);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.60), 0 0 30px rgba(212, 159, 45, 0.10);
+  backdrop-filter: blur(20px);
+}
+
+.svc-form-card__header {
+  margin-bottom: 20px;
+}
+
+.svc-form-card__badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #120800;
+  background: #E8BC52;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.svc-form-card__title {
+  font-size: 1.35rem;
+  font-weight: 750;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.svc-form-card__sub {
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.svc-form-card__sub strong {
+  color: #FBE5A2;
+}
+
+.svc-form-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.svc-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.svc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.svc-form-group label {
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.svc-input,
+.svc-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
+  color: #FFFFFF;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.svc-input:focus,
+.svc-textarea:focus {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: #D49F2D;
+  box-shadow: 0 0 0 3px rgba(212, 159, 45, 0.20);
+}
+
+.svc-textarea {
+  resize: vertical;
+  min-height: 58px;
+}
+
+.svc-form-card__submit {
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 0.95rem;
+  margin-top: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.svc-form-card__trust {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.70rem;
+  color: rgba(255, 255, 255, 0.55);
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.svc-form-card__success {
+  text-align: center;
+  padding: 24px 10px;
+}
+
+.svc-form-card__success-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(37, 211, 102, 0.15);
+  border: 1.5px solid #25D366;
+  border-radius: 50%;
+  color: #25D366;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.svc-form-card__success h4 {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.svc-form-card__success p {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.svc-form-card__wa-btn {
+  width: 100%;
+  padding: 12px;
+}
+
+/* 2. Challenge vs. Solution Matrix */
+.svc-dash__matrix {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #0B0604 0%, #100805 100%);
+  border-bottom: 1px solid rgba(212, 159, 45, 0.12);
+}
+
+.svc-dash__matrix-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+
+.svc-dash__matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.svc-dash__matrix-card {
+  padding: 32px 26px;
+  background: rgba(18, 10, 6, 0.75);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.svc-dash__matrix-card--friction {
+  border: 1px solid rgba(238, 59, 59, 0.25);
+  background: linear-gradient(180deg, rgba(35, 12, 12, 0.6) 0%, rgba(18, 10, 6, 0.8) 100%);
+}
+
+.svc-dash__matrix-card--solution {
+  border: 1px solid rgba(212, 159, 45, 0.40);
+  background: linear-gradient(180deg, rgba(30, 20, 10, 0.7) 0%, rgba(18, 10, 6, 0.85) 100%);
+  box-shadow: 0 10px 30px rgba(212, 159, 45, 0.08);
+}
+
+.svc-dash__matrix-card--impact {
+  border: 1px solid rgba(52, 199, 89, 0.30);
+  background: linear-gradient(180deg, rgba(10, 28, 16, 0.6) 0%, rgba(18, 10, 6, 0.8) 100%);
+}
+
+.svc-dash__matrix-card:hover {
+  transform: translateY(-3px);
+}
+
+.svc-dash__matrix-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.68rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.svc-dash__matrix-badge--friction {
+  background: rgba(238, 59, 59, 0.15);
+  color: #FF8F8F;
+  border: 1px solid rgba(238, 59, 59, 0.35);
+}
+
+.svc-dash__matrix-badge--solution {
+  background: rgba(212, 159, 45, 0.18);
+  color: #FBE5A2;
+  border: 1px solid rgba(212, 159, 45, 0.45);
+}
+
+.svc-dash__matrix-badge--impact {
+  background: rgba(52, 199, 89, 0.15);
+  color: #8CF0A8;
+  border: 1px solid rgba(52, 199, 89, 0.35);
+}
+
+.svc-dash__matrix-card h3 {
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.svc-dash__matrix-card p {
+  font-size: 0.90rem;
+  line-height: 1.6;
+  color: rgba(255, 246, 240, 0.78);
+  margin: 0;
+}
+
+/* 3. Core Capabilities Section */
+.svc-dash__capabilities {
+  padding: 85px 0;
+  background: #0B0604;
+}
+
+.svc-dash__cap-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+
+.svc-dash__cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.svc-dash__cap-card {
+  padding: 28px 24px;
+  background: rgba(20, 11, 7, 0.65);
+  border: 1px solid rgba(212, 159, 45, 0.18);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.svc-dash__cap-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 159, 45, 0.48);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.50), 0 0 20px rgba(212, 159, 45, 0.08);
+}
+
+.svc-dash__cap-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.svc-dash__cap-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #D49F2D;
+  font-family: monospace;
+}
+
+.svc-dash__cap-dot {
+  width: 5px;
+  height: 5px;
+  background: rgba(212, 159, 45, 0.4);
+  border-radius: 50%;
+}
+
+.svc-dash__cap-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.svc-dash__cap-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(255, 246, 240, 0.72);
+  margin: 0;
+}
+
+/* 4. SLAs & Governance Section */
+.svc-dash__slas {
+  padding: 30px 0 70px;
+  background: #0B0604;
+}
+
+.svc-dash__sla-box {
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(28, 15, 9, 0.85) 0%, rgba(16, 9, 5, 0.90) 100%);
+  border: 1px solid rgba(212, 159, 45, 0.30);
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.svc-dash__sla-intro h3 {
+  font-size: 1.45rem;
+  font-weight: 750;
+  color: #FFFFFF;
+  margin: 8px 0 12px;
+  line-height: 1.25;
+}
+
+.svc-dash__sla-intro p {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.70);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.svc-dash__sla-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.svc-dash__sla-item {
+  padding: 20px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(212, 159, 45, 0.18);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.svc-dash__sla-metric {
+  font-size: 1.35rem;
+  font-weight: 850;
+  color: #FBE5A2;
+  line-height: 1.1;
+}
+
+.svc-dash__sla-label {
+  font-size: 0.78rem;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.svc-dash__sla-detail {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.4;
+}
+
+/* 5. Bottom Engagement CTA Banner */
+.svc-dash__cta {
+  padding: 0 0 90px;
+  background: #0B0604;
+}
+
+.svc-dash__cta-card {
+  padding: 44px 40px;
+  background: radial-gradient(circle at 80% 50%, rgba(212, 159, 45, 0.18) 0%, transparent 60%),
+              linear-gradient(135deg, #180D08 0%, #100805 100%);
+  border: 1px solid rgba(212, 159, 45, 0.35);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.svc-dash__cta-content h2 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 6px 0 8px;
+}
+
+.svc-dash__cta-content p {
+  font-size: 0.95rem;
+  color: rgba(255, 246, 240, 0.78);
+  margin: 0;
+  max-width: 580px;
+}
+
+.svc-dash__cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Responsive Rules for Service Dashboard ── */
+@media (max-width: 1024px) {
+  .nav__dropdown-menu--3col {
+    min-width: 100% !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .svc-dash__hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .svc-dash__matrix-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .svc-dash__cap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .svc-dash__sla-box {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .svc-dash__cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .svc-dash__stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-dash__cap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-dash__sla-items {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-dash__cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .svc-dash__cta-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
