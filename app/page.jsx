@@ -132,7 +132,7 @@ export default function Home() {
             <p className="muted">We partner with growth-stage enterprises and middle-market organizations to improve outcomes through operational intelligence, technological integration, and audit-ready governance.</p>
             <a href="#contact" className="link-arrow">Start a conversation <span aria-hidden="true">→</span></a>
             <figure className="about__photo img-reveal">
-              <img src="/assets/img/who-we-are-opt.webp" alt="Reddington Global leadership strategy briefing" loading="lazy" />
+              <img src="/assets/img/who-we-are-opt.webp" alt="Reddington Global 24/7 global telemetry and enterprise operations command center" loading="lazy" />
             </figure>
           </div>
           <MotionAbout />

@@ -43,7 +43,7 @@ export default function AboutPage() {
               <p className="muted">We partner with small to middle-market organisations to improve outcomes through operational intelligence, compliance, and quality assurance delivered as one integrated model.</p>
               <a href="/contact" className="link-arrow">Start a conversation <span aria-hidden="true">→</span></a>
               <figure className="about__photo img-reveal">
-                <img src="/assets/img/who-we-are-opt.webp" alt="The Reddington Global team at work" loading="lazy" />
+                <img src="/assets/img/who-we-are-opt.webp" alt="Reddington Global 24/7 global telemetry and enterprise operations command center" loading="lazy" />
               </figure>
             </div>
             <MotionAbout />

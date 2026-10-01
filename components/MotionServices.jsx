@@ -69,7 +69,7 @@ export default function MotionServices() {
               <div className="svc-card__media">
                 <img
                   src={svc.image}
-                  alt={`${svc.title} operational team at Reddington Global`}
+                  alt={`${svc.title} platform and operations console at Reddington Global`}
                   loading="lazy"
                   className="svc-card__img"
                 />

@@ -73,16 +73,16 @@ export default function ServicePage({ params }) {
 
                 <p className="svc-dash__overview reveal">{svc.overview}</p>
 
-                {/* Realistic Practice Operations Photography */}
+                {/* Product UI & Operations Platform Console */}
                 <figure className="svc-dash__hero-photo reveal">
                   <img
                     src={svc.image}
-                    alt={`${svc.title} dedicated practice floor at Reddington Global`}
+                    alt={`${svc.title} enterprise platform console at Reddington Global`}
                     className="svc-dash__hero-img"
                   />
                   <figcaption className="svc-dash__hero-caption">
-                    <span className="svc-dash__live-badge">Dedicated Practice Floor</span>
-                    <span>Reddington Global Enterprise Delivery Hubs · Dual-Shore (India &amp; USA)</span>
+                    <span className="svc-dash__live-badge">Enterprise Console</span>
+                    <span>Reddington Global Practice Operations · Real-Time Platform Telemetry</span>
                   </figcaption>
                 </figure>
 
