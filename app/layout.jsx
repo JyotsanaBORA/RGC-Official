@@ -2,6 +2,7 @@ import './globals.css';
 import GoogleTracking from '../components/analytics/GoogleTracking';
 
 export const metadata = {
+  metadataBase: new URL('https://www.reddingtonglobal.com'),
   title: 'Reddington Global — Consulting That Moves Business Forward',
   description:
     'Reddington Global delivers recruitment & staffing, Immergix BPO, performance management consultancy, payroll, SaaS solutions, and bookkeeping services for businesses worldwide.',
@@ -11,6 +12,28 @@ export const metadata = {
     description: 'Premium BPO & Staffing Solutions — India & USA',
     type: 'website',
   },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Reddington Global',
+  alternateName: ['RG Consultancy', 'Immergix BPO'],
+  url: 'https://www.reddingtonglobal.com',
+  logo: 'https://www.reddingtonglobal.com/assets/img/rgc-logo-opt.png',
+  description:
+    'Reddington Global delivers recruitment & staffing, Immergix BPO, performance management consultancy, payroll, SaaS solutions, and bookkeeping services for businesses worldwide.',
+  telephone: '+919818224495',
+  email: 'sales@reddingtonglobal.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '750 Udyog Vihar Phase 5, Sector 19',
+    addressLocality: 'Gurugram',
+    addressRegion: 'Haryana',
+    postalCode: '122016',
+    addressCountry: 'IN',
+  },
+  sameAs: ['https://www.linkedin.com/company/immergixthefuture/'],
 };
 
 export default function RootLayout({ children }) {
@@ -26,6 +49,10 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <link rel="icon" type="image/png" href="/assets/img/rgc-logo-opt.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         <GoogleTracking />
