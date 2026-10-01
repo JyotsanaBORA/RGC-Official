@@ -36,8 +36,8 @@
   --border-gold: rgba(201,168,0,0.28);
   --border-gold-strong: rgba(201,168,0,0.55);
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "DM Sans", "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --space-1: 8px;  --space-2: 16px; --space-3: 24px;
   --space-4: 32px; --space-5: 48px; --space-6: 64px;
@@ -87,10 +87,10 @@ a { color: inherit; text-decoration: none; }
 .section--navy .eyebrow { color: var(--coral-bright); }
 .section__title {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(32px, 4.4vw, 52px);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin-bottom: var(--space-3);
   color: inherit;
   word-break: break-word;
@@ -99,6 +99,7 @@ a { color: inherit; text-decoration: none; }
 }
 .gold-italic {
   font-style: italic;
+  font-weight: 600;
   color: #F5DD27;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -576,10 +577,10 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 .hero .eyebrow { color: var(--coral-bright); }
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(42px, 6.6vw, 84px);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   max-width: 100%;
   margin-bottom: var(--space-3);
   word-break: break-word;
@@ -851,7 +852,7 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
   transition: transform 250ms var(--ease), border-color 250ms, box-shadow 250ms var(--ease);
 }
 .about__card:hover { transform: translateY(-4px); border-color: rgba(248,124,99,0.50); box-shadow: 0 12px 36px rgba(248,124,99,0.12); }
-.about__card-num { font-family: var(--font-display); font-style: italic; color: var(--coral); font-size: 22px; margin-bottom: 10px; }
+.about__card-num { font-family: var(--font-display); font-weight: 700; color: var(--coral); font-size: 22px; margin-bottom: 10px; }
 .about__card h3 { font-size: 18px; margin-bottom: 8px; color: #1A0800; }
 .about__card p { color: rgba(26,8,0,0.65); font-size: 15px; }
 .about .link-arrow { margin-top: var(--space-3); }
@@ -1123,12 +1124,12 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
   animation: badgeFloat 5s ease-in-out infinite alternate;
 }
 @keyframes badgeFloat { from { transform: translateY(0); } to { transform: translateY(-14px); } }
-.edge__badge-num { font-family: var(--font-display); font-size: 30px; font-weight: 600; line-height: 1; }
+.edge__badge-num { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1; }
 .edge__badge-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 .edge__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5) var(--space-5); }
 .edge__item { display: flex; gap: 18px; align-items: flex-start; }
 .edge__num {
-  font-family: var(--font-display); font-style: italic;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 26px; color: var(--gold); line-height: 1.2;
   min-width: 44px;
   border-top: none;
@@ -1829,7 +1830,7 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
   transform: translateY(-4px);
 }
 .svc-offering__num {
-  font-family: var(--font-display); font-style: italic;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: #FD9E8B; line-height: 1.2;
   min-width: 36px; border-top: 2px solid #FD9E8B; padding-top: 6px;
 }
@@ -1853,7 +1854,7 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 }
 .svc-why__card:hover { transform: translateY(-4px); border-color: rgba(253,158,139,0.5); }
 .svc-why__num {
-  font-family: var(--font-display); font-style: italic;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 28px; color: #D95542; margin-bottom: 14px; display: block;
 }
 .svc-why__card h3 { font-size: 20px; margin-bottom: 12px; font-weight: 600; color: #1A0800; }
