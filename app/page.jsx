@@ -259,6 +259,7 @@ export default function Home() {
       </section>
 
 
+
       {/* ══════════ PROJECTS & LIFE AT REDDINGTON ══════════ */}
       <section className="section projects" id="projects" aria-label="Recent projects and life at Reddington Global">
         <div className="container">
