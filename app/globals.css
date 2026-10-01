@@ -446,39 +446,39 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 }
 .nav__dropdown-header {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--coral-deep);
+  color: #A37213;
   padding: 2px 10px 8px;
-  border-bottom: 1px solid rgba(248,124,99,0.22);
+  border-bottom: 1.5px solid rgba(212, 159, 45, 0.25);
   margin-bottom: 4px;
 }
 .nav__dropdown-menu a {
   display: flex;
   flex-direction: column;
-  padding: 9px 10px;
+  padding: 9px 12px;
   border-radius: var(--radius-xs);
   text-decoration: none;
-  transition: background 150ms, transform 150ms;
-  border-left: 2px solid transparent;
+  transition: all 180ms ease;
+  border-left: 2.5px solid transparent;
 }
 .nav__dropdown-menu a:hover {
-  background: rgba(248,124,99,0.12);
-  border-left-color: var(--coral);
+  background: rgba(212, 159, 45, 0.09);
+  border-left-color: #D49F2D;
   transform: translateX(3px);
 }
 .nav__dropdown-item-title {
   font-size: 13.5px;
-  font-weight: 600;
-  color: #1A0800;
+  font-weight: 750;
+  color: #1A0E06;
   line-height: 1.25;
 }
 .nav__dropdown-item-sub {
   font-size: 11px;
-  color: #7A6961;
+  color: #6E5C50;
   margin-top: 3px;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 /* Mobile: show as stacked list inside the fullscreen menu */
@@ -4683,43 +4683,103 @@ body {
    TIER-1 ENTERPRISE SERVICE DASHBOARD & 3-COLUMN MEGA MENU (TCS/DELOITTE)
    ══════════════════════════════════════════════════════════════════════ */
 
-/* ── 3-Column Navigation Mega-Menu ── */
+/* ── 3-Column Navigation Mega-Menu (Deloitte / TCS Tier Luxury Light Aesthetic) ── */
+.nav__dropdown-menu,
 .nav__dropdown-menu--3col {
   display: grid !important;
-  grid-template-columns: 1.1fr 1.1fr 1fr !important;
-  min-width: 820px !important;
-  gap: 20px !important;
-  padding: 24px 28px !important;
-  background: rgba(14, 8, 4, 0.96) !important;
-  border: 1px solid rgba(212, 159, 45, 0.28) !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 25px rgba(212, 159, 45, 0.12) !important;
+  grid-template-columns: 1.05fr 1.05fr 0.95fr !important;
+  width: 860px !important;
+  max-width: 94vw !important;
+  gap: 18px !important;
+  padding: 24px 26px !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(212, 159, 45, 0.32) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14), 0 4px 16px rgba(212, 159, 45, 0.10) !important;
   border-radius: 14px !important;
-  backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(20px) !important;
+  left: 50% !important;
+  transform: translateX(-38%) !important;
+}
+
+.nav__dropdown-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.nav__dropdown-header {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: #A37213 !important;
+  padding: 2px 10px 8px !important;
+  border-bottom: 2px solid rgba(212, 159, 45, 0.28) !important;
+  margin-bottom: 6px !important;
+}
+
+.nav__dropdown-menu a {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 9px 12px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  transition: all 180ms ease !important;
+  border-left: 2.5px solid transparent !important;
+}
+
+.nav__dropdown-menu a:hover {
+  background: linear-gradient(135deg, rgba(251, 229, 162, 0.35) 0%, rgba(212, 159, 45, 0.12) 100%) !important;
+  border-left-color: #D49F2D !important;
+  transform: translateX(4px) !important;
+}
+
+.nav__dropdown-item-title {
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  color: #1A0E06 !important;
+  line-height: 1.25 !important;
+}
+
+.nav__dropdown-menu a:hover .nav__dropdown-item-title {
+  color: #8C5F10 !important;
+}
+
+.nav__dropdown-item-sub {
+  font-size: 11.5px !important;
+  color: #6E5C50 !important;
+  margin-top: 3px !important;
+  font-weight: 450 !important;
+  line-height: 1.35 !important;
 }
 
 .nav__dropdown-callout {
-  margin-top: 14px;
-  padding: 12px 14px;
-  background: rgba(212, 159, 45, 0.08);
-  border: 1px solid rgba(212, 159, 45, 0.22);
-  border-radius: 8px;
+  margin-top: 10px !important;
+  padding: 12px 14px !important;
+  background: linear-gradient(135deg, rgba(254, 250, 242, 0.95) 0%, rgba(248, 238, 220, 0.9) 100%) !important;
+  border: 1px solid rgba(212, 159, 45, 0.30) !important;
+  border-radius: 8px !important;
 }
 
 .nav__dropdown-callout-badge {
-  display: inline-block;
-  font-size: 0.68rem;
-  font-weight: 750;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #FBE5A2;
-  margin-bottom: 4px;
+  display: inline-block !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #8C5F10 !important;
+  background: rgba(212, 159, 45, 0.18) !important;
+  padding: 2px 7px !important;
+  border-radius: 4px !important;
+  margin-bottom: 4px !important;
 }
 
 .nav__dropdown-callout p {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.72);
-  margin: 0;
-  line-height: 1.35;
+  font-size: 0.78rem !important;
+  color: #554336 !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
 }
 
 .service__badge-category {
