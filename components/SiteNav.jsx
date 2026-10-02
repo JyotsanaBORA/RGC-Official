@@ -4,7 +4,7 @@ import { SERVICES } from '../lib/services-data';
 const NAV_ITEM_SUBS = {
   'bpo-sales': 'Inbound & outbound pipeline',
   'bpo-backoffice': 'Data operations & KYC/AML',
-  'bpo-customer-service': 'By Vishal Sir · 24/7 care',
+  'bpo-customer-service': 'Omnichannel 24/7 care & support',
   'recruitment-hiring': 'IT, marketing & corporate talent',
   'recruitment-staffing': 'IT, marketing & corporate talent',
   'saas-digital-solutions': 'Web, APIs & payment gateways',
