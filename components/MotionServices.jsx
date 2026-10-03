@@ -1,119 +1,147 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { SERVICES, SERVICE_CATEGORIES } from '../lib/services-data';
 
 export default function MotionServices() {
-  const [activeCategory, setActiveCategory] = useState('all');
-
-  const filteredServices =
-    activeCategory === 'all'
-      ? SERVICES
-      : activeCategory === 'marketing'
-      ? SERVICES.filter((s) => s.slug === 'digital-marketing')
-      : SERVICES.filter((s) => s.category === activeCategory);
+  const categories = [
+    {
+      id: 'bpo',
+      title: 'BPO Services',
+      boardTitle: 'BPO SERVICES',
+      domain: '24/7 Operations / Delivery',
+      tagline: '24/7 Mission-Critical Delivery & CX',
+      colorTheme: 'bpo',
+      href: '/services/bpo-sales',
+      capabilitiesHeader: 'SERVICES & CAPABILITIES:',
+      services: [
+        'Sales & Revenue Operations',
+        'Back-Office Operations',
+        'Customer Services & Support',
+        'Omnichannel CX Floor',
+      ],
+      badge: 'DUAL-SHORE OUTSOURCING · ENTERPRISE SLA',
+    },
+    {
+      id: 'consultancy',
+      title: 'Consultancy Services',
+      boardTitle: 'CONSULTANCY SERVICES',
+      domain: 'SaaS, Finance & Tax',
+      tagline: 'SaaS, Finance & Statutory Advisory',
+      colorTheme: 'consultancy',
+      href: '/services/saas-digital-solutions',
+      capabilitiesHeader: 'SERVICES & CAPABILITIES:',
+      services: [
+        'SaaS & Digital Solutions',
+        'Bookkeeping & Accountancy',
+        'Digital Marketing & Growth',
+        'Payroll & Compensation',
+        'Performance Management',
+      ],
+      badge: 'STATUTORY COMPLIANCE: MCA & GSTIN',
+    },
+    {
+      id: 'recruitment',
+      title: 'Recruitment & Staffing',
+      boardTitle: 'RECRUITMENT & STAFFING',
+      domain: 'Talent & Headhunting',
+      tagline: 'Precision Talent & Search',
+      colorTheme: 'recruitment',
+      href: '/services/recruitment-hiring',
+      capabilitiesHeader: 'SERVICES & CAPABILITIES:',
+      services: [
+        'Recruitment & Hiring',
+        'Workforce Staffing',
+        'Leadership Search & Selection',
+        'Dual-Shore Talent Pools',
+      ],
+      badge: 'VETTED TOP 3% TALENT · INDIA & USA HUBS',
+    },
+  ];
 
   return (
-    <div className="svc-showcase">
-      {/* ── Deloitte-Style Division Tabs ── */}
-      <div className="svc-showcase__tabs reveal" role="tablist" aria-label="Services Divisions">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeCategory === 'all'}
-          className={`svc-showcase__tab ${activeCategory === 'all' ? 'is-active' : ''}`}
-          onClick={() => setActiveCategory('all')}
-        >
-          All Capabilities <span className="svc-showcase__tab-count">{SERVICES.length}</span>
-        </button>
-
-        {SERVICE_CATEGORIES.map((cat) => {
-          const count = SERVICES.filter((s) => s.category === cat.id).length;
-          return (
-            <button
-              key={cat.id}
-              type="button"
-              role="tab"
-              aria-selected={activeCategory === cat.id}
-              className={`svc-showcase__tab ${activeCategory === cat.id ? 'is-active' : ''}`}
-              onClick={() => setActiveCategory(cat.id)}
+    <div className="svc-categories-container">
+      <div className="svc-categories-grid">
+        {categories.map((cat) => (
+          <article key={cat.id} className="svc-cat-card reveal">
+            <Link
+              href={cat.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="svc-cat-card__link-wrap"
+              aria-label={`Explore ${cat.title} in new tab`}
             >
-              {cat.name} <span className="svc-showcase__tab-count">{count}</span>
-            </button>
-          );
-        })}
+              {/* Signature Architectural Totem Board (Portrait Square, Zero-AI, Razor-Sharp Vector Typography) */}
+              <div className={`svc-board svc-board--${cat.colorTheme}`}>
+                <div className="svc-board__frame">
+                  {/* Precision Corner Mounting Rivets */}
+                  <span className="svc-board__rivet svc-board__rivet--tl" aria-hidden="true"></span>
+                  <span className="svc-board__rivet svc-board__rivet--tr" aria-hidden="true"></span>
+                  <span className="svc-board__rivet svc-board__rivet--bl" aria-hidden="true"></span>
+                  <span className="svc-board__rivet svc-board__rivet--br" aria-hidden="true"></span>
 
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeCategory === 'marketing'}
-          className={`svc-showcase__tab ${activeCategory === 'marketing' ? 'is-active' : ''}`}
-          onClick={() => setActiveCategory('marketing')}
-        >
-          Digital Marketing <span className="svc-showcase__tab-count">1</span>
-        </button>
-      </div>
+                  {/* Architectural Matte Faceplate */}
+                  <div className="svc-board__faceplate">
+                    {/* Top Identity Header */}
+                    <div className="svc-board__header">
+                      <span className="svc-board__brand">REDDINGTON GLOBAL CONSULTANCY</span>
+                    </div>
 
-      {/* ── Capabilities Grid ── */}
-      <div className="svc-showcase__grid">
-        {filteredServices.map((svc) => {
-          const href = `/services/${svc.slug}`;
-          const topStat = svc.stats && svc.stats.length > 0 ? svc.stats[0] : null;
+                    <div className="svc-board__divider" aria-hidden="true"></div>
 
-          return (
-            <article key={svc.slug} className="svc-card reveal">
-              <Link href={href} className="svc-card__overlay-link" aria-label={`View ${svc.title} dashboard`} />
+                    {/* Major Category Title & Tagline */}
+                    <div className="svc-board__hero">
+                      <h3 className="svc-board__title">{cat.boardTitle}</h3>
+                      <p className="svc-board__tagline">{cat.tagline}</p>
+                    </div>
 
-              {/* Realistic Operational Photography */}
-              <div className="svc-card__media">
-                <img
-                  src={svc.image}
-                  alt={`${svc.title} platform and operations console at Reddington Global`}
-                  loading="lazy"
-                  className="svc-card__img"
-                />
-                <span className="svc-card__badge-cat">{svc.categoryName}</span>
-              </div>
+                    {/* Services & Capabilities List */}
+                    <div className="svc-board__body">
+                      <div className="svc-board__sec-label">{cat.capabilitiesHeader}</div>
+                      <ul className="svc-board__list">
+                        {cat.services.map((svc, idx) => (
+                          <li key={idx} className="svc-board__item">
+                            <span className="svc-board__bullet" aria-hidden="true">•</span>
+                            <span className="svc-board__item-text">{svc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-              {/* Card Body */}
-              <div className="svc-card__body">
-                <div className="svc-card__eyebrow">{svc.eyebrow}</div>
-                <h3 className="svc-card__title">{svc.title}</h3>
-                <p className="svc-card__tagline">{svc.tagline}</p>
-
-                {topStat && (
-                  <div className="svc-card__stat-chip">
-                    <span className="svc-card__stat-metric">{topStat.metric}</span>
-                    <span className="svc-card__stat-label">{topStat.label}</span>
+                    {/* Bottom Technical Telemetry Badge */}
+                    <div className="svc-board__footer">
+                      <div className="svc-board__divider svc-board__divider--bottom" aria-hidden="true"></div>
+                      <div className="svc-board__footer-row">
+                        <span className="svc-board__badge">{cat.badge}</span>
+                        <span className="svc-board__action-pill">Open &rarr;</span>
+                      </div>
+                    </div>
                   </div>
-                )}
-
-                <div className="svc-card__footer">
-                  <span className="svc-card__link-text">
-                    Explore Dashboard <span className="svc-card__arrow" aria-hidden="true">→</span>
-                  </span>
                 </div>
               </div>
-            </article>
-          );
-        })}
 
-        {/* ── Executive Consultation Advisory Card ── */}
-        <article className="svc-card svc-card--advisory reveal">
-          <div className="svc-card__advisory-inner">
-            <span className="svc-card__advisory-pill">Tailored Architecture</span>
-            <h3 className="svc-card__advisory-title">Need cross-division operations?</h3>
-            <p className="svc-card__advisory-desc">
-              We engineer custom hybrid operating models combining specialized BPO floors, full-stack SaaS pipelines, and statutory financial governance.
-            </p>
-            <div className="svc-card__advisory-action">
-              <a href="#contact" className="btn btn--gold btn--sm">
-                Request Strategy Scoping &rarr;
-              </a>
-            </div>
-          </div>
-        </article>
+              {/* Signature Editorial Caption: Title ——— Domain */}
+              <div className="svc-cat-card__caption">
+                <h3 className="svc-cat-card__title">{cat.title}</h3>
+                <span className="svc-cat-card__rule" aria-hidden="true"></span>
+                <span className="svc-cat-card__domain">{cat.domain}</span>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+
+      {/* ── Compact Advisory Callout Bar ── */}
+      <div className="svc-advisory-bar reveal">
+        <div>
+          <h4 className="svc-advisory-bar__title">Need a custom multi-service operating model?</h4>
+          <p className="svc-advisory-bar__desc">
+            We engineer tailored hybrid frameworks combining dedicated BPO delivery, full-stack digital pipelines, and statutory compliance.
+          </p>
+        </div>
+        <a href="#contact" className="btn btn--gold btn--sm">
+          Get Custom Scoping &rarr;
+        </a>
       </div>
     </div>
   );

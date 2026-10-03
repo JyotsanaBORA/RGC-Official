@@ -20,17 +20,36 @@ const IconPin = () => (
 );
 
 const CONTACTS = [
-  { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com' },
-  { Icon: IconPhone, label: 'Call — India', value: '+91 98182 24495', href: 'tel:+919818224495' },
-  { Icon: IconPhone, label: 'Call — International', value: '+1 (949) 779-4978', href: 'tel:+19497794978' },
+  { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com', badge: 'Direct Desk' },
+  { Icon: IconPhone, label: 'Call — India', value: '+91 98182 24495', href: 'tel:+919818224495', badge: 'Toll-Free' },
+  { Icon: IconPhone, label: 'Call — International', value: '+1 (949) 779-4978', href: 'tel:+19497794978', badge: 'US Direct' },
 ];
 
 const OFFICES = [
-  { name: 'RG Consultancy', addr: 'Tulip Ivory T-D, FL-G002, Sector 70, Gurugram, Haryana 122016, India', href: 'https://www.reddingtonglobal.com/' },
-  { name: 'RG Group Inc', addr: '30 N Gould St, Ste R, Sheridan, WY 82801, USA', href: 'https://www.rgdebtrelief.com/' },
-  { name: 'MyCashBridge Fintech Pvt Ltd', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://mycashbridge.com/' },
-  { name: 'BPO Operations Floor', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://www.reddingtonglobal.com/' },
-  { name: 'RG Care Foundation', addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India', href: 'https://rgcare.in/' },
+  {
+    name: 'Gurugram Operations Campus',
+    region: 'India Delivery Center',
+    flag: '🇮🇳',
+    addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016',
+    entities: ['BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
+    href: 'https://www.reddingtonglobal.com/',
+  },
+  {
+    name: 'Gurugram Executive Office',
+    region: 'Corporate HQ',
+    flag: '🇮🇳',
+    addr: 'Tulip Ivory T-D, FL-G002, Sector 70, Gurugram, Haryana 122016',
+    entities: ['RG Consultancy Pvt Ltd'],
+    href: 'https://www.reddingtonglobal.com/',
+  },
+  {
+    name: 'RG Group Inc',
+    region: 'USA Global Office',
+    flag: '🇺🇸',
+    addr: '30 N Gould St, Ste R, Sheridan, WY 82801, USA',
+    entities: ['North America Client Solutions'],
+    href: 'https://www.rgdebtrelief.com/',
+  },
 ];
 
 /* ── Floating-label field ── */
@@ -83,9 +102,13 @@ export default function MotionContact() {
               >
                 <span className="ct-channel__icon"><c.Icon /></span>
                 <span className="ct-channel__text">
-                  <span className="ct-channel__label">{c.label}</span>
+                  <span className="ct-channel__meta">
+                    <span className="ct-channel__label">{c.label}</span>
+                    {c.badge && <span className="ct-channel__badge">{c.badge}</span>}
+                  </span>
                   <span className="ct-channel__value">{c.value}</span>
                 </span>
+                <span className="ct-channel__arrow" aria-hidden="true">→</span>
               </a>
             ))}
           </div>
@@ -93,22 +116,34 @@ export default function MotionContact() {
           {/* Offices */}
           <div className="ct-offices">
             <p className="ct-offices__head">
+              Our Global Offices &amp; Delivery Hubs
               <span className="ct-offices__line" aria-hidden="true"></span>
-              Our Offices
             </p>
             <div className="ct-offices__grid">
               {OFFICES.map((o) => (
                 <div key={o.name} className="ct-office">
                   <span className="ct-office__icon"><IconPin /></span>
-                  <div>
-                    <strong>
-                      {o.href ? (
-                        <a href={o.href} target="_blank" rel="noreferrer">{o.name}</a>
-                      ) : (
-                        o.name
-                      )}
-                    </strong>
-                    <p>{o.addr}</p>
+                  <div className="ct-office__body">
+                    <div className="ct-office__top">
+                      <strong className="ct-office__name">
+                        {o.href ? (
+                          <a href={o.href} target="_blank" rel="noopener noreferrer">{o.name}</a>
+                        ) : (
+                          o.name
+                        )}
+                      </strong>
+                      <span className="ct-office__badge">
+                        <span aria-hidden="true">{o.flag}</span> {o.region}
+                      </span>
+                    </div>
+                    <p className="ct-office__addr">{o.addr}</p>
+                    {o.entities && (
+                      <div className="ct-office__chips">
+                        {o.entities.map((ent) => (
+                          <span key={ent} className="ct-office__chip">{ent}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

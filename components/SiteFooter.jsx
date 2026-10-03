@@ -16,6 +16,7 @@ export default function SiteFooter() {
         <nav className="footer__col" aria-label="Useful links">
           <h4>Useful Links</h4>
           <Link href="/about">About Us</Link>
+          <Link href="/bpo-partnerships">BPO Partnerships</Link>
           <Link href="/#services">Our Services</Link>
           <Link href="/team">Our Team</Link>
           <Link href="/careers">Careers</Link>
@@ -23,7 +24,7 @@ export default function SiteFooter() {
         <nav className="footer__col" aria-label="Services">
           <h4>Services</h4>
           {SERVICES.map(s => (
-            <Link key={s.slug} href={`/services/${s.slug}`}>{s.title}</Link>
+            <Link key={s.slug} href={`/services/${s.slug}`} target="_blank" rel="noopener noreferrer">{s.title}</Link>
           ))}
         </nav>
         <div className="footer__col">

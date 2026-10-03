@@ -5,6 +5,8 @@ import SiteFooter from '../../../components/SiteFooter';
 import ClientScripts from '../../../components/ClientScripts';
 import ServiceLeadForm from '../../../components/ServiceLeadForm';
 
+import ServiceVisualizer from '../../../components/ServiceVisualizer';
+
 export async function generateStaticParams() {
   return SERVICES.flatMap((s) => [
     { slug: s.slug },
@@ -73,18 +75,10 @@ export default function ServicePage({ params }) {
 
                 <p className="svc-dash__overview reveal">{svc.overview}</p>
 
-                {/* Product UI & Operations Platform Console */}
-                <figure className="svc-dash__hero-photo reveal">
-                  <img
-                    src={svc.image}
-                    alt={`${svc.title} enterprise platform console at Reddington Global`}
-                    className="svc-dash__hero-img"
-                  />
-                  <figcaption className="svc-dash__hero-caption">
-                    <span className="svc-dash__live-badge">Enterprise Console</span>
-                    <span>Reddington Global Practice Operations · Real-Time Platform Telemetry</span>
-                  </figcaption>
-                </figure>
+                {/* Creative Non-AI Enterprise Service Architecture Canvas */}
+                <div className="svc-dash__hero-visualizer reveal">
+                  <ServiceVisualizer service={svc} />
+                </div>
 
                 {/* Proof Telemetry Stats Cards */}
                 {svc.stats && svc.stats.length > 0 && (

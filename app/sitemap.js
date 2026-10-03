@@ -7,6 +7,7 @@ export default function sitemap() {
   const staticRoutes = [
     '',
     '/about',
+    '/bpo-partnerships',
     '/careers',
     '/contact',
     '/faq',
