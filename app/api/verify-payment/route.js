@@ -91,15 +91,22 @@ export async function POST(req) {
       }
     }
 
-    // 3. Dispatch Tax Invoice Email with consultation booking details
+    // 3. Dispatch Tax Invoice Email with consultation booking details (if not already sent by webhook)
     let emailResult = null;
-    if (orderDoc?.customer?.email) {
+    const recipientEmail = orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email;
+    if (recipientEmail && !orderDoc?.invoiceSent) {
       try {
         emailResult = await sendInvoiceEmail({
           order: orderDoc,
-          customer: orderDoc.customer,
+          customer: orderDoc.customer || { email: recipientEmail, name: orderDoc.customerName },
           paymentId: razorpay_payment_id,
         });
+        if (emailResult?.success && db) {
+          await Order.updateOne(
+            { orderId: razorpay_order_id },
+            { $set: { invoiceSent: true, invoiceSentAt: new Date() } }
+          );
+        }
       } catch (emailErr) {
         console.error('Error sending invoice email:', emailErr);
       }

@@ -98,6 +98,19 @@ const OrderSchema = new mongoose.Schema(
       type: String,
     },
 
+    // Email dispatch tracking (prevents duplicate sends between webhook and client callback)
+    invoiceSent: {
+      type: Boolean,
+      default: false,
+    },
+    invoiceSentAt: {
+      type: Date,
+    },
+    rejectionSent: {
+      type: Boolean,
+      default: false,
+    },
+
     paidAt: {
       type: Date,
     },
