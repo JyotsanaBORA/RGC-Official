@@ -237,6 +237,14 @@ export default function MotionContact() {
               </div>
               <div className="ct-success-card__actions">
                 <a
+                  href={`/invoice/${paymentSuccess.orderId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--secondary"
+                >
+                  📄 Download Invoice (PDF)
+                </a>
+                <a
                   href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation at ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"

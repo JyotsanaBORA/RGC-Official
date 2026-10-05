@@ -104,14 +104,24 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               ✉️ Official tax invoice with GST breakdown has been emailed to <strong>{formData.email}</strong>.
             </div>
           </div>
-          <a
-            href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} at ₹99 (Order: ${status.orderId}).`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--gold svc-form-card__wa-btn"
-          >
-            <span>💬</span> Fast-Track via WhatsApp
-          </a>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '12px' }}>
+            <a
+              href={`/invoice/${status.orderId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--secondary svc-form-card__wa-btn"
+            >
+              📄 Download Invoice (PDF)
+            </a>
+            <a
+              href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} at ₹99 (Order: ${status.orderId}).`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--gold svc-form-card__wa-btn"
+            >
+              <span>💬</span> Fast-Track via WhatsApp
+            </a>
+          </div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="svc-form-card__form">
