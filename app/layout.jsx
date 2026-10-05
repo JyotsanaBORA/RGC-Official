@@ -3,14 +3,49 @@ import GoogleTracking from '../components/analytics/GoogleTracking';
 
 export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
-  title: 'Reddington Global — Consulting That Moves Business Forward',
+  title: {
+    default: 'Reddington Global — Consulting That Moves Business Forward',
+    template: '%s | Reddington Global',
+  },
   description:
     'Reddington Global delivers enterprise BPO services (Sales, Back Office, Customer Care), strategic consultancy (SaaS, Bookkeeping & Accountancy, IT Services), and performance Digital Marketing for businesses worldwide.',
-  keywords: 'BPO services, sales outsourcing, back office operations, customer services, SaaS solutions, bookkeeping, accountancy, IT services, digital marketing, consultancy, India, USA',
+  keywords:
+    'BPO services, sales outsourcing, back office operations, customer services, SaaS solutions, bookkeeping, accountancy, IT services, digital marketing, consultancy, India, USA',
+  alternates: {
+    canonical: './',
+  },
   openGraph: {
     title: 'Reddington Global Consultancy',
     description: 'Enterprise BPO Services, Strategic Consultancy & Digital Marketing — India & USA',
+    url: 'https://www.reddingtonglobal.com',
+    siteName: 'Reddington Global',
+    locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/assets/img/rgc-logo-opt.png',
+        width: 1200,
+        height: 630,
+        alt: 'Reddington Global Consultancy',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Reddington Global Consultancy',
+    description: 'Enterprise BPO Services, Strategic Consultancy & Digital Marketing — India & USA',
+    images: ['/assets/img/rgc-logo-opt.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
