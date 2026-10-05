@@ -21,25 +21,17 @@ const IconPin = () => (
 
 const CONTACTS = [
   { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com', badge: 'Direct Desk' },
-  { Icon: IconPhone, label: 'Call — India', value: '+91 98182 24495', href: 'tel:+919818224495', badge: 'Toll-Free' },
+  { Icon: IconPhone, label: 'Call — India', value: '+91 98182 24495', href: 'tel:+919818224495', badge: 'Contact No.' },
   { Icon: IconPhone, label: 'Call — International', value: '+1 (949) 779-4978', href: 'tel:+19497794978', badge: 'US Direct' },
 ];
 
 const OFFICES = [
   {
     name: 'Gurugram Operations Campus',
-    region: 'India Delivery Center',
+    region: 'Corporate HQ & India Delivery Center',
     flag: '🇮🇳',
     addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016',
-    entities: ['BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
-    href: 'https://www.reddingtonglobal.com/',
-  },
-  {
-    name: 'Gurugram Executive Office',
-    region: 'Corporate HQ',
-    flag: '🇮🇳',
-    addr: 'Tulip Ivory T-D, FL-G002, Sector 70, Gurugram, Haryana 122016',
-    entities: ['RG Consultancy Pvt Ltd'],
+    entities: ['RG Consultancy Pvt Ltd', 'BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
     href: 'https://www.reddingtonglobal.com/',
   },
   {
