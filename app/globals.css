@@ -2278,7 +2278,7 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 
 /* ═══════════════ BACK TO TOP ═══════════════ */
 .totop {
-  position: fixed; right: 26px; bottom: 26px; z-index: 150;
+  position: fixed; right: 26px; bottom: 84px; z-index: 150;
   width: 50px; height: 50px; border-radius: 50%;
   border: 1.5px solid var(--coral);
   background: rgba(13, 6, 0, 0.85);
@@ -4191,7 +4191,7 @@ html, body {
 
   .logo-chip { width: 170px; }
   .logo-marquee__track { animation-duration: 26s; }
-  .totop { right: 16px; bottom: 16px; }
+  .totop { right: 16px; bottom: 74px; }
 }
 
 @media (max-width: 680px) {
@@ -7231,6 +7231,65 @@ body {
   color: #991B1B;
   font-size: 13px;
   text-align: left;
+}
+
+/* ═══════════════ FLOATING WHATSAPP BUTTON ═══════════════ */
+.floating-wa {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #FFFFFF !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.floating-wa svg {
+  width: 20px;
+  height: 20px;
+  fill: #FFFFFF;
+  flex-shrink: 0;
+  display: block;
+}
+
+.floating-wa:hover {
+  background: #20BD5A;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5), 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.floating-wa:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (max-width: 640px) {
+  .floating-wa {
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 16px;
+    font-size: 13px;
+    gap: 6px;
+  }
+  .floating-wa svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 

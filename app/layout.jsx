@@ -1,5 +1,6 @@
 import './globals.css';
 import GoogleTracking from '../components/GoogleTracking';
+import FloatingWhatsApp from '../components/FloatingWhatsApp';
 
 export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
@@ -92,6 +93,7 @@ export default function RootLayout({ children }) {
       <body>
         <GoogleTracking />
         {children}
+        <FloatingWhatsApp />
       </body>
     </html>
   );
