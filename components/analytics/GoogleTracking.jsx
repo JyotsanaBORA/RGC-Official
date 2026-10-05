@@ -33,8 +33,8 @@ export default function GoogleTracking() {
         </>
       )}
 
-      {/* ── Standalone Google Analytics 4 (Fallback if not using GTM) ── */}
-      {!gtmId && gaId && (
+      {/* ── Google Analytics 4 (Direct Tracking) ── */}
+      {gaId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
@@ -45,7 +45,7 @@ export default function GoogleTracking() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${gaId}', { page_path: window.location.pathname });
+              gtag('config', '${gaId}', { send_page_view: true });
             `}
           </Script>
         </>
