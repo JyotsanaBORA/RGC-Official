@@ -27,7 +27,7 @@ const CONTACTS = [
 
 const OFFICES = [
   {
-    name: 'Gurugram Operations Campus',
+    name: 'Office Address',
     addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016',
     entities: ['RG Consultancy Pvt Ltd', 'BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
     href: 'https://www.reddingtonglobal.com/',
@@ -163,7 +163,7 @@ export default function MotionContact() {
           {/* Offices */}
           <div className="ct-offices">
             <p className="ct-offices__head">
-              Our Operations Campus &amp; Delivery Hub
+              Corporate Headquarters &amp; Delivery Hub
               <span className="ct-offices__line" aria-hidden="true"></span>
             </p>
             <div className="ct-offices__grid">
