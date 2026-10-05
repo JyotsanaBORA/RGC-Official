@@ -31,7 +31,6 @@ export default function SiteFooter() {
           <h4>Contact</h4>
           <a href="mailto:sales@reddingtonglobal.com">sales@reddingtonglobal.com</a>
           <a href="tel:+919818224495">+91 98182 24495</a>
-          <a href="tel:+19497794978">+1 (949) 779-4978</a>
         </div>
       </div>
       <div className="container footer__bar">

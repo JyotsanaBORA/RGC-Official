@@ -21,9 +21,8 @@ const IconPin = () => (
 );
 
 const CONTACTS = [
-  { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com', badge: 'Direct Desk' },
-  { Icon: IconPhone, label: 'Call — India', value: '+91 98182 24495', href: 'tel:+919818224495', badge: 'Contact No.' },
-  { Icon: IconPhone, label: 'Call — International', value: '+1 (949) 779-4978', href: 'tel:+19497794978', badge: 'US Direct' },
+  { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com' },
+  { Icon: IconPhone, label: 'Call us', value: '+91 98182 24495', href: 'tel:+919818224495' },
 ];
 
 const OFFICES = [
@@ -32,14 +31,6 @@ const OFFICES = [
     addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016',
     entities: ['RG Consultancy Pvt Ltd', 'BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
     href: 'https://www.reddingtonglobal.com/',
-  },
-  {
-    name: 'RG Group Inc',
-    region: 'USA Global Office',
-    flag: '🇺🇸',
-    addr: '30 N Gould St, Ste R, Sheridan, WY 82801, USA',
-    entities: ['North America Client Solutions'],
-    href: 'https://www.rgdebtrelief.com/',
   },
 ];
 
@@ -172,7 +163,7 @@ export default function MotionContact() {
           {/* Offices */}
           <div className="ct-offices">
             <p className="ct-offices__head">
-              Our Global Offices &amp; Delivery Hubs
+              Our Operations Campus &amp; Delivery Hub
               <span className="ct-offices__line" aria-hidden="true"></span>
             </p>
             <div className="ct-offices__grid">

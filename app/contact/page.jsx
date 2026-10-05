@@ -5,7 +5,7 @@ import MotionContact from '../../components/MotionContact';
 
 export const metadata = {
   title: 'Contact Us — Reddington Global',
-  description: 'Get in touch with Reddington Global for expert consultancy @ ₹99. Global delivery offices in India and USA.',
+  description: 'Get in touch with Reddington Global for expert consultancy @ ₹99. Delivery campus in Gurugram, India.',
 };
 
 export default function ContactPage() {
