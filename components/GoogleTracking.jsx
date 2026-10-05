@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { ANALYTICS_CONFIG } from '../../lib/analytics/config';
+import { ANALYTICS_CONFIG } from '../lib/analytics/config';
 
 /**
  * Universal Google Tracking Component

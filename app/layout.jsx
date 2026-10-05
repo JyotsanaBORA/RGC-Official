@@ -1,5 +1,5 @@
 import './globals.css';
-import GoogleTracking from '../components/analytics/GoogleTracking';
+import GoogleTracking from '../components/GoogleTracking';
 
 export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
