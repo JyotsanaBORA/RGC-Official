@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { trackLeadSubmission } from '../lib/analytics/events';
+import { startConsultationPayment } from '../lib/payment';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     company: '',
     requirement: '',
   });
-  const [status, setStatus] = useState({ loading: false, success: false, error: '' });
+  const [status, setStatus] = useState({ loading: false, success: false, error: '', orderId: '', paymentId: '' });
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -19,55 +20,92 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({ loading: true, success: false, error: '' });
+    setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
+
+    trackLeadSubmission({
+      form_name: `service_inquiry_${serviceSlug}`,
+      form_location: `service_dashboard_${serviceSlug}`,
+      service_requested: serviceTitle,
+      amount: 99,
+    });
 
     try {
-      // Fire Google Tag Manager & GA4 conversion event immediately
-      trackLeadSubmission({
-        form_name: `service_inquiry_${serviceSlug}`,
-        form_location: `service_dashboard_${serviceSlug}`,
-        service_requested: serviceTitle,
+      await startConsultationPayment({
+        customer: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.requirement,
+        },
+        serviceName: `${serviceTitle} Consultation`,
+        amount: 99,
+        onSuccess: (data) => {
+          setStatus({
+            loading: false,
+            success: true,
+            error: '',
+            orderId: data.orderId,
+            paymentId: data.paymentId,
+          });
+        },
+        onFailure: (errMsg) => {
+          setStatus({
+            loading: false,
+            success: false,
+            error: errMsg || 'Payment transaction was declined or failed.',
+            orderId: '',
+            paymentId: '',
+          });
+        },
+        onCancel: () => {
+          setStatus({
+            loading: false,
+            success: false,
+            error: 'Payment window was closed. A status notification has been dispatched to your email.',
+            orderId: '',
+            paymentId: '',
+          });
+        },
       });
-
-      // Prepare mailto fallback or API dispatch
-      const subject = encodeURIComponent(`Executive Consultation Request: ${serviceTitle}`);
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nCompany: ${formData.company}\nService: ${serviceTitle}\n\nRequirements:\n${formData.requirement}`
-      );
-
-      // Brief simulate API response for smooth UX
-      await new Promise((resolve) => setTimeout(resolve, 600));
-
-      setStatus({ loading: false, success: true, error: '' });
-
-      // Automatically open email client as secondary confirmation
-      window.location.href = `mailto:sales@reddingtonglobal.com?subject=${subject}&body=${body}`;
     } catch (err) {
       console.error('Submission error:', err);
-      setStatus({ loading: false, success: true, error: '' }); // Graceful fallback
+      setStatus({
+        loading: false,
+        success: false,
+        error: err.message || 'Error initializing payment gateway.',
+        orderId: '',
+        paymentId: '',
+      });
     }
   };
 
   return (
     <div className="svc-form-card" id="consultation-form">
       <div className="svc-form-card__header">
-        <div className="svc-form-card__badge">Priority Direct Desk</div>
-        <h3 className="svc-form-card__title">Request Strategy Consultation</h3>
+        <div className="svc-form-card__badge">Priority Direct Desk • ₹99</div>
+        <h3 className="svc-form-card__title">Consultancy at ₹99</h3>
         <p className="svc-form-card__sub">
-          Speak with our <strong>{serviceTitle}</strong> practice directors. Tailored operational scoping delivered within 24 hours.
+          Book a 1-on-1 strategic scoping session for <strong>{serviceTitle}</strong> with our practice directors for <strong>₹99</strong>.
         </p>
       </div>
 
       {status.success ? (
         <div className="svc-form-card__success">
           <div className="svc-form-card__success-icon">✓</div>
-          <h4>Inquiry Registered Successfully</h4>
+          <h4>Consultation Booked Successfully!</h4>
           <p>
-            Thank you, <strong>{formData.name || 'Partner'}</strong>. Our engagement team will contact you shortly at{' '}
-            <strong>{formData.email || 'your email'}</strong>.
+            Thank you, <strong>{formData.name || 'Partner'}</strong>. Your consultation for <strong>{serviceTitle}</strong> is confirmed.
           </p>
+          <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px', fontSize: '13px', margin: '14px 0', border: '1px solid #e2e8f0' }}>
+            <div><strong>Order ID:</strong> {status.orderId}</div>
+            <div><strong>Payment Ref:</strong> {status.paymentId}</div>
+            <div style={{ color: '#059669', marginTop: '6px', fontSize: '12px' }}>
+              ✉️ Official tax invoice with GST breakdown has been emailed to <strong>{formData.email}</strong>.
+            </div>
+          </div>
           <a
-            href="https://wa.me/919818224495"
+            href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} at ₹99 (Order: ${status.orderId}).`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn--gold svc-form-card__wa-btn"
@@ -77,6 +115,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="svc-form-card__form">
+          {status.error && (
+            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '10px 14px', color: '#991b1b', fontSize: '13px' }}>
+              <strong>Payment Alert:</strong> {status.error}
+            </div>
+          )}
+
           <div className="svc-form-group">
             <label htmlFor="svc-name">Full Name *</label>
             <input
@@ -151,13 +195,13 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
             disabled={status.loading}
             className="btn btn--gold svc-form-card__submit"
           >
-            {status.loading ? 'Encrypting & Transmitting...' : 'Submit Strategy Briefing →'}
+            {status.loading ? 'Initializing Gateway...' : 'Proceed to Pay ₹99 & Book →'}
           </button>
 
           <div className="svc-form-card__trust">
             <span>🔒 Strict Mutual NDA</span>
-            <span>⚡ &lt; 2 Hr Callback</span>
-            <span>🛡️ Enterprise SLA</span>
+            <span>⚡ Instant Razorpay Gateway</span>
+            <span>📄 GST Tax Invoice</span>
           </div>
         </form>
       )}

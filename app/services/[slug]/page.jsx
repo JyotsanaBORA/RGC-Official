@@ -235,7 +235,7 @@ export default function ServicePage({ params }) {
               </div>
               <div className="svc-dash__cta-actions">
                 <a href="#consultation-form" className="btn btn--gold">
-                  Book Strategy Briefing
+                  Consultancy at ₹99 &rarr;
                 </a>
                 <a href="tel:+919818224495" className="btn btn--secondary">
                   📞 +91 98182 24495

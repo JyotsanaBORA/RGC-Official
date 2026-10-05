@@ -38,6 +38,7 @@ const OrderSchema = new mongoose.Schema(
       name: { type: String, default: '' },
       email: { type: String, default: '' },
       phone: { type: String, default: '' },
+      company: { type: String, default: '' },
     },
     paymentId: {
       type: String,
@@ -45,6 +46,9 @@ const OrderSchema = new mongoose.Schema(
       index: true,
     },
     signature: {
+      type: String,
+    },
+    failureReason: {
       type: String,
     },
     notes: {

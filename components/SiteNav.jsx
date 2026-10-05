@@ -156,7 +156,7 @@ export default function SiteNav() {
               BPO Partnerships
             </Link>
             <Link href="/contact" className="btn btn--gold btn--sm">
-              Get Consultation
+              Consultancy @ ₹99
             </Link>
           </div>
         </div>

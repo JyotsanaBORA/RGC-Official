@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
+import { sendInvoiceEmail, sendRejectionEmail } from '../../../lib/email';
 
 export async function POST(req) {
   try {
@@ -31,14 +32,28 @@ export async function POST(req) {
 
     if (!isMatch) {
       // Mark as failed in DB if connected
+      let failedDoc = null;
       if (db) {
         try {
-          await Order.findOneAndUpdate(
+          failedDoc = await Order.findOneAndUpdate(
             { orderId: razorpay_order_id },
-            { status: 'failed', failedAt: new Date() }
+            { status: 'failed', failedAt: new Date(), failureReason: 'Signature mismatch' },
+            { new: true }
           );
         } catch (dbErr) {
           console.error('Failed to update failed order status in DB:', dbErr);
+        }
+      }
+
+      if (failedDoc?.customer?.email) {
+        try {
+          await sendRejectionEmail({
+            order: failedDoc,
+            customer: failedDoc.customer,
+            reason: 'Payment signature verification failed.',
+          });
+        } catch (emailErr) {
+          console.error('Error sending rejection email:', emailErr);
         }
       }
 
@@ -67,11 +82,26 @@ export async function POST(req) {
       }
     }
 
+    // 3. Dispatch Tax Invoice Email with consultation booking details
+    let emailResult = null;
+    if (orderDoc?.customer?.email) {
+      try {
+        emailResult = await sendInvoiceEmail({
+          order: orderDoc,
+          customer: orderDoc.customer,
+          paymentId: razorpay_payment_id,
+        });
+      } catch (emailErr) {
+        console.error('Error sending invoice email:', emailErr);
+      }
+    }
+
     return NextResponse.json({
       success: true,
-      message: 'Payment verified successfully',
+      message: 'Payment verified successfully and invoice dispatched',
       payment_id: razorpay_payment_id,
       order_id: razorpay_order_id,
+      invoice_sent: emailResult?.success || false,
       order: orderDoc || undefined,
     });
   } catch (error) {

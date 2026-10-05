@@ -1,6 +1,7 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { trackLeadSubmission, trackContactClick } from '../lib/analytics/events';
+import { startConsultationPayment } from '../lib/payment';
 
 /* ── SVG icons ── */
 const IconEmail = () => (
@@ -43,7 +44,7 @@ const OFFICES = [
 ];
 
 /* ── Floating-label field ── */
-function FloatField({ id, name, label, type = 'text', required = false, rows, autoComplete }) {
+function FloatField({ id, name, label, type = 'text', required = false, rows, autoComplete, value, onChange }) {
   const Tag = rows ? 'textarea' : 'input';
   return (
     <div className={`ff${rows ? ' ff--textarea' : ''}`}>
@@ -56,6 +57,8 @@ function FloatField({ id, name, label, type = 'text', required = false, rows, au
         rows={rows}
         placeholder=" "
         maxLength={rows ? 2000 : undefined}
+        value={value}
+        onChange={onChange}
       />
       <label htmlFor={id}>{label}</label>
       <span className="ff__bar" aria-hidden="true"></span>
@@ -64,6 +67,69 @@ function FloatField({ id, name, label, type = 'text', required = false, rows, au
 }
 
 export default function MotionContact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    service: 'Consultancy — SaaS & Digital Solutions',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(null);
+  const [paymentError, setPaymentError] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setPaymentError(null);
+
+    trackLeadSubmission({
+      service: formData.service,
+      amount: 99,
+    });
+
+    try {
+      await startConsultationPayment({
+        customer: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+        },
+        serviceName: formData.service || 'Strategic Business Consultancy',
+        amount: 99,
+        onSuccess: (data) => {
+          setLoading(false);
+          setPaymentSuccess({
+            name: formData.name,
+            email: formData.email,
+            orderId: data.orderId,
+            paymentId: data.paymentId,
+            service: formData.service,
+          });
+        },
+        onFailure: (errMsg) => {
+          setLoading(false);
+          setPaymentError(errMsg || 'Payment was unsuccessful.');
+        },
+        onCancel: () => {
+          setLoading(false);
+          setPaymentError('Payment window was dismissed. A notification has been sent to your email.');
+        },
+      });
+    } catch (err) {
+      setLoading(false);
+      setPaymentError(err.message || 'Error initializing payment gateway.');
+    }
+  };
+
   return (
     <div className="ct-wrap">
       {/* ── Decorative background glows ── */}
@@ -146,64 +212,160 @@ export default function MotionContact() {
         {/* ════ RIGHT — form ════ */}
         <div className="ct-form-wrap reveal">
           <div className="ct-form-header">
-            <p className="ct-form-header__eyebrow">Free Consultation</p>
+            <p className="ct-form-header__eyebrow">Consultancy at ₹99</p>
             <h3 className="ct-form-header__title">Share your requirements</h3>
+            <div className="ct-price-pill">
+              <span className="ct-price-pill__label">1-on-1 Practice Lead Session</span>
+              <span className="ct-price-pill__amount">₹99 Only</span>
+            </div>
             <div className="ct-form-header__rule" aria-hidden="true"></div>
           </div>
 
-          <form
-            id="contactForm"
-            className="ct-form"
-            action="mailto:sales@reddingtonglobal.com"
-            method="post"
-            encType="text/plain"
-            onSubmit={(e) => {
-              const service = e.currentTarget.elements.service?.value;
-              trackLeadSubmission({ service });
-            }}
-          >
-            <div className="ct-form__row">
-              <FloatField id="fName"    name="name"    label="Full Name"     autoComplete="name"         required />
-              <FloatField id="fCompany" name="company" label="Company"       autoComplete="organization"          />
-            </div>
-            <FloatField   id="fEmail"   name="email"   label="Work Email"    type="email" autoComplete="email"  required />
-            <div className="ct-form__row">
-              <FloatField id="fPhone"   name="phone"   label="Phone Number"  type="tel"   autoComplete="tel"               />
-              <div className="ff ct-form__select-wrap">
-                <select id="fService" name="service" defaultValue="">
-                  <option value="" disabled hidden></option>
-                  <option>BPO — Sales &amp; Revenue Operations</option>
-                  <option>BPO — Back Office Operations</option>
-                  <option>BPO — Customer Services by Experts</option>
-                  <option>Consultancy — SaaS &amp; Digital Solutions</option>
-                  <option>Consultancy — Bookkeeping &amp; Accountancy</option>
-                  <option>Consultancy — IT Services &amp; Infrastructure</option>
-                  <option>Digital Marketing &amp; Growth</option>
-                  <option>Other Enterprise Inquiries</option>
-                </select>
-                <label htmlFor="fService">Service Interested In</label>
-                <span className="ff__bar" aria-hidden="true"></span>
+          {paymentSuccess ? (
+            <div className="ct-success-card">
+              <div className="ct-success-card__icon">✓</div>
+              <h4 className="ct-success-card__title">Consultation Confirmed!</h4>
+              <p className="ct-success-card__msg">
+                Thank you, <strong>{paymentSuccess.name || 'Partner'}</strong>. Your strategic consultation session has been booked.
+              </p>
+              <div className="ct-success-card__meta">
+                <div><span>Order ID:</span> <code>{paymentSuccess.orderId}</code></div>
+                <div><span>Payment ID:</span> <code>{paymentSuccess.paymentId}</code></div>
+              </div>
+              <div className="ct-success-card__invoice-notice">
+                <span>✉️</span> Official tax invoice with GST breakdown has been emailed to <strong>{paymentSuccess.email}</strong>.
+              </div>
+              <div className="ct-success-card__actions">
+                <a
+                  href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation at ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--gold"
+                >
+                  Fast-Track via WhatsApp →
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPaymentSuccess(null);
+                    setFormData({ name: '', company: '', email: '', phone: '', service: 'Consultancy — SaaS & Digital Solutions', message: '' });
+                  }}
+                  className="btn btn--ghost"
+                >
+                  Book Another Session
+                </button>
               </div>
             </div>
-            <FloatField id="fMsg" name="message" label="How can we help you?" required rows={4} />
-
-            <button
-              type="submit"
-              className="btn btn--gold ct-form__submit"
+          ) : (
+            <form
+              id="contactForm"
+              className="ct-form"
+              onSubmit={handleFormSubmit}
             >
-              Send Message
-              <svg className="ct-form__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M4 10h12M11 5l5 5-5 5"/>
-              </svg>
-            </button>
+              {paymentError && (
+                <div className="ct-form__error-banner">
+                  <span>⚠️</span>
+                  <div>
+                    <strong>Payment Alert:</strong> {paymentError}
+                    <div style={{ marginTop: '3px', fontSize: '12px' }}>
+                      A status update was sent to your email. You can check your payment details and retry below.
+                    </div>
+                  </div>
+                </div>
+              )}
 
-            <p className="ct-form__note">
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a.75.75 0 110 1.5A.75.75 0 018 4zm1 8H7v-5h2v5z"/>
-              </svg>
-              Our team typically responds within one business day.
-            </p>
-          </form>
+              <div className="ct-form__row">
+                <FloatField
+                  id="fName"
+                  name="name"
+                  label="Full Name *"
+                  autoComplete="name"
+                  required
+                  value={formData.name}
+                  onChange={handleInputChange}
+                />
+                <FloatField
+                  id="fCompany"
+                  name="company"
+                  label="Company"
+                  autoComplete="organization"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <FloatField
+                id="fEmail"
+                name="email"
+                label="Work Email *"
+                type="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+
+              <div className="ct-form__row">
+                <FloatField
+                  id="fPhone"
+                  name="phone"
+                  label="Phone / WhatsApp *"
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                />
+                <div className="ff ct-form__select-wrap">
+                  <select
+                    id="fService"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                  >
+                    <option>Consultancy — SaaS &amp; Digital Solutions</option>
+                    <option>Consultancy — Bookkeeping &amp; Accountancy</option>
+                    <option>Consultancy — IT Services &amp; Infrastructure</option>
+                    <option>BPO — Sales &amp; Revenue Operations</option>
+                    <option>BPO — Back Office Operations</option>
+                    <option>BPO — Customer Services by Experts</option>
+                    <option>Digital Marketing &amp; Growth</option>
+                    <option>Other Enterprise Inquiries</option>
+                  </select>
+                  <label htmlFor="fService">Service Interested In</label>
+                  <span className="ff__bar" aria-hidden="true"></span>
+                </div>
+              </div>
+
+              <FloatField
+                id="fMsg"
+                name="message"
+                label="How can we help you? *"
+                required
+                rows={4}
+                value={formData.message}
+                onChange={handleInputChange}
+              />
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn btn--gold ct-form__submit"
+              >
+                {loading ? 'Initializing Payment Gateway...' : 'Proceed to Pay ₹99 & Book →'}
+                <svg className="ct-form__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M4 10h12M11 5l5 5-5 5"/>
+                </svg>
+              </button>
+
+              <p className="ct-form__note">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a.75.75 0 110 1.5A.75.75 0 018 4zm1 8H7v-5h2v5z"/>
+                </svg>
+                Instant Razorpay checkout (UPI, Cards, Netbanking). Tax invoice dispatched immediately on success.
+              </p>
+            </form>
+          )}
         </div>
       </div>
     </div>
