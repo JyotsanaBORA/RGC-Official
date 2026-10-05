@@ -5,7 +5,7 @@ import MotionContact from '../../components/MotionContact';
 
 export const metadata = {
   title: 'Contact Us — Reddington Global',
-  description: 'Get in touch with Reddington Global for expert consultancy at ₹99. Global delivery offices in India and USA.',
+  description: 'Get in touch with Reddington Global for expert consultancy @ ₹99. Global delivery offices in India and USA.',
 };
 
 export default function ContactPage() {
@@ -31,7 +31,7 @@ export default function ContactPage() {
           <div className="container svc-hero__content">
             <p className="eyebrow">Get In Touch</p>
             <h1 className="svc-hero__title">Let&apos;s start a <span className="gold-italic">conversation.</span></h1>
-            <p className="svc-hero__tagline">Book 1-on-1 strategic consultancy at ₹99, request an enterprise proposal, or explore operational scaling.</p>
+            <p className="svc-hero__tagline">Book 1-on-1 strategic consultancy @ ₹99, request an enterprise proposal, or explore operational scaling.</p>
           </div>
         </section>
 

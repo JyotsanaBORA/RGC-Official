@@ -65,7 +65,7 @@ export default function Home() {
             From specialized staffing and 24/7 BPO to full-stack digital solutions and statutory tax compliance, we deliver integrated operational muscle to scale your business with confidence.
           </p>
           <div className="hero__cta reveal">
-            <a href="#contact" className="btn btn--gold">Consultancy at ₹99</a>
+            <a href="#contact" className="btn btn--gold">Consultancy @ ₹99</a>
             <a href="#services" className="btn btn--ghost">Explore Services</a>
             <Link href="/bpo-partnerships" className="btn btn--ghost">BPO Partnerships</Link>
           </div>

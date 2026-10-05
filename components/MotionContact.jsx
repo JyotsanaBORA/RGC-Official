@@ -212,7 +212,7 @@ export default function MotionContact() {
         {/* ════ RIGHT — form ════ */}
         <div className="ct-form-wrap reveal">
           <div className="ct-form-header">
-            <p className="ct-form-header__eyebrow">Consultancy at ₹99</p>
+            <p className="ct-form-header__eyebrow">Consultancy @ ₹99</p>
             <h3 className="ct-form-header__title">Share your requirements</h3>
             <div className="ct-price-pill">
               <span className="ct-price-pill__label">1-on-1 Practice Lead Session</span>
@@ -245,7 +245,7 @@ export default function MotionContact() {
                   📄 Download Invoice (PDF)
                 </a>
                 <a
-                  href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation at ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
+                  href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation @ ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--gold"

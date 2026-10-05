@@ -84,7 +84,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     <div className="svc-form-card" id="consultation-form">
       <div className="svc-form-card__header">
         <div className="svc-form-card__badge">Priority Direct Desk • ₹99</div>
-        <h3 className="svc-form-card__title">Consultancy at ₹99</h3>
+        <h3 className="svc-form-card__title">Consultancy @ ₹99</h3>
         <p className="svc-form-card__sub">
           Book a 1-on-1 strategic scoping session for <strong>{serviceTitle}</strong> with our practice directors for <strong>₹99</strong>.
         </p>
@@ -114,7 +114,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               📄 Download Invoice (PDF)
             </a>
             <a
-              href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} at ₹99 (Order: ${status.orderId}).`)}`}
+              href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} @ ₹99 (Order: ${status.orderId}).`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn--gold svc-form-card__wa-btn"
