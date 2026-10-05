@@ -206,7 +206,7 @@ export default function MotionContact() {
             <p className="ct-form-header__eyebrow">Consultancy @ ₹99</p>
             <h3 className="ct-form-header__title">Share your requirements</h3>
             <div className="ct-price-pill">
-              <span className="ct-price-pill__label">1-on-1 Practice Lead Session</span>
+              <span className="ct-price-pill__label">1-on-1 Senior Consultant Session</span>
               <span className="ct-price-pill__amount">₹99 Only</span>
             </div>
             <div className="ct-form-header__rule" aria-hidden="true"></div>

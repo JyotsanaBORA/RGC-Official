@@ -163,7 +163,7 @@ export default async function InvoicePage({ params }) {
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td style={{ padding: '14px 12px' }}>
                   <strong style={{ fontSize: '14px', color: '#0F172A' }}>{displayOrder.service || 'Strategic Business Consultancy'}</strong>
-                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>1-on-1 Practice Lead Scoping Session (30 mins)</div>
+                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>1-on-1 Senior Consultant Strategy Session (30 mins)</div>
                 </td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>9983</td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>1</td>

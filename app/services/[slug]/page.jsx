@@ -233,7 +233,7 @@ export default function ServicePage({ params }) {
                 <p className="eyebrow">Initiate Operational Scoping</p>
                 <h2>Ready to scale your {svc.shortTitle || svc.title}?</h2>
                 <p>
-                  Connect directly with our practice leaders in Gurugram and the USA for a structured discovery briefing.
+                  Connect directly with our senior consultants in Gurugram for a structured discovery briefing.
                 </p>
               </div>
               <div className="svc-dash__cta-actions">

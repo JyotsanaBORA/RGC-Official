@@ -584,7 +584,7 @@ export default function SiteNav() {
                   <div className="infosys-panel__header">
                     <h2 className="infosys-panel__title">Contact Us</h2>
                     <p className="infosys-panel__desc">
-                      Connect with our practice leaders for a customized enterprise consultation.
+                      Connect with our senior consultants for a customized enterprise consultation.
                     </p>
                   </div>
                   <div className="infosys-preview-card">

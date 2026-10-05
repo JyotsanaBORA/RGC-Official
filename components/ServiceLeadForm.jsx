@@ -86,7 +86,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         <div className="svc-form-card__badge">Priority Direct Desk • ₹99</div>
         <h3 className="svc-form-card__title">Consultancy @ ₹99</h3>
         <p className="svc-form-card__sub">
-          Book a 1-on-1 strategic scoping session for <strong>{serviceTitle}</strong> with our practice directors for <strong>₹99</strong>.
+          Book a 1-on-1 strategic consultation session for <strong>{serviceTitle}</strong> with our senior consultants for <strong>₹99</strong>.
         </p>
       </div>
 
