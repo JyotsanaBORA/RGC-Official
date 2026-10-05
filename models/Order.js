@@ -14,9 +14,38 @@ const OrderSchema = new mongoose.Schema(
       sparse: true,
       index: true,
     },
+    // Primary customer contact at top-level of schema
+    email: {
+      type: String,
+      default: '',
+      index: true,
+    },
+    customerName: {
+      type: String,
+      default: '',
+    },
+    customerEmail: {
+      type: String,
+      default: '',
+      index: true,
+    },
+    customerPhone: {
+      type: String,
+      default: '',
+    },
+    customerCompany: {
+      type: String,
+      default: '',
+    },
+
+    // Amount representation
     amount: {
       type: Number,
-      required: true, // Amount in paise
+      required: true, // Amount in paise (Razorpay standard, e.g. 9900)
+    },
+    amountInRupees: {
+      type: Number,
+      default: 99, // Amount in Rupees (e.g. 99)
     },
     currency: {
       type: String,
@@ -34,6 +63,8 @@ const OrderSchema = new mongoose.Schema(
     service: {
       type: String,
     },
+
+    // Nested customer details (preserved for backward compatibility)
     customer: {
       name: { type: String, default: '' },
       email: { type: String, default: '' },
@@ -55,6 +86,18 @@ const OrderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
+
+    // Human-readable IST (Indian Standard Time) timestamps
+    createdAtIST: {
+      type: String,
+    },
+    paidAtIST: {
+      type: String,
+    },
+    failedAtIST: {
+      type: String,
+    },
+
     paidAt: {
       type: Date,
     },

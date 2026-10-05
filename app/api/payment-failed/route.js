@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import { sendRejectionEmail } from '../../../lib/email';
+import { getISTTimestamp } from '../../../lib/date';
 
 export async function POST(req) {
   try {
@@ -17,11 +18,13 @@ export async function POST(req) {
 
     if (db) {
       try {
+        const now = new Date();
         orderDoc = await Order.findOneAndUpdate(
           { orderId: order_id },
           {
             status: 'failed',
-            failedAt: new Date(),
+            failedAt: now,
+            failedAtIST: getISTTimestamp(now),
             failureReason: reason || 'Payment cancelled or declined',
             paymentId: payment_id || undefined,
           },

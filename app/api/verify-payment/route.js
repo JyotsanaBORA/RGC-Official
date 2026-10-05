@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import { sendInvoiceEmail, sendRejectionEmail } from '../../../lib/email';
+import { getISTTimestamp } from '../../../lib/date';
 
 export async function POST(req) {
   try {
@@ -35,9 +36,15 @@ export async function POST(req) {
       let failedDoc = null;
       if (db) {
         try {
+          const now = new Date();
           failedDoc = await Order.findOneAndUpdate(
             { orderId: razorpay_order_id },
-            { status: 'failed', failedAt: new Date(), failureReason: 'Signature mismatch' },
+            {
+              status: 'failed',
+              failedAt: now,
+              failedAtIST: getISTTimestamp(now),
+              failureReason: 'Signature mismatch',
+            },
             { new: true }
           );
         } catch (dbErr) {
@@ -45,11 +52,11 @@ export async function POST(req) {
         }
       }
 
-      if (failedDoc?.customer?.email) {
+      if (failedDoc?.customer?.email || failedDoc?.email) {
         try {
           await sendRejectionEmail({
             order: failedDoc,
-            customer: failedDoc.customer,
+            customer: failedDoc.customer || { email: failedDoc.email, name: failedDoc.customerName },
             reason: 'Payment signature verification failed.',
           });
         } catch (emailErr) {
@@ -67,13 +74,15 @@ export async function POST(req) {
     let orderDoc = null;
     if (db) {
       try {
+        const now = new Date();
         orderDoc = await Order.findOneAndUpdate(
           { orderId: razorpay_order_id },
           {
             status: 'paid',
             paymentId: razorpay_payment_id,
             signature: razorpay_signature,
-            paidAt: new Date(),
+            paidAt: now,
+            paidAtIST: getISTTimestamp(now),
           },
           { new: true }
         );

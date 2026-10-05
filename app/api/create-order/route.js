@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
+import { getISTTimestamp } from '../../../lib/date';
 
 export async function POST(req) {
   try {
@@ -29,6 +30,7 @@ export async function POST(req) {
         return NextResponse.json({
           order_id: existingOrder.orderId,
           amount: existingOrder.amount,
+          amount_in_rupees: existingOrder.amountInRupees || Math.round(existingOrder.amount / 100),
           currency: existingOrder.currency,
           idempotent_replay: true,
         });
@@ -48,24 +50,37 @@ export async function POST(req) {
       notes: body.notes || {},
     });
 
+    const customerName = body.notes?.customer_name || body.customer?.name || '';
+    const customerEmail = body.notes?.customer_email || body.customer?.email || '';
+    const customerPhone = body.notes?.customer_phone || body.customer?.phone || '';
+    const customerCompany = body.notes?.company || body.customer?.company || '';
+    const amountInRupees = Math.round(Number(order.amount) / 100);
+
     // 3. Persist Order in MongoDB (if connected)
     if (db) {
       try {
         await Order.create({
           orderId: order.id,
           idempotencyKey: idempotencyKey || undefined,
+          email: customerEmail,
+          customerName,
+          customerEmail,
+          customerPhone,
+          customerCompany,
           amount: order.amount,
+          amountInRupees,
           currency: order.currency,
           receipt,
           service: body.notes?.service || body.service || 'Strategic Business Consultancy',
           customer: {
-            name: body.notes?.customer_name || body.customer?.name || '',
-            email: body.notes?.customer_email || body.customer?.email || '',
-            phone: body.notes?.customer_phone || body.customer?.phone || '',
-            company: body.notes?.company || body.customer?.company || '',
+            name: customerName,
+            email: customerEmail,
+            phone: customerPhone,
+            company: customerCompany,
           },
           notes: body.notes || {},
           status: 'created',
+          createdAtIST: getISTTimestamp(),
         });
       } catch (dbErr) {
         console.error('Failed to save order to MongoDB:', dbErr);
