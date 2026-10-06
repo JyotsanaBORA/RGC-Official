@@ -227,9 +227,10 @@ export default async function InvoicePage({ params }) {
 
       <style dangerouslySetInnerHTML={{
         __html: `
+          #floatingWhatsApp, .floating-wa { display: none !important; }
           @media print {
             body { background: #FFFFFF !important; padding: 0 !important; }
-            .no-print { display: none !important; }
+            .no-print, #floatingWhatsApp, .floating-wa { display: none !important; }
             #invoice-doc { box-shadow: none !important; border: 1px solid #CBD5E1 !important; width: 100% !important; max-width: 100% !important; }
           }
         `

@@ -1,6 +1,15 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+
 export default function FloatingWhatsApp() {
+  const pathname = usePathname();
+
+  // Hide WhatsApp button on invoice / receipt download pages
+  if (pathname?.startsWith('/invoice')) {
+    return null;
+  }
+
   return (
     <a
       href="https://wa.me/919818224495"
