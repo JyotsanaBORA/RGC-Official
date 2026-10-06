@@ -70,43 +70,51 @@ export async function POST(req) {
       );
     }
 
-    // 2. Signature is valid — update DB to 'paid' (Idempotent update)
+    // 2. Signature is valid — atomic update and claim invoice dispatch
     let orderDoc = null;
+    let shouldSendInvoice = false;
     if (db) {
       try {
         const now = new Date();
         orderDoc = await Order.findOneAndUpdate(
-          { orderId: razorpay_order_id },
+          { orderId: razorpay_order_id, invoiceSent: { $ne: true } },
           {
-            status: 'paid',
-            paymentId: razorpay_payment_id,
-            signature: razorpay_signature,
-            paidAt: now,
-            paidAtIST: getISTTimestamp(now),
+            $set: {
+              status: 'paid',
+              paymentId: razorpay_payment_id,
+              signature: razorpay_signature,
+              paidAt: now,
+              paidAtIST: getISTTimestamp(now),
+              invoiceSent: true,
+              invoiceSentAt: now,
+            },
           },
           { new: true }
         );
+
+        if (orderDoc) {
+          shouldSendInvoice = true;
+        } else {
+          // Already claimed by webhook or prior call
+          orderDoc = await Order.findOne({ orderId: razorpay_order_id });
+        }
       } catch (dbErr) {
         console.error('Failed to update paid order status in DB:', dbErr);
       }
+    } else {
+      shouldSendInvoice = true;
     }
 
-    // 3. Dispatch Tax Invoice Email with consultation booking details (if not already sent by webhook)
+    // 3. Dispatch Tax Invoice Email if this execution won the atomic lock
     let emailResult = null;
     const recipientEmail = orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email;
-    if (recipientEmail && !orderDoc?.invoiceSent) {
+    if (recipientEmail && shouldSendInvoice) {
       try {
         emailResult = await sendInvoiceEmail({
           order: orderDoc,
           customer: orderDoc.customer || { email: recipientEmail, name: orderDoc.customerName },
           paymentId: razorpay_payment_id,
         });
-        if (emailResult?.success && db) {
-          await Order.updateOne(
-            { orderId: razorpay_order_id },
-            { $set: { invoiceSent: true, invoiceSentAt: new Date() } }
-          );
-        }
       } catch (emailErr) {
         console.error('Error sending invoice email:', emailErr);
       }

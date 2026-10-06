@@ -94,7 +94,7 @@ export default function BpoPartnerForm() {
                 value={formData.contactPerson}
                 onChange={handleChange}
               />
-              <label htmlFor="bpPerson">Contact Person Name &amp; Title *</label>
+              <label htmlFor="bpPerson">Contact Person Name & Title *</label>
               <span className="ff__bar"></span>
             </div>
           </div>
@@ -172,10 +172,10 @@ export default function BpoPartnerForm() {
                 onChange={handleChange}
               >
                 <option value="US Voice (Outbound / Inbound)">US Voice (Outbound / Inbound)</option>
-                <option value="Financial Services & Debt Campaigns">Financial Services &amp; Debt Campaigns</option>
-                <option value="24/7 Customer Care & Support">24/7 Customer Care &amp; Support</option>
-                <option value="Lead Generation & Surveys">Lead Generation &amp; Surveys</option>
-                <option value="Back Office & Non-Voice">Back Office &amp; Non-Voice</option>
+                <option value="Financial Services & Debt Campaigns">Financial Services & Debt Campaigns</option>
+                <option value="24/7 Customer Care & Support">24/7 Customer Care & Support</option>
+                <option value="Lead Generation & Surveys">Lead Generation & Surveys</option>
+                <option value="Back Office & Non-Voice">Back Office & Non-Voice</option>
               </select>
               <label htmlFor="bpCampaign">Primary Campaign Domain</label>
               <span className="ff__bar"></span>
@@ -204,7 +204,7 @@ export default function BpoPartnerForm() {
               value={formData.experience}
               onChange={handleChange}
             />
-            <label htmlFor="bpExp">Prior Campaign Experience &amp; Highlights</label>
+            <label htmlFor="bpExp">Prior Campaign Experience & Highlights</label>
             <span className="ff__bar"></span>
           </div>
 

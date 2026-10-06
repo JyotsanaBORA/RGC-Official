@@ -277,13 +277,13 @@ export default function SiteNav() {
                         </div>
                         <div className="infosys-cat-box__head-meta">
                           <h3 className="infosys-cat-box__title">BPO Services</h3>
-                          <p className="infosys-cat-box__sub">24/7 Floor Telemetry &amp; Customer Care</p>
+                          <p className="infosys-cat-box__sub">24/7 Floor Telemetry & Customer Care</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/bpo-sales" target="_blank" rel="noopener noreferrer">
-                            <span>Sales &amp; Revenue Operations</span>
+                            <span>Sales & Revenue Operations</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -299,7 +299,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/bpo-customer-service" target="_blank" rel="noopener noreferrer">
-                            <span>Customer Services &amp; Support</span>
+                            <span>Customer Services & Support</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -320,13 +320,13 @@ export default function SiteNav() {
                         </div>
                         <div className="infosys-cat-box__head-meta">
                           <h3 className="infosys-cat-box__title">Consultancy Services</h3>
-                          <p className="infosys-cat-box__sub">SaaS, Finance, Tax &amp; Performance</p>
+                          <p className="infosys-cat-box__sub">SaaS, Finance, Tax & Performance</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/saas-digital-solutions" target="_blank" rel="noopener noreferrer">
-                            <span>SaaS &amp; Digital Solutions</span>
+                            <span>SaaS & Digital Solutions</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -334,7 +334,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/bookkeeping-accountancy" target="_blank" rel="noopener noreferrer">
-                            <span>Bookkeeping &amp; Accountancy</span>
+                            <span>Bookkeeping & Accountancy</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -342,7 +342,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/digital-marketing" target="_blank" rel="noopener noreferrer">
-                            <span>Digital Marketing &amp; Growth</span>
+                            <span>Digital Marketing & Growth</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -350,7 +350,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/payroll-compensation" target="_blank" rel="noopener noreferrer">
-                            <span>Payroll &amp; Compensation</span>
+                            <span>Payroll & Compensation</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -379,14 +379,14 @@ export default function SiteNav() {
                           </svg>
                         </div>
                         <div className="infosys-cat-box__head-meta">
-                          <h3 className="infosys-cat-box__title">Recruitment &amp; Staffing</h3>
-                          <p className="infosys-cat-box__sub">Precision Talent &amp; Executive Placement</p>
+                          <h3 className="infosys-cat-box__title">Recruitment & Staffing</h3>
+                          <p className="infosys-cat-box__sub">Precision Talent & Executive Placement</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/recruitment-hiring" target="_blank" rel="noopener noreferrer">
-                            <span>Recruitment &amp; Hiring</span>
+                            <span>Recruitment & Hiring</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -394,7 +394,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/recruitment-staffing" target="_blank" rel="noopener noreferrer">
-                            <span>Recruitment &amp; Staffing</span>
+                            <span>Recruitment & Staffing</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M3 8h10M9 4l4 4-4 4"/>
                             </svg>
@@ -459,7 +459,7 @@ export default function SiteNav() {
                     </p>
                   </div>
                   <div className="infosys-preview-card">
-                    <h3>Campaign Opportunities for BPOs &amp; Call Centers</h3>
+                    <h3>Campaign Opportunities for BPOs & Call Centers</h3>
                     <p>
                       We bring together delivery centers with partners seeking reliable teams to support their campaigns. From initial assessment to partner introductions and onboarding coordination, we build high-performing partnerships.
                     </p>

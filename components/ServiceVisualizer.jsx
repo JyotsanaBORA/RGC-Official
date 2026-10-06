@@ -426,7 +426,7 @@ export default function ServiceVisualizer({ service }) {
           </div>
           <div className="svc-canvas__footer-note">
             <span className="svc-canvas__lock-icon">✦</span>
-            <span>Audited &amp; Governed by Reddington Global SLA Framework</span>
+            <span>Audited & Governed by Reddington Global SLA Framework</span>
           </div>
         </div>
       </div>

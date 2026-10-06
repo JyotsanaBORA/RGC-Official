@@ -61,21 +61,12 @@ export async function POST(req) {
       }
 
       let orderDoc = null;
+      let shouldSendInvoice = false;
+
       if (db) {
-        orderDoc = await Order.findOne({ orderId });
-
-        // If invoice already dispatched (e.g. from verify-payment callback), don't send duplicate
-        if (orderDoc && orderDoc.status === 'paid' && orderDoc.invoiceSent) {
-          console.log(`[Razorpay Webhook] Order ${orderId} already paid and invoice sent. Skipping duplicate.`);
-          return NextResponse.json({ status: 'ok', message: 'Invoice already sent' });
-        }
-
-        const customerName = notes.customer_name || orderDoc?.customerName || orderDoc?.customer?.name || 'Valued Client';
-        const customerEmail = payerEmail || notes.customer_email || orderDoc?.email || orderDoc?.customer?.email || '';
-        const customerPhone = payerContact || notes.customer_phone || orderDoc?.customerPhone || '';
-
+        // Atomic lock: Only update and claim invoice dispatch if invoiceSent is NOT true
         orderDoc = await Order.findOneAndUpdate(
-          { orderId },
+          { orderId, invoiceSent: { $ne: true } },
           {
             $set: {
               status: 'paid',
@@ -84,39 +75,71 @@ export async function POST(req) {
               paidAtIST: getISTTimestamp(now),
               invoiceSent: true,
               invoiceSentAt: now,
-              ...(customerEmail ? { email: customerEmail, customerEmail } : {}),
-              ...(customerName ? { customerName } : {}),
-              ...(customerPhone ? { customerPhone } : {}),
+              ...(payerEmail ? { email: payerEmail, customerEmail: payerEmail } : {}),
+              ...(notes.customer_name ? { customerName: notes.customer_name } : {}),
+              ...(payerContact ? { customerPhone: payerContact } : {}),
             },
           },
           { new: true }
         );
-      }
 
-      // Send Professional Invoice Email
-      const targetCustomer = {
-        name: orderDoc?.customerName || orderDoc?.customer?.name || notes.customer_name || 'Valued Client',
-        email: orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email || payerEmail,
-        phone: orderDoc?.customerPhone || payerContact,
-      };
-
-      if (targetCustomer.email) {
-        try {
-          const emailRes = await sendInvoiceEmail({
-            order: orderDoc || {
+        if (orderDoc) {
+          shouldSendInvoice = true;
+        } else {
+          // If null, either already sent by previous webhook/verify call or order not created yet
+          const existing = await Order.findOne({ orderId });
+          if (existing && existing.invoiceSent) {
+            console.log(`[Razorpay Webhook] Order ${orderId} already paid and invoice sent. Skipping duplicate.`);
+            return NextResponse.json({ status: 'ok', message: 'Invoice already sent' });
+          }
+          if (!existing) {
+            orderDoc = await Order.create({
               orderId,
-              service: notes.service || 'Strategic Business Consultancy',
+              status: 'paid',
+              paymentId,
+              paidAt: now,
+              paidAtIST: getISTTimestamp(now),
+              invoiceSent: true,
+              invoiceSentAt: now,
+              email: payerEmail || notes.customer_email || '',
+              customerName: notes.customer_name || 'Valued Client',
+              customerPhone: payerContact || notes.customer_phone || '',
               amount: paymentEntity.amount || 9900,
-            },
-            customer: targetCustomer,
-            paymentId,
-          });
-          console.log(`[Razorpay Webhook] Invoice email sent to ${targetCustomer.email}:`, emailRes.success);
-        } catch (emailErr) {
-          console.error('[Razorpay Webhook] Error sending invoice email:', emailErr);
+              currency: paymentEntity.currency || 'INR',
+            });
+            shouldSendInvoice = true;
+          }
         }
       } else {
-        console.warn(`[Razorpay Webhook] No email found for order ${orderId} to dispatch invoice.`);
+        shouldSendInvoice = true;
+      }
+
+      // Send Professional Invoice Email only if this execution claimed the lock
+      if (shouldSendInvoice) {
+        const targetCustomer = {
+          name: orderDoc?.customerName || orderDoc?.customer?.name || notes.customer_name || 'Valued Client',
+          email: orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email || payerEmail,
+          phone: orderDoc?.customerPhone || payerContact,
+        };
+
+        if (targetCustomer.email) {
+          try {
+            const emailRes = await sendInvoiceEmail({
+              order: orderDoc || {
+                orderId,
+                service: notes.service || 'Strategic Business Consultancy',
+                amount: paymentEntity.amount || 9900,
+              },
+              customer: targetCustomer,
+              paymentId,
+            });
+            console.log(`[Razorpay Webhook] Invoice email sent to ${targetCustomer.email}:`, emailRes.success);
+          } catch (emailErr) {
+            console.error('[Razorpay Webhook] Error sending invoice email:', emailErr);
+          }
+        } else {
+          console.warn(`[Razorpay Webhook] No email found for order ${orderId} to dispatch invoice.`);
+        }
       }
 
       return NextResponse.json({ status: 'ok', event: eventType, orderId });
@@ -138,16 +161,12 @@ export async function POST(req) {
       const now = new Date();
 
       let orderDoc = null;
+      let shouldSendRejection = false;
+
       if (db && orderId) {
-        orderDoc = await Order.findOne({ orderId });
-
-        if (orderDoc && orderDoc.rejectionSent) {
-          console.log(`[Razorpay Webhook] Rejection email already sent for order ${orderId}. Skipping duplicate.`);
-          return NextResponse.json({ status: 'ok', message: 'Rejection notice already sent' });
-        }
-
+        // Atomic lock: Only update and claim rejection dispatch if rejectionSent is NOT true
         orderDoc = await Order.findOneAndUpdate(
-          { orderId },
+          { orderId, rejectionSent: { $ne: true } },
           {
             $set: {
               status: 'failed',
@@ -160,27 +179,41 @@ export async function POST(req) {
           },
           { new: true }
         );
+
+        if (orderDoc) {
+          shouldSendRejection = true;
+        } else {
+          const existing = await Order.findOne({ orderId });
+          if (existing && existing.rejectionSent) {
+            console.log(`[Razorpay Webhook] Rejection email already sent for order ${orderId}. Skipping duplicate.`);
+            return NextResponse.json({ status: 'ok', message: 'Rejection notice already sent' });
+          }
+        }
+      } else {
+        shouldSendRejection = true;
       }
 
-      // Send Professional Rejection / Retry Email
-      const targetCustomer = {
-        name: orderDoc?.customerName || orderDoc?.customer?.name || notes.customer_name || 'Valued Client',
-        email: orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email || payerEmail,
-      };
+      // Send Professional Rejection / Retry Email only if this execution claimed the lock
+      if (shouldSendRejection) {
+        const targetCustomer = {
+          name: orderDoc?.customerName || orderDoc?.customer?.name || notes.customer_name || 'Valued Client',
+          email: orderDoc?.email || orderDoc?.customerEmail || orderDoc?.customer?.email || payerEmail,
+        };
 
-      if (targetCustomer.email) {
-        try {
-          const emailRes = await sendRejectionEmail({
-            order: orderDoc || {
-              orderId,
-              service: notes.service || 'Strategic Business Consultancy',
-            },
-            customer: targetCustomer,
-            reason: failureReason,
-          });
-          console.log(`[Razorpay Webhook] Rejection notice email sent to ${targetCustomer.email}:`, emailRes.success);
-        } catch (emailErr) {
-          console.error('[Razorpay Webhook] Error sending rejection email:', emailErr);
+        if (targetCustomer.email) {
+          try {
+            const emailRes = await sendRejectionEmail({
+              order: orderDoc || {
+                orderId,
+                service: notes.service || 'Strategic Business Consultancy',
+              },
+              customer: targetCustomer,
+              reason: failureReason,
+            });
+            console.log(`[Razorpay Webhook] Rejection notice email sent to ${targetCustomer.email}:`, emailRes.success);
+          } catch (emailErr) {
+            console.error('[Razorpay Webhook] Error sending rejection email:', emailErr);
+          }
         }
       }
 

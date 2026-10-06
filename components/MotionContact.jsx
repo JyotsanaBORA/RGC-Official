@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { trackLeadSubmission, trackContactClick } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
+import CustomServiceSelect from './CustomServiceSelect';
 
 /* ── SVG icons ── */
 const IconEmail = () => (
@@ -63,7 +64,7 @@ export default function MotionContact() {
     company: '',
     email: '',
     phone: '',
-    service: 'Consultancy — SaaS & Digital Solutions',
+    service: 'SaaS and IT Digital Solutions',
     message: '',
   });
   const [loading, setLoading] = useState(false);
@@ -163,7 +164,7 @@ export default function MotionContact() {
           {/* Offices */}
           <div className="ct-offices">
             <p className="ct-offices__head">
-              Corporate Headquarters &amp; Delivery Hub
+              Corporate Headquarters & Delivery Hub
               <span className="ct-offices__line" aria-hidden="true"></span>
             </p>
             <div className="ct-offices__grid">
@@ -251,7 +252,7 @@ export default function MotionContact() {
                   type="button"
                   onClick={() => {
                     setPaymentSuccess(null);
-                    setFormData({ name: '', company: '', email: '', phone: '', service: 'Consultancy — SaaS & Digital Solutions', message: '' });
+                    setFormData({ name: '', company: '', email: '', phone: '', service: 'SaaS and IT Digital Solutions', message: '' });
                   }}
                   className="btn btn--ghost"
                 >
@@ -319,25 +320,14 @@ export default function MotionContact() {
                   value={formData.phone}
                   onChange={handleInputChange}
                 />
-                <div className="ff ct-form__select-wrap">
-                  <select
-                    id="fService"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                  >
-                    <option>Consultancy — SaaS &amp; Digital Solutions</option>
-                    <option>Consultancy — Bookkeeping &amp; Accountancy</option>
-                    <option>Consultancy — IT Services &amp; Infrastructure</option>
-                    <option>BPO — Sales &amp; Revenue Operations</option>
-                    <option>BPO — Back Office Operations</option>
-                    <option>BPO — Customer Services by Experts</option>
-                    <option>Digital Marketing &amp; Growth</option>
-                    <option>Other Enterprise Inquiries</option>
-                  </select>
-                  <label htmlFor="fService">Service Interested In</label>
-                  <span className="ff__bar" aria-hidden="true"></span>
-                </div>
+                <CustomServiceSelect
+                  id="fService"
+                  name="service"
+                  label="Service Interested In *"
+                  value={formData.service}
+                  onChange={handleInputChange}
+                  variant="floating"
+                />
               </div>
 
               <FloatField

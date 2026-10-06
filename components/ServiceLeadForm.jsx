@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { trackLeadSubmission } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
+import CustomServiceSelect from './CustomServiceSelect';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   const [formData, setFormData] = useState({
@@ -10,9 +11,16 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     email: '',
     phone: '',
     company: '',
+    service: serviceTitle || 'Payroll and Compensation Management',
     requirement: '',
   });
   const [status, setStatus] = useState({ loading: false, success: false, error: '', orderId: '', paymentId: '' });
+
+  useEffect(() => {
+    if (serviceTitle) {
+      setFormData((prev) => ({ ...prev, service: serviceTitle }));
+    }
+  }, [serviceTitle]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -22,10 +30,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
 
+    const activeService = formData.service || serviceTitle;
+
     trackLeadSubmission({
       form_name: `service_inquiry_${serviceSlug}`,
       form_location: `service_dashboard_${serviceSlug}`,
-      service_requested: serviceTitle,
+      service_requested: activeService,
       amount: 99,
     });
 
@@ -38,7 +48,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           company: formData.company,
           message: formData.requirement,
         },
-        serviceName: `${serviceTitle} Consultation`,
+        serviceName: `${activeService} Consultation`,
         amount: 99,
         onSuccess: (data) => {
           setStatus({
@@ -86,7 +96,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         <div className="svc-form-card__badge">Priority Direct Desk • ₹99</div>
         <h3 className="svc-form-card__title">Consultancy @ ₹99</h3>
         <p className="svc-form-card__sub">
-          Book a 1-on-1 strategic consultation session for <strong>{serviceTitle}</strong> with our senior consultants for <strong>₹99</strong>.
+          Book a 1-on-1 strategic consultation session for <strong>{formData.service || serviceTitle}</strong> with our senior consultants for <strong>₹99</strong>.
         </p>
       </div>
 
@@ -191,13 +201,22 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
             />
           </div>
 
+          <CustomServiceSelect
+            id="svc-service"
+            name="service"
+            label="Practice / Service Area *"
+            value={formData.service}
+            onChange={handleChange}
+            variant="box"
+          />
+
           <div className="svc-form-group">
             <label htmlFor="svc-requirement">Scope or Operational Requirements</label>
             <textarea
               id="svc-requirement"
               name="requirement"
               rows={2}
-              placeholder={`Describe your ${serviceTitle} goals, target headcount, or timeline...`}
+              placeholder={`Describe your ${formData.service || serviceTitle} goals, target headcount, or timeline...`}
               value={formData.requirement}
               onChange={handleChange}
               className="svc-textarea"

@@ -188,7 +188,7 @@ export default async function CareerPage() {
                     <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
                   </svg>
                 </div>
-                <h3>Ongoing Recruitment &amp; General Applications</h3>
+                <h3>Ongoing Recruitment & General Applications</h3>
                 <p>
                   While specific role requisitions are being updated in our staffing hub, we are actively hiring for talent in <strong>BPO Operations</strong>, <strong>Talent Acquisition</strong>, <strong>Financial Analysis</strong>, and <strong>Client Services</strong>.
                 </p>

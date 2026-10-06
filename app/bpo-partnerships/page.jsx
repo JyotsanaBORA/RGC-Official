@@ -106,7 +106,7 @@ export default function BpoPartnershipsPage() {
           <div className="container svc-hero__content">
             <p className="eyebrow">BPO Partnerships · Call Center Growth</p>
             <h1 className="svc-hero__title">
-              Campaign Opportunities for <span className="gold-italic">BPOs &amp; Call Centers.</span>
+              Campaign Opportunities for <span className="gold-italic">BPOs & Call Centers.</span>
             </h1>
             <p className="svc-hero__tagline">
               Connect your call center with the right business opportunities. Reddington Global Consultancy Pvt Ltd helps BPOs and call centers explore campaign opportunities through its network of business partners and service providers.
@@ -186,7 +186,7 @@ export default function BpoPartnershipsPage() {
         <section className="section" id="who-should-apply" style={{ background: '#F7F3EC' }}>
           <div className="container">
             <div className="section__head">
-              <p className="eyebrow">Eligibility &amp; Criteria</p>
+              <p className="eyebrow">Eligibility & Criteria</p>
               <h2 className="section__title">
                 Who should <span className="gold-italic">apply?</span>
               </h2>

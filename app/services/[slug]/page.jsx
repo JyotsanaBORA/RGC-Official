@@ -172,7 +172,7 @@ export default function ServicePage({ params }) {
             <div className="svc-dash__cap-header reveal">
               <p className="eyebrow">Specialized Practice Areas</p>
               <h2 className="section__title">
-                Core Capabilities &amp; <span className="gold-italic">Execution Deliverables.</span>
+                Core Capabilities & <span className="gold-italic">Execution Deliverables.</span>
               </h2>
               <p className="section__sub">
                 End-to-end operational rigor built for middle-market and enterprise scale.
@@ -203,7 +203,7 @@ export default function ServicePage({ params }) {
               <div className="svc-dash__sla-box reveal">
                 <div className="svc-dash__sla-intro">
                   <p className="eyebrow">Institutional Governance</p>
-                  <h3>Service Level Agreements &amp; Quality Benchmarks</h3>
+                  <h3>Service Level Agreements & Quality Benchmarks</h3>
                   <p>
                     Every engagement operates under contractually defined performance indicators, daily QA calibration, and zero-compromise security protocols.
                   </p>

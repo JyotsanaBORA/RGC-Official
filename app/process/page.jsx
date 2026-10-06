@@ -71,7 +71,7 @@ export default function ProcessPage() {
                     <span className="node-icon">⚡</span>
                     <div className="node-info">
                       <strong>Reddington Delivery Hub</strong>
-                      <span>Gurugram &amp; Sheridan · 24/7 Floor</span>
+                      <span>Gurugram & Sheridan · 24/7 Floor</span>
                     </div>
                   </div>
                 </div>

@@ -71,9 +71,9 @@ export default function Home() {
           </div>
           <div className="hero__trust reveal">
             <span className="hero__trust-badge">NASSCOM Certified</span>
-            <span className="hero__trust-item">GSTN &amp; MCA Ready</span>
-            <span className="hero__trust-item">PCI-DSS &amp; AES-256</span>
-            <span className="hero__trust-item">Dual-Shore (India &amp; USA)</span>
+            <span className="hero__trust-item">GSTN & MCA Ready</span>
+            <span className="hero__trust-item">PCI-DSS & AES-256</span>
+            <span className="hero__trust-item">Dual-Shore (India & USA)</span>
           </div>
           <div className="hero__stats reveal">
             <div className="stat">
@@ -105,7 +105,7 @@ export default function Home() {
       <section className="section services" id="services">
         <div className="container">
           <div className="section__head reveal">
-            <p className="eyebrow">Services &amp; Solutions</p>
+            <p className="eyebrow">Services & Solutions</p>
             <h2 className="section__title">What we <span className="gold-italic">offer.</span></h2>
             <p className="lead">Enterprise-grade customer care, back-office operations, software engineering, and statutory compliance tailored to high-growth businesses.</p>
           </div>

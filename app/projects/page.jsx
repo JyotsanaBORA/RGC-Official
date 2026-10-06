@@ -47,14 +47,14 @@ export default function ProjectsPage() {
               <article className="project-card">
                 <img src="/assets/img/svc-saas-opt.webp" alt="Cloud Architecture & Digital Solutions" loading="lazy" />
                 <div className="project-card__body">
-                  <h3>Cloud Systems &amp; SaaS Delivery</h3>
+                  <h3>Cloud Systems & SaaS Delivery</h3>
                   <p>Full-stack web engineering, resilient REST/GraphQL API fabrics, and microservices automated for high concurrency.</p>
                 </div>
               </article>
               <article className="project-card">
                 <img src="/assets/img/svc-compliance-opt.webp" alt="Operational Compliance & Audit Governance" loading="lazy" />
                 <div className="project-card__body">
-                  <h3>Regulatory &amp; Statutory Governance</h3>
+                  <h3>Regulatory & Statutory Governance</h3>
                   <p>Multi-jurisdiction tax and ledger reconciliation frameworks ensuring zero-penalty operational compliance.</p>
                 </div>
               </article>
