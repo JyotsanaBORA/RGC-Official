@@ -289,25 +289,25 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/bpo-backoffice" onClick={() => setIsOpen(false)}>
-                            <span>Back Office</span>
+                            <span>Back Office Operations</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/bpo-sales" onClick={() => setIsOpen(false)}>
-                            <span>Sales Support</span>
+                            <span>Sales & Revenue Ops</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/bpo-backoffice#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>KYC / Operations</span>
+                          <Link href="/services/performance-management-consultancy" onClick={() => setIsOpen(false)}>
+                            <span>Performance Management</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/bpo-customer-service#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>24/7 Support</span>
+                          <Link href="/services/recruitment-hiring" onClick={() => setIsOpen(false)}>
+                            <span>Recruitment & Staffing</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
@@ -331,31 +331,31 @@ export default function SiteNav() {
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/saas-digital-solutions" onClick={() => setIsOpen(false)}>
-                            <span>Web / SaaS</span>
+                            <span>SaaS & IT Solutions</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/digital-marketing" onClick={() => setIsOpen(false)}>
+                            <span>Digital Marketing & Growth</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Applications</span>
+                            <span>Web / SaaS Apps</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>APIs</span>
+                            <span>APIs & Integrations</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Integrations</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Cloud</span>
+                            <span>Cloud Infrastructure</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
@@ -381,31 +381,31 @@ export default function SiteNav() {
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/bookkeeping-accountancy" onClick={() => setIsOpen(false)}>
-                            <span>Bookkeeping</span>
+                            <span>Bookkeeping & Accounts</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/payroll-compensation" onClick={() => setIsOpen(false)}>
+                            <span>Payroll & Compensation</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Accounting</span>
+                            <span>Account Reconciliation</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Reconciliation</span>
+                            <span>Tax Support (GST & TDS)</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
                           <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Tax Support</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Reporting</span>
+                            <span>Reporting & MIS</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
