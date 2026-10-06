@@ -50,12 +50,12 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico?v=2', sizes: 'any' },
-      { url: '/assets/img/favicon-32x32.png?v=2', type: 'image/png', sizes: '32x32' },
-      { url: '/icon.png?v=2', type: 'image/png', sizes: '512x512' },
+      { url: '/favicon.ico?v=3', sizes: 'any' },
+      { url: '/assets/img/favicon-32x32.png?v=3', type: 'image/png', sizes: '32x32' },
+      { url: '/icon.png?v=3', type: 'image/png', sizes: '512x512' },
     ],
     apple: [
-      { url: '/apple-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-icon.png?v=3', sizes: '180x180', type: 'image/png' },
     ],
   },
 };
@@ -94,10 +94,10 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png?v=3" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=3" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
