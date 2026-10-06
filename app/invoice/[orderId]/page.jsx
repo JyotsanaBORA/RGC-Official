@@ -83,22 +83,22 @@ export default async function InvoicePage({ params }) {
         overflow: 'hidden',
       }}>
         {/* Header */}
-        <div style={{ background: '#0F172A', color: '#FFFFFF', padding: '36px 40px', borderBottom: '3px solid #D49F2D', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
+        <div style={{ background: '#FFFFFF', color: '#0F172A', padding: '36px 40px', borderBottom: '2px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
           <div>
             <img
               src="https://www.reddingtonglobal.com/assets/img/rgc-logo.webp"
               alt="Reddington Global Consultancy"
               style={{ maxHeight: '48px', width: 'auto', display: 'block', marginBottom: '14px' }}
             />
-            <div style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '0.04em' }}>
-              REDDINGTON GLOBAL <span style={{ color: '#D49F2D' }}>CONSULTANCY PVT LTD</span>
+            <div style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '0.04em', color: '#0F172A' }}>
+              REDDINGTON GLOBAL CONSULTANCY PVT LTD
             </div>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#94A3B8', marginTop: '4px' }}>
+            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#64748B', marginTop: '4px' }}>
               Tax Invoice &bull; SAC Code: 9983
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#F1F5F9' }}>TAX INVOICE</div>
+            <div style={{ fontSize: '18px', fontWeight: '700', color: '#0F172A' }}>TAX INVOICE</div>
             <div style={{ fontSize: '13px', color: '#D49F2D', fontWeight: '600', marginTop: '2px' }}>{invoiceNo}</div>
           </div>
         </div>
