@@ -51,7 +51,7 @@ export default async function InvoicePage({ params }) {
           &larr; Back to Reddington Global
         </Link>
         <button
-          onClick={() => {}}
+          type="button"
           id="printBtn"
           style={{
             background: 'linear-gradient(135deg, #FBE5A2 0%, #D49F2D 100%)',
@@ -85,8 +85,13 @@ export default async function InvoicePage({ params }) {
         {/* Header */}
         <div style={{ background: '#0F172A', color: '#FFFFFF', padding: '36px 40px', borderBottom: '3px solid #D49F2D', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
           <div>
-            <div style={{ fontSize: '24px', fontWeight: '800', letterSpacing: '0.04em' }}>
-              REDDINGTON <span style={{ color: '#D49F2D' }}>GLOBAL</span>
+            <img
+              src="https://www.reddingtonglobal.com/assets/img/rgc-logo.webp"
+              alt="Reddington Global Consultancy"
+              style={{ maxHeight: '48px', width: 'auto', display: 'block', marginBottom: '14px' }}
+            />
+            <div style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '0.04em' }}>
+              REDDINGTON GLOBAL <span style={{ color: '#D49F2D' }}>CONSULTANCY PVT LTD</span>
             </div>
             <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#94A3B8', marginTop: '4px' }}>
               Tax Invoice &bull; SAC Code: 9983
@@ -109,7 +114,7 @@ export default async function InvoicePage({ params }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', paddingBottom: '24px', borderBottom: '1px solid #F1F5F9', marginBottom: '24px' }}>
             <div>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#94A3B8', letterSpacing: '0.05em', marginBottom: '6px' }}>ISSUED BY</div>
-              <strong style={{ fontSize: '15px', color: '#0F172A' }}>Reddington Global (RG Group)</strong>
+              <strong style={{ fontSize: '15px', color: '#0F172A' }}>Reddington Global Consultancy Pvt Ltd</strong>
               <div style={{ fontSize: '13px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
                 750 Udyog Vihar Phase 5, Sector 19<br />
                 Gurugram, Haryana 122016, India<br />
@@ -120,11 +125,11 @@ export default async function InvoicePage({ params }) {
 
             <div>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#94A3B8', letterSpacing: '0.05em', marginBottom: '6px' }}>BILLED TO</div>
-              <strong style={{ fontSize: '15px', color: '#0F172A' }}>{displayOrder.customer?.name || 'Valued Client'}</strong>
+              <strong style={{ fontSize: '15px', color: '#0F172A' }}>{displayOrder.customer?.name || displayOrder.customerName || 'Valued Client'}</strong>
               <div style={{ fontSize: '13px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
-                {displayOrder.customer?.company && <>{displayOrder.customer.company}<br /></>}
-                Email: {displayOrder.customer?.email || 'N/A'}<br />
-                Phone: {displayOrder.customer?.phone || 'N/A'}
+                {(displayOrder.customer?.company || displayOrder.customerCompany) && <>{displayOrder.customer?.company || displayOrder.customerCompany}<br /></>}
+                Email: {displayOrder.customer?.email || displayOrder.customerEmail || displayOrder.email || 'N/A'}<br />
+                Phone: {displayOrder.customer?.phone || displayOrder.customerPhone || 'N/A'}
               </div>
             </div>
           </div>
@@ -188,14 +193,14 @@ export default async function InvoicePage({ params }) {
           <div style={{ background: '#FFFBEB', border: '1px solid #FEF3C7', borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
             <h4 style={{ margin: '0 0 6px', color: '#92400E', fontSize: '13px' }}>Consultancy Scheduling</h4>
             <p style={{ margin: 0, color: '#78350F', fontSize: '12.5px', lineHeight: '1.5' }}>
-              Your dedicated consulting partner will contact you at <strong>{displayOrder.customer?.email}</strong> or <strong>{displayOrder.customer?.phone}</strong> within 24 business hours to coordinate your strategic briefing.
+              Your dedicated consulting partner will contact you at <strong>{displayOrder.customer?.email || displayOrder.customerEmail || displayOrder.email || 'your email'}</strong> or <strong>{displayOrder.customer?.phone || displayOrder.customerPhone || 'your phone'}</strong> within 24 business hours to coordinate your strategic briefing.
             </p>
           </div>
 
           <div style={{ fontSize: '11px', color: '#94A3B8', lineHeight: '1.6', textAlign: 'center' }}>
             This is a computer-generated tax invoice and requires no physical signature under the Information Technology Act.
             <br />
-            Reddington Global &bull; RG Group Inc &bull; RG Consultancy Pvt Ltd
+            Reddington Global Consultancy Pvt Ltd &bull; All rights reserved.
           </div>
         </div>
       </div>
@@ -203,9 +208,20 @@ export default async function InvoicePage({ params }) {
       {/* Inline print style script */}
       <script dangerouslySetInnerHTML={{
         __html: `
-          document.getElementById('printBtn')?.addEventListener('click', function() {
-            window.print();
-          });
+          (function() {
+            function bindPrint() {
+              var btn = document.getElementById('printBtn');
+              if (btn && !btn.dataset.bound) {
+                btn.dataset.bound = 'true';
+                btn.addEventListener('click', function() { window.print(); });
+              }
+            }
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', bindPrint);
+            } else {
+              bindPrint();
+            }
+          })();
         `
       }} />
 
