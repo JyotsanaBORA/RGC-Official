@@ -10,17 +10,11 @@ export async function POST(req) {
     const keySecret = process.env.RAZORPAY_KEY_SECRET || '75LPU9tRuBp8YZ1OJJrI0eAJ';
 
     const body = await req.json().catch(() => ({}));
-    const amount = Number(body.amount);
+    // Authoritative server-side price: ₹99 (9900 paise) prevents client-side price tampering
+    const amount = 9900;
     const currency = body.currency || 'INR';
     const receipt = body.receipt || `rcpt_${Date.now()}`;
     const idempotencyKey = body.idempotency_key || req.headers.get('x-idempotency-key') || null;
-
-    if (!amount || isNaN(amount) || amount < 100) {
-      return NextResponse.json(
-        { error: 'Amount is required and must be at least 100 paise (1 INR)' },
-        { status: 400 }
-      );
-    }
 
     // 1. Idempotency Check in MongoDB (if connected)
     const db = await connectDB();
