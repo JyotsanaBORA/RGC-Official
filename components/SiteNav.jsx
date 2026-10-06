@@ -265,7 +265,7 @@ export default function SiteNav() {
                   </div>
 
                   <div className="infosys-categories-grid">
-                    {/* Category 1: BPO Services */}
+                    {/* Vertical 1: BPO & Customer Operations */}
                     <div className="infosys-cat-box infosys-cat-box--bpo">
                       <div className="infosys-cat-box__head">
                         <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--bpo" aria-hidden="true">
@@ -276,176 +276,152 @@ export default function SiteNav() {
                           </svg>
                         </div>
                         <div className="infosys-cat-box__head-meta">
-                          <h3 className="infosys-cat-box__title">BPO Services</h3>
-                          <p className="infosys-cat-box__sub">24/7 Floor Telemetry & Customer Care</p>
+                          <h3 className="infosys-cat-box__title">BPO & Customer Operations</h3>
+                          <p className="infosys-cat-box__sub">24/7 CX & Operations Floor</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
-                          <Link href="/services/bpo-sales" target="_blank" rel="noopener noreferrer">
-                            <span>Sales & Revenue Operations</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/bpo-customer-service" onClick={() => setIsOpen(false)}>
+                            <span>Customer Service</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/bpo-backoffice" target="_blank" rel="noopener noreferrer">
-                            <span>Back Office Operations</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/bpo-backoffice" onClick={() => setIsOpen(false)}>
+                            <span>Back Office</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/bpo-customer-service" target="_blank" rel="noopener noreferrer">
-                            <span>Customer Services & Support</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/bpo-sales" onClick={() => setIsOpen(false)}>
+                            <span>Sales Support</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/bpo-backoffice#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>KYC / Operations</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/bpo-customer-service#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>24/7 Support</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                       </ul>
                     </div>
 
-                    {/* Category 2: Consultancy Services */}
-                    <div className="infosys-cat-box infosys-cat-box--consultancy">
+                    {/* Vertical 2: Software Development & IT Solutions */}
+                    <div className="infosys-cat-box infosys-cat-box--software">
                       <div className="infosys-cat-box__head">
-                        <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--consultancy" aria-hidden="true">
+                        <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--software" aria-hidden="true">
                           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                            <polygon points="12 2 2 7 12 12 22 7 12 2" fill="currentColor" fillOpacity="0.16" />
-                            <polyline points="2 17 12 22 22 17" />
-                            <polyline points="2 12 12 17 22 12" />
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
                           </svg>
                         </div>
                         <div className="infosys-cat-box__head-meta">
-                          <h3 className="infosys-cat-box__title">Consultancy Services</h3>
-                          <p className="infosys-cat-box__sub">SaaS, Finance, Tax & Performance</p>
+                          <h3 className="infosys-cat-box__title">Software Development & IT Solutions</h3>
+                          <p className="infosys-cat-box__sub">Web, SaaS, APIs & Cloud</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
-                          <Link href="/services/saas-digital-solutions" target="_blank" rel="noopener noreferrer">
-                            <span>SaaS & Digital Solutions</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/saas-digital-solutions" onClick={() => setIsOpen(false)}>
+                            <span>Web / SaaS</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/bookkeeping-accountancy" target="_blank" rel="noopener noreferrer">
-                            <span>Bookkeeping & Accountancy</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Applications</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/digital-marketing" target="_blank" rel="noopener noreferrer">
-                            <span>Digital Marketing & Growth</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>APIs</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/payroll-compensation" target="_blank" rel="noopener noreferrer">
-                            <span>Payroll & Compensation</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Integrations</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/performance-management-consultancy" target="_blank" rel="noopener noreferrer">
-                            <span>Performance Management</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Cloud</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                       </ul>
                     </div>
 
-                    {/* Category 3: Recruitment & Staffing */}
-                    <div className="infosys-cat-box infosys-cat-box--recruitment">
+                    {/* Vertical 3: Bookkeeping & Accounting */}
+                    <div className="infosys-cat-box infosys-cat-box--accounting">
                       <div className="infosys-cat-box__head">
-                        <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--recruitment" aria-hidden="true">
+                        <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--accounting" aria-hidden="true">
                           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" fill="currentColor" fillOpacity="0.15" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                            <line x1="7" y1="15" x2="7.01" y2="15" strokeWidth="3" />
+                            <line x1="12" y1="15" x2="12.01" y2="15" strokeWidth="3" />
                           </svg>
                         </div>
                         <div className="infosys-cat-box__head-meta">
-                          <h3 className="infosys-cat-box__title">Recruitment & Staffing</h3>
-                          <p className="infosys-cat-box__sub">Precision Talent & Executive Placement</p>
+                          <h3 className="infosys-cat-box__title">Bookkeeping & Accounting</h3>
+                          <p className="infosys-cat-box__sub">Ledgers, Tax & Financial Reporting</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
-                          <Link href="/services/recruitment-hiring" target="_blank" rel="noopener noreferrer">
-                            <span>Recruitment & Hiring</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/bookkeeping-accountancy" onClick={() => setIsOpen(false)}>
+                            <span>Bookkeeping</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                         <li>
-                          <Link href="/services/recruitment-staffing" target="_blank" rel="noopener noreferrer">
-                            <span>Recruitment & Staffing</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
+                          <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Accounting</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Reconciliation</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Tax Support</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/services/bookkeeping-accountancy#capabilities" onClick={() => setIsOpen(false)}>
+                            <span>Reporting</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
                       </ul>
                     </div>
+                  </div>
 
-                    {/* Category 4: Strategic Partnerships & Programs */}
-                    <div className="infosys-cat-box infosys-cat-box--partnerships infosys-cat-box--highlight">
-                      <div className="infosys-cat-box__head">
-                        <div className="infosys-cat-box__icon-badge infosys-cat-box__icon-badge--partnerships" aria-hidden="true">
-                          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0L13 13" />
-                            <path d="m13 13-3.3-3.3a1 1 0 0 0-1.4 0L6 12a1 1 0 0 0 0 1.4l4.3 4.3a1 1 0 0 0 1.4 0l2-2" />
-                            <path d="m18 11 3-3a2.8 2.8 0 0 0 0-4v0a2.8 2.8 0 0 0-4 0l-3 3" />
-                            <path d="m6 13-3 3a2.8 2.8 0 0 0 0 4v0a2.8 2.8 0 0 0 4 0l3-3" />
-                          </svg>
-                        </div>
-                        <div className="infosys-cat-box__head-meta">
-                          <h3 className="infosys-cat-box__title">BPO Partnerships</h3>
-                          <p className="infosys-cat-box__sub">Campaign Opportunities for Call Centers</p>
-                        </div>
-                      </div>
-                      <ul className="infosys-cat-box__list">
-                        <li>
-                          <Link href="/bpo-partnerships" onClick={() => setIsOpen(false)}>
-                            <span>Explore Campaign Opportunities</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/bpo-partnerships#partner-form" onClick={() => setIsOpen(false)}>
-                            <span>Register Your Call Center</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link href="/contact" onClick={() => setIsOpen(false)}>
-                            <span>Enterprise Strategy Scoping</span>
-                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M3 8h10M9 4l4 4-4 4"/>
-                            </svg>
-                          </Link>
-                        </li>
-                      </ul>
+                  {/* Unified Global Delivery Partner Strip */}
+                  <div className="infosys-partner-banner">
+                    <div className="infosys-partner-banner__meta">
+                      <span className="infosys-partner-banner__tag">GLOBAL DELIVERY PARTNER</span>
+                      <p className="infosys-partner-banner__title">Campaign Opportunities for BPOs & Call Centers</p>
                     </div>
+                    <Link href="/bpo-partnerships" className="btn btn--gold btn--sm" onClick={() => setIsOpen(false)}>
+                      Explore BPO Partnerships →
+                    </Link>
                   </div>
                 </div>
               )}

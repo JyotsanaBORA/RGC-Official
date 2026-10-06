@@ -4,33 +4,39 @@ import React, { useState, useRef, useEffect } from 'react';
 
 export const SERVICE_CATEGORIES = [
   {
-    category: 'Consultancy and Advisory Services',
+    category: 'BPO and Customer Operations',
     options: [
-      { value: 'Payroll and Compensation Management', label: 'Payroll and Compensation Management' },
-      { value: 'SaaS and IT Digital Solutions', label: 'SaaS and IT Digital Solutions' },
-      { value: 'Bookkeeping and Accountancy', label: 'Bookkeeping and Accountancy' },
-      { value: 'Performance Management Consultancy', label: 'Performance Management Consultancy' },
-      { value: 'IT Services and Infrastructure', label: 'IT Services and Infrastructure' },
-      { value: 'Digital Marketing and Growth', label: 'Digital Marketing and Growth' },
+      { value: 'Customer Service', label: 'Customer Service' },
+      { value: 'Back Office', label: 'Back Office' },
+      { value: 'Sales Support', label: 'Sales Support' },
+      { value: 'KYC / Operations', label: 'KYC / Operations' },
+      { value: '24/7 Support', label: '24/7 Support' },
     ],
   },
   {
-    category: 'BPO Operations',
+    category: 'Software Development and IT Solutions',
     options: [
-      { value: 'Sales and Revenue Operations', label: 'Sales and Revenue Operations' },
-      { value: 'Back Office Operations', label: 'Back Office Operations' },
-      { value: 'Customer Services and Support', label: 'Customer Services and Support' },
+      { value: 'Web / SaaS', label: 'Web / SaaS' },
+      { value: 'Applications', label: 'Applications' },
+      { value: 'APIs', label: 'APIs' },
+      { value: 'Integrations', label: 'Integrations' },
+      { value: 'Cloud', label: 'Cloud' },
     ],
   },
   {
-    category: 'Recruitment and Staffing',
+    category: 'Bookkeeping and Accounting',
     options: [
-      { value: 'Recruitment and Hiring Solutions', label: 'Recruitment and Hiring Solutions' },
+      { value: 'Bookkeeping', label: 'Bookkeeping' },
+      { value: 'Accounting', label: 'Accounting' },
+      { value: 'Reconciliation', label: 'Reconciliation' },
+      { value: 'Tax Support', label: 'Tax Support' },
+      { value: 'Reporting', label: 'Reporting' },
     ],
   },
   {
-    category: 'Enterprise Solutions',
+    category: 'Enterprise and Global Delivery',
     options: [
+      { value: 'Global Delivery Partner Inquiry', label: 'Global Delivery Partner Inquiry' },
       { value: 'Other Enterprise Inquiries', label: 'Other Enterprise Inquiries' },
     ],
   },

@@ -1,5 +1,6 @@
 import ClientScripts from '../components/ClientScripts';
 import MotionServices from '../components/MotionServices';
+import GlobalDeliveryTree from '../components/GlobalDeliveryTree';
 import MotionContact from '../components/MotionContact';
 import SiteNav from '../components/SiteNav';
 import SiteFooter from '../components/SiteFooter';
@@ -110,6 +111,7 @@ export default function Home() {
             <p className="lead">Enterprise-grade customer care, back-office operations, software engineering, and statutory compliance tailored to high-growth businesses.</p>
           </div>
           <MotionServices />
+          <GlobalDeliveryTree />
         </div>
       </section>
 
