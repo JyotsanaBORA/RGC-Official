@@ -87,6 +87,21 @@ const OrderSchema = new mongoose.Schema(
       default: {},
     },
 
+    // Call Tracking / CRM Status
+    callStatus: {
+      type: String,
+      enum: ['pending', 'called', 'follow_up', 'no_answer', 'closed'],
+      default: 'pending',
+      index: true,
+    },
+    callNotes: {
+      type: String,
+      default: '',
+    },
+    calledAt: {
+      type: Date,
+    },
+
     // Human-readable IST (Indian Standard Time) timestamps
     createdAtIST: {
       type: String,

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { showPaymentLoader, hidePaymentLoader } from '../lib/payment';
 
 /**
  * Helper to dynamically load the Razorpay checkout.js SDK
@@ -94,11 +95,13 @@ export default function RazorpayCheckout({
         },
         modal: {
           ondismiss: () => {
+            hidePaymentLoader();
             setLoading(false);
             setStatusMessage({ type: 'warning', text: 'Payment cancelled by user. You can retry when ready.' });
           },
         },
         handler: async function (response) {
+          showPaymentLoader('Verifying Payment...', 'Confirming transaction with bank and issuing your tax invoice. Please do not refresh.');
           try {
             // 4. Send payment signature to backend verification endpoint
             const verifyRes = await fetch('/api/verify-payment', {
@@ -116,6 +119,7 @@ export default function RazorpayCheckout({
               throw new Error(verifyData.error || 'Payment signature verification failed');
             }
 
+            hidePaymentLoader();
             setLoading(false);
             setStatusMessage({
               type: 'success',
@@ -131,6 +135,7 @@ export default function RazorpayCheckout({
               });
             }
           } catch (verifyErr) {
+            hidePaymentLoader();
             setLoading(false);
             const errMsg = verifyErr.message || 'Verification error occurred';
             setStatusMessage({ type: 'error', text: errMsg });
@@ -143,6 +148,7 @@ export default function RazorpayCheckout({
       const rzp = new window.Razorpay(options);
 
       rzp.on('payment.failed', function (failResponse) {
+        hidePaymentLoader();
         setLoading(false);
         const failMsg = failResponse?.error?.description || 'Payment transaction failed. Please retry.';
         setStatusMessage({ type: 'error', text: failMsg });

@@ -83,23 +83,32 @@ export default async function InvoicePage({ params }) {
         overflow: 'hidden',
       }}>
         {/* Header */}
-        <div style={{ background: '#FFFFFF', color: '#0F172A', padding: '36px 40px', borderBottom: '2px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
+        <div style={{ background: '#FFFFFF', color: '#0F172A', padding: '32px 36px', borderBottom: '2px solid #E2E8F0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
           <div>
             <img
               src="https://www.reddingtonglobal.com/assets/img/rgc-logo.webp"
               alt="Reddington Global Consultancy"
-              style={{ maxHeight: '48px', width: 'auto', display: 'block', marginBottom: '14px' }}
+              style={{ maxHeight: '46px', width: 'auto', display: 'block', marginBottom: '14px' }}
             />
-            <div style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '0.04em', color: '#0F172A' }}>
+            <div
+              className="brand-title"
+              style={{
+                fontSize: '18px',
+                fontWeight: '800',
+                letterSpacing: '0.02em',
+                color: '#0F172A',
+                whiteSpace: 'nowrap',
+              }}
+            >
               REDDINGTON GLOBAL CONSULTANCY PVT LTD
             </div>
             <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#64748B', marginTop: '4px' }}>
               Tax Invoice &bull; SAC Code: 9983
             </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#0F172A' }}>TAX INVOICE</div>
-            <div style={{ fontSize: '13px', color: '#D49F2D', fontWeight: '600', marginTop: '2px' }}>{invoiceNo}</div>
+          <div style={{ textAlign: 'left', flexShrink: 0 }}>
+            <div style={{ fontSize: '18px', fontWeight: '700', color: '#0F172A', whiteSpace: 'nowrap' }}>TAX INVOICE</div>
+            <div style={{ fontSize: '13px', color: '#D49F2D', fontWeight: '600', marginTop: '2px', whiteSpace: 'nowrap' }}>{invoiceNo}</div>
           </div>
         </div>
 
@@ -135,22 +144,36 @@ export default async function InvoicePage({ params }) {
           </div>
 
           {/* Transaction Metadata Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', background: '#F8FAFC', padding: '16px', borderRadius: '8px', border: '1px solid #E2E8F0', marginBottom: '28px' }}>
-            <div>
-              <div style={{ fontSize: '11px', color: '#64748B' }}>Invoice Date</div>
-              <strong style={{ fontSize: '13px', color: '#0F172A' }}>{orderDate}</strong>
+          <div
+            className="meta-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, auto)',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              gap: '16px',
+              background: '#F8FAFC',
+              padding: '16px 20px',
+              borderRadius: '8px',
+              border: '1px solid #E2E8F0',
+              marginBottom: '28px',
+            }}
+          >
+            <div style={{ whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '11px', color: '#64748B', whiteSpace: 'nowrap' }}>Invoice Date</div>
+              <strong style={{ fontSize: '13px', color: '#0F172A', whiteSpace: 'nowrap', display: 'block', marginTop: '3px' }}>{orderDate}</strong>
             </div>
-            <div>
-              <div style={{ fontSize: '11px', color: '#64748B' }}>Order ID</div>
-              <strong style={{ fontSize: '13px', color: '#0F172A' }}>{displayOrder.orderId}</strong>
+            <div style={{ whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '11px', color: '#64748B', whiteSpace: 'nowrap' }}>Order ID</div>
+              <strong style={{ fontSize: '13px', color: '#0F172A', whiteSpace: 'nowrap', display: 'block', marginTop: '3px' }}>{displayOrder.orderId}</strong>
             </div>
-            <div>
-              <div style={{ fontSize: '11px', color: '#64748B' }}>Payment ID</div>
-              <strong style={{ fontSize: '13px', color: '#0F172A' }}>{displayOrder.paymentId || 'N/A'}</strong>
+            <div style={{ whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '11px', color: '#64748B', whiteSpace: 'nowrap' }}>Payment ID</div>
+              <strong style={{ fontSize: '13px', color: '#0F172A', whiteSpace: 'nowrap', display: 'block', marginTop: '3px' }}>{displayOrder.paymentId || 'N/A'}</strong>
             </div>
-            <div>
-              <div style={{ fontSize: '11px', color: '#64748B' }}>Payment Mode</div>
-              <strong style={{ fontSize: '13px', color: '#0F172A' }}>Razorpay Online</strong>
+            <div style={{ whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: '11px', color: '#64748B', whiteSpace: 'nowrap' }}>Payment Mode</div>
+              <strong style={{ fontSize: '13px', color: '#0F172A', whiteSpace: 'nowrap', display: 'block', marginTop: '3px' }}>Razorpay Online</strong>
             </div>
           </div>
 
@@ -215,6 +238,15 @@ export default async function InvoicePage({ params }) {
                 btn.dataset.bound = 'true';
                 btn.addEventListener('click', function() { window.print(); });
               }
+              window.addEventListener('beforeprint', function() {
+                window.__origDocTitle = document.title;
+                document.title = '';
+              });
+              window.addEventListener('afterprint', function() {
+                if (window.__origDocTitle !== undefined) {
+                  document.title = window.__origDocTitle;
+                }
+              });
             }
             if (document.readyState === 'loading') {
               document.addEventListener('DOMContentLoaded', bindPrint);
@@ -228,10 +260,41 @@ export default async function InvoicePage({ params }) {
       <style dangerouslySetInnerHTML={{
         __html: `
           #floatingWhatsApp, .floating-wa { display: none !important; }
+          @page {
+            margin: 0;
+            size: auto;
+          }
           @media print {
-            body { background: #FFFFFF !important; padding: 0 !important; }
-            .no-print, #floatingWhatsApp, .floating-wa { display: none !important; }
-            #invoice-doc { box-shadow: none !important; border: 1px solid #CBD5E1 !important; width: 100% !important; max-width: 100% !important; }
+            html, body {
+              background: #FFFFFF !important;
+              margin: 0 !important;
+              padding: 10mm 12mm !important;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            .no-print, #floatingWhatsApp, .floating-wa {
+              display: none !important;
+            }
+            #invoice-doc {
+              box-shadow: none !important;
+              border: 1px solid #CBD5E1 !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              margin: 0 auto !important;
+            }
+            .brand-title {
+              font-size: 16.5px !important;
+              white-space: nowrap !important;
+            }
+            .meta-grid {
+              display: grid !important;
+              grid-template-columns: repeat(4, auto) !important;
+              justify-content: space-between !important;
+              gap: 16px !important;
+            }
+            .meta-grid div, .meta-grid strong {
+              white-space: nowrap !important;
+            }
           }
         `
       }} />
