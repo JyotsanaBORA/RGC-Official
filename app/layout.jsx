@@ -1,5 +1,6 @@
 import './globals.css';
 import GoogleTracking from '../components/GoogleTracking';
+import MetaPixel from '../components/MetaPixel';
 import FloatingWhatsApp from '../components/FloatingWhatsApp';
 
 export const metadata = {
@@ -105,6 +106,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <GoogleTracking />
+        <MetaPixel />
         {children}
         <FloatingWhatsApp />
       </body>

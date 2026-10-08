@@ -126,6 +126,15 @@ export default function RazorpayCheckout({
               text: `Payment verified! Reference ID: ${response.razorpay_payment_id}`,
             });
 
+            // Fire Meta Pixel Purchase event
+            if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+              window.fbq('track', 'Purchase', {
+                value: Number(amount) || 0,
+                currency: 'INR',
+                content_name: serviceName,
+              });
+            }
+
             if (onSuccess) {
               onSuccess({
                 payment_id: response.razorpay_payment_id,

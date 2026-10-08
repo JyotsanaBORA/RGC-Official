@@ -165,6 +165,27 @@ export async function POST(req) {
       });
     }
 
+    // 4. Action: Delete Order / Invoice data
+    if (action === 'delete_order') {
+      if (!verifyAuth(req)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const { orderId } = body;
+      if (!orderId) {
+        return NextResponse.json({ error: 'orderId is required' }, { status: 400 });
+      }
+
+      await connectDB();
+      const deleted = await Order.findOneAndDelete({ orderId });
+
+      if (!deleted) {
+        return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+      }
+
+      return NextResponse.json({ success: true, orderId });
+    }
+
     return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
   } catch (error) {
     console.error('[Admin API] Action error:', error);

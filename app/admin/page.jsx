@@ -129,6 +129,32 @@ export default function AdminPage() {
     }
   };
 
+  // Handle Delete Order
+  const handleDeleteOrder = async (orderId, customerName) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to permanently delete booking data and invoice for "${customerName || orderId}"? This action cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete_order', orderId }),
+      });
+      if (res.ok) {
+        setOrders((prev) => prev.filter((ord) => ord.orderId !== orderId));
+        fetchAdminData();
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete order');
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Error connecting to server to delete order');
+    }
+  };
+
   // Filter orders
   const filteredOrders = orders.filter((order) => {
     // Tab filter
@@ -575,26 +601,46 @@ export default function AdminPage() {
                           />
                         </td>
 
-                        {/* Action: Invoice */}
-                        <td style={{ padding: '16px 18px', verticalAlign: 'top', textAlign: 'right' }}>
-                          <Link
-                            href={`/invoice/${order.orderId}`}
-                            target="_blank"
-                            style={{
-                              display: 'inline-block',
-                              padding: '6px 12px',
-                              background: '#F8FAFC',
-                              color: '#0F172A',
-                              border: '1px solid #E2E8F0',
-                              borderRadius: '6px',
-                              fontSize: '12px',
-                              fontWeight: '600',
-                              textDecoration: 'none',
-                              whiteSpace: 'nowrap',
-                            }}
-                          >
-                            📄 Invoice &rarr;
-                          </Link>
+                        {/* Action: Invoice & Delete */}
+                        <td style={{ padding: '16px 18px', verticalAlign: 'top', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            <Link
+                              href={`/invoice/${order.orderId}`}
+                              target="_blank"
+                              style={{
+                                display: 'inline-block',
+                                padding: '6px 11px',
+                                background: '#F8FAFC',
+                                color: '#0F172A',
+                                border: '1px solid #CBD5E1',
+                                borderRadius: '6px',
+                                fontSize: '12px',
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              📄 Invoice
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteOrder(order.orderId, order.customerName)}
+                              title="Delete booking data & invoice"
+                              style={{
+                                background: '#FEF2F2',
+                                border: '1px solid #FECACA',
+                                color: '#DC2626',
+                                padding: '6px 11px',
+                                borderRadius: '6px',
+                                fontSize: '12px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              🗑️ Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );
