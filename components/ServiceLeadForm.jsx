@@ -19,6 +19,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   useEffect(() => {
     if (serviceTitle) {
       setFormData((prev) => ({ ...prev, service: serviceTitle }));
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'ViewContent', {
+          content_name: serviceTitle,
+          content_category: 'Consulting & BPO Services',
+        });
+      }
     }
   }, [serviceTitle]);
 

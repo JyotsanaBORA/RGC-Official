@@ -155,7 +155,19 @@ export default function SiteNav() {
             <Link href="/bpo-partnerships" className="infosys-header__pill-link">
               BPO Partnerships
             </Link>
-            <Link href="/contact" className="btn btn--gold btn--sm">
+            <Link
+              href="/contact"
+              className="btn btn--gold btn--sm"
+              onClick={() => {
+                if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                  window.fbq('track', 'InitiateCheckout', {
+                    value: 99,
+                    currency: 'INR',
+                    content_name: 'Consultancy @ ₹99',
+                  });
+                }
+              }}
+            >
               Consultancy @ ₹99
             </Link>
           </div>
