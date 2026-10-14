@@ -337,13 +337,13 @@ export default function SiteNav() {
                         </div>
                         <div className="infosys-cat-box__head-meta">
                           <h3 className="infosys-cat-box__title">Software Development & IT Solutions</h3>
-                          <p className="infosys-cat-box__sub">Web, SaaS, APIs & Cloud</p>
+                          <p className="infosys-cat-box__sub">AI, Web, SaaS, APIs & Cloud</p>
                         </div>
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
                           <Link href="/services/saas-digital-solutions" onClick={() => setIsOpen(false)}>
-                            <span>SaaS & IT Solutions</span>
+                            <span>AI & SaaS Solutions</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>
@@ -355,7 +355,7 @@ export default function SiteNav() {
                         </li>
                         <li>
                           <Link href="/services/saas-digital-solutions#capabilities" onClick={() => setIsOpen(false)}>
-                            <span>Web / SaaS Apps</span>
+                            <span>AI & Automation</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                           </Link>
                         </li>

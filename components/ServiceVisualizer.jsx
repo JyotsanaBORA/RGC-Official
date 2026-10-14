@@ -118,17 +118,17 @@ const SERVICE_CONFIGS = {
     ],
   },
   'saas-digital-solutions': {
-    badge: 'SaaS & IT Digital Solutions',
-    systemId: 'SYS-CLOUD-MICROSERVICES',
+    badge: 'AI & SaaS Digital Solutions',
+    systemId: 'SYS-AI-CLOUD-PIPELINE',
     accentColor: '#6366F1',
     accentGradient: 'linear-gradient(135deg, #6366F1, #818CF8)',
-    flowTitle: 'Cloud Native Systems & API Gateway Architecture',
+    flowTitle: 'Enterprise AI & Cloud Native Systems Architecture',
     steps: [
       {
         num: '01',
         title: 'Modern Web Client (Next.js)',
         meta: 'Sub-second Edge Hydration',
-        tag: 'Zero-Latency UX',
+        tag: 'Intelligent UI',
       },
       {
         num: '02',
@@ -138,21 +138,21 @@ const SERVICE_CONFIGS = {
       },
       {
         num: '03',
-        title: 'Microservices & Business Core',
-        meta: 'Automated CI/CD Containers',
-        tag: 'Scalable Runtime',
+        title: 'AI Inference & Automation Engine',
+        meta: 'Custom LLMs & Intelligent RPA',
+        tag: 'AI Runtime Core',
       },
       {
         num: '04',
-        title: 'Secure Payment & Data Vaults',
-        meta: 'PCI-DSS & Stripe/Razorpay',
+        title: 'Secure Cloud & Payment Vaults',
+        meta: 'SOC-2 / PCI-DSS Security',
         tag: 'Encrypted Core',
       },
     ],
     kpis: [
-      { value: '99.95%', label: 'Uptime SLA' },
-      { value: '< 45ms', label: 'API Latency' },
-      { value: 'PCI-DSS', label: 'Security Grade' },
+      { value: '99.95%', label: 'Infrastructure & AI' },
+      { value: '< 45ms', label: 'API & AI Latency' },
+      { value: 'SOC-2 / PCI', label: 'Security Grade' },
     ],
   },
   'bookkeeping-accountancy': {

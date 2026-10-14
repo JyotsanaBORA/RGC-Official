@@ -26,10 +26,10 @@ export default function GlobalDeliveryTree() {
       accent: '#38BDF8',
       href: '/services/saas-digital-solutions',
       capabilities: [
+        { name: 'AI & Automation', href: '/services/saas-digital-solutions' },
         { name: 'Web / SaaS', href: '/services/saas-digital-solutions' },
         { name: 'Applications', href: '/services/saas-digital-solutions#capabilities' },
-        { name: 'APIs', href: '/services/saas-digital-solutions#capabilities' },
-        { name: 'Integrations', href: '/services/saas-digital-solutions#capabilities' },
+        { name: 'APIs & Integrations', href: '/services/saas-digital-solutions#capabilities' },
         { name: 'Cloud', href: '/services/saas-digital-solutions#capabilities' },
       ],
     },
