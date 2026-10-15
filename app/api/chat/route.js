@@ -118,7 +118,13 @@ export async function POST(req) {
       }
 
       const data = await response.json();
-      const reply = data?.choices?.[0]?.message?.content || getFallbackReply();
+      const rawReply = data?.choices?.[0]?.message?.content || getFallbackReply();
+      const reply = rawReply
+        .replace(/\r\n/g, '\n')
+        .replace(/([.!?])\s+(\*\*[A-Z][^*]+\*\*)/g, '$1\n\n$2\n')
+        .replace(/\s*[•●]\s*/g, '\n• ')
+        .replace(/(\*\*[A-Z][^*]+\*\*)\s+(•|\*\*)/g, '$1\n$2')
+        .trim();
       return NextResponse.json({ message: reply });
     } catch (grokErr) {
       console.warn('AI fetch failed, falling back:', grokErr);

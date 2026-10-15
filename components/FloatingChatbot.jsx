@@ -10,6 +10,109 @@ const QUICK_PROMPTS = [
   'How do I book a consultation?',
 ];
 
+function formatInline(text) {
+  if (!text) return '';
+  const tokens = [];
+  const regex = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|https?:\/\/[^\s)]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      tokens.push(text.substring(lastIndex, match.index));
+    }
+    const val = match[0];
+    if (val.startsWith('**') && val.endsWith('**')) {
+      tokens.push(<strong key={match.index}>{val.slice(2, -2)}</strong>);
+    } else if (val.startsWith('[') && val.includes('](')) {
+      const linkText = val.slice(1, val.indexOf(']('));
+      const linkUrl = val.slice(val.indexOf('](') + 2, -1);
+      tokens.push(
+        <a key={match.index} href={linkUrl} target="_blank" rel="noopener noreferrer">
+          {linkText}
+        </a>
+      );
+    } else if (val.includes('@')) {
+      tokens.push(
+        <a key={match.index} href={`mailto:${val}`}>
+          {val}
+        </a>
+      );
+    } else {
+      tokens.push(
+        <a key={match.index} href={val} target="_blank" rel="noopener noreferrer">
+          {val}
+        </a>
+      );
+    }
+    lastIndex = match.index + val.length;
+  }
+
+  if (lastIndex < text.length) {
+    tokens.push(text.substring(lastIndex));
+  }
+
+  return tokens.length > 0 ? tokens : text;
+}
+
+function ChatMessageContent({ content }) {
+  if (!content) return null;
+
+  const normalized = content
+    .replace(/\r\n/g, '\n')
+    .replace(/([.!?])\s+(\*\*[A-Z][^*]+\*\*)/g, '$1\n\n$2\n')
+    .replace(/\s*[•●]\s*/g, '\n• ')
+    .replace(/(\*\*[A-Z][^*]+\*\*)\s+(•|\*\*)/g, '$1\n$2');
+
+  const rawLines = normalized.split('\n').map((l) => l.trim()).filter(Boolean);
+
+  const elements = [];
+  let currentList = [];
+
+  const flushList = () => {
+    if (currentList.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} className="chat-bubble-list">
+          {currentList.map((item, i) => (
+            <li key={i}>{formatInline(item)}</li>
+          ))}
+        </ul>
+      );
+      currentList = [];
+    }
+  };
+
+  rawLines.forEach((line, idx) => {
+    if (line.startsWith('•') || line.startsWith('- ') || line.startsWith('* ')) {
+      const cleanItem = line.replace(/^[•\-\*]\s*/, '');
+      currentList.push(cleanItem);
+      return;
+    }
+
+    flushList();
+
+    const headingMatch = line.match(/^\*\*([^*]+)\*\*:?$/);
+    if (headingMatch && headingMatch[1].length < 75) {
+      elements.push(
+        <div key={`heading-${idx}`} className="chat-bubble-heading">
+          {headingMatch[1]}
+        </div>
+      );
+      return;
+    }
+
+    elements.push(
+      <p key={`p-${idx}`} className="chat-bubble-p">
+        {formatInline(line)}
+      </p>
+    );
+  });
+
+  flushList();
+
+  return <>{elements}</>;
+}
+
 export default function FloatingChatbot() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -133,7 +236,9 @@ export default function FloatingChatbot() {
           <div className="floating-chat-messages">
             {messages.map((m, idx) => (
               <div key={idx} className={`chat-bubble-row ${m.role === 'user' ? 'is-user' : 'is-assistant'}`}>
-                <div className="chat-bubble">{m.content}</div>
+                <div className="chat-bubble">
+                  <ChatMessageContent content={m.content} />
+                </div>
               </div>
             ))}
 
