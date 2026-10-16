@@ -3,8 +3,9 @@
 import { usePathname } from 'next/navigation';
 import { trackContactClick } from '../lib/analytics/events';
 
-// ponytail: redirect disabled until user provides WhatsApp number
-const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '';
+// WhatsApp support number (+91 98182 24495)
+const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919818224495';
+const PREFILLED_TEXT = encodeURIComponent('Hello Reddington Global, I would like to inquire about your services.');
 
 export default function FloatingWhatsApp() {
   const pathname = usePathname();
@@ -16,7 +17,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <a
-      href={PHONE_NUMBER ? `https://wa.me/${PHONE_NUMBER}` : '#'}
+      href={PHONE_NUMBER ? `https://wa.me/${PHONE_NUMBER}?text=${PREFILLED_TEXT}` : '#'}
       target={PHONE_NUMBER ? '_blank' : undefined}
       rel={PHONE_NUMBER ? 'noopener noreferrer' : undefined}
       className="floating-wa"

@@ -69,7 +69,7 @@ const SERVICE_CONFIGS = {
       {
         num: '04',
         title: 'Same-Day Ledger Settlement',
-        meta: 'Cutoff Window Guarantee',
+        meta: 'Cutoff Window Protocol',
         tag: 'Continuous 24/7',
       },
     ],
@@ -102,7 +102,7 @@ const SERVICE_CONFIGS = {
         num: '03',
         title: 'Tier-1 & Tier-2 Helpdesk',
         meta: '92.4% First Contact Resolution',
-        tag: 'FCR Guarantee',
+        tag: 'FCR Benchmark',
       },
       {
         num: '04',
@@ -178,19 +178,19 @@ const SERVICE_CONFIGS = {
         num: '03',
         title: 'Statutory GST & TDS Filing',
         meta: '100% Punctual Compliance (India)',
-        tag: 'Zero Penalties',
+        tag: 'Compliant Filings',
       },
       {
         num: '04',
         title: 'Executive Management Pack',
-        meta: 'Delivered by 5th of Month',
+        meta: 'Punctual Monthly Delivery',
         tag: 'Board Ready MIS',
       },
     ],
     kpis: [
       { value: '100%', label: 'Statutory On-Time' },
-      { value: '5th Mo.', label: 'Books Closing' },
-      { value: 'Zero', label: 'Penalty Record' },
+      { value: 'Punctual', label: 'Monthly Closing' },
+      { value: '100%', label: 'Compliance Record' },
     ],
   },
   'payroll-compensation': {
@@ -335,8 +335,8 @@ const SERVICE_CONFIGS = {
       {
         num: '04',
         title: 'Placement & 90-Day Retention SLA',
-        meta: '95% Long-Term Retention Guarantee',
-        tag: 'Zero-Cost Replacement',
+        meta: '95% Long-Term Retention Benchmark',
+        tag: 'Structured Replacement Support',
       },
     ],
     kpis: [

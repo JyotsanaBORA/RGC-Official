@@ -55,8 +55,8 @@ const STEPS = [
     phase: 'Phase 04',
     badge: '99.8% Precision',
     title: 'Optimise & Scale',
-    desc: 'Continuous performance feedback, calibrated QA scoring, and data-driven audits to permanently eliminate error rates.',
-    deliverables: ['Real-Time QA Scoring', 'Monthly Financial Packs', 'Zero-Variance Audits'],
+    desc: 'Continuous performance feedback, calibrated QA scoring, and data-driven audits to minimize error rates and maintain audit-ready standards.',
+    deliverables: ['Real-Time QA Scoring', 'Monthly Financial Packs', 'Comprehensive Audits'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5h16" />

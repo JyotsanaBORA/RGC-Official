@@ -55,7 +55,7 @@ export default function ProjectsPage() {
                 <img src="/assets/img/svc-compliance-opt.webp" alt="Operational Compliance & Audit Governance" loading="lazy" />
                 <div className="project-card__body">
                   <h3>Regulatory & Statutory Governance</h3>
-                  <p>Multi-jurisdiction tax and ledger reconciliation frameworks ensuring zero-penalty operational compliance.</p>
+                  <p>Multi-jurisdiction tax and ledger reconciliation frameworks ensuring audit-ready statutory compliance.</p>
                 </div>
               </article>
             </div>

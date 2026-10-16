@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default function ServicePage({ params }) {
-  const svc = getServiceBySlug(params.slug);
+  const svc = getServiceBySlug(params?.slug);
   if (!svc) notFound();
 
   return (

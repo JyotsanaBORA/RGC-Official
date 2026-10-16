@@ -4,10 +4,12 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 const QUICK_PROMPTS = [
-  'What BPO services do you provide?',
-  'Tell me about your AI & SaaS solutions',
-  'How does Bookkeeping & Accounting work?',
-  'How do I book a consultation?',
+  'What 24/7 BPO & Customer Support services do you provide?',
+  'Can you build custom AI agents & Web applications?',
+  'How does audit-ready Bookkeeping & Tax compliance work?',
+  'Tell me about Payroll & Compensation management',
+  'How do BPO Partnerships & Campaign opportunities work?',
+  'How do I book a ₹99 strategy consultation?',
 ];
 
 function formatInline(text) {
@@ -39,11 +41,16 @@ function formatInline(text) {
         </a>
       );
     } else {
+      const cleanUrl = val.replace(/[.,;:!?]+$/, '');
+      const trailingPunctuation = val.slice(cleanUrl.length);
       tokens.push(
-        <a key={match.index} href={val} target="_blank" rel="noopener noreferrer">
-          {val}
+        <a key={match.index} href={cleanUrl} target="_blank" rel="noopener noreferrer">
+          {cleanUrl}
         </a>
       );
+      if (trailingPunctuation) {
+        tokens.push(trailingPunctuation);
+      }
     }
     lastIndex = match.index + val.length;
   }
@@ -110,6 +117,43 @@ function ChatMessageContent({ content }) {
 
   flushList();
 
+  // Extract service/contact URL to render a dedicated, one-tap payment/dashboard button
+  const serviceUrlMatch = content.match(/https?:\/\/[^\s)]+(?:\/services\/[a-z0-9-]+|\/contact|\/bpo-partnerships)/i);
+  if (serviceUrlMatch) {
+    const matchedUrl = serviceUrlMatch[0].replace(/[.,;:!?]+$/, '');
+    const localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
+    let btnLabel = 'Go to Payment & Dashboard →';
+    if (matchedUrl.includes('saas-digital-solutions')) {
+      btnLabel = 'Open Web & AI Dashboard (₹99 Form) →';
+    } else if (matchedUrl.includes('bookkeeping-accountancy')) {
+      btnLabel = 'Open Bookkeeping Dashboard (₹99 Form) →';
+    } else if (matchedUrl.includes('payroll-compensation')) {
+      btnLabel = 'Open Payroll Dashboard (₹99 Form) →';
+    } else if (matchedUrl.includes('bpo-customer-service')) {
+      btnLabel = 'Open Customer Support Dashboard →';
+    } else if (matchedUrl.includes('bpo-sales')) {
+      btnLabel = 'Open BPO Sales Dashboard →';
+    } else if (matchedUrl.includes('bpo-backoffice')) {
+      btnLabel = 'Open Back Office Dashboard →';
+    } else if (matchedUrl.includes('bpo-partnerships')) {
+      btnLabel = 'Open BPO Partnerships Form →';
+    } else if (matchedUrl.includes('digital-marketing')) {
+      btnLabel = 'Open Digital Marketing Dashboard →';
+    } else if (matchedUrl.includes('recruitment-hiring')) {
+      btnLabel = 'Open Recruitment Dashboard →';
+    } else if (matchedUrl.includes('contact')) {
+      btnLabel = 'Open ₹99 Consultation Form →';
+    }
+
+    elements.push(
+      <div key="action-cta-wrap" className="chat-bubble-cta-wrap">
+        <a href={localHref || matchedUrl} className="chat-bubble-cta">
+          {btnLabel}
+        </a>
+      </div>
+    );
+  }
+
   return <>{elements}</>;
 }
 
@@ -120,7 +164,7 @@ export default function FloatingChatbot() {
     {
       role: 'assistant',
       content:
-        "Hello! I am Reddington Global's AI Assistant. Ask me anything about our BPO operations, AI & Software solutions, or Accounting services.",
+        "Hello! I am Reddington Global's Enterprise Solutions Advisor for BPO, Software & AI, and Bookkeeping services.\nWhich service area or operational challenge can I help scale for your business today?",
     },
   ]);
   const [input, setInput] = useState('');

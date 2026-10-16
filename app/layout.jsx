@@ -7,7 +7,7 @@ import FloatingChatbot from '../components/FloatingChatbot';
 export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
   title: {
-    default: 'Reddington Global — Consulting That Moves Business Forward',
+    default: 'Reddington Global Consultancy',
     template: '%s | Reddington Global',
   },
   description:
@@ -19,13 +19,14 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg?v=8', type: 'image/svg+xml' },
-      { url: '/assets/img/favicon-32x32.png?v=8', sizes: '32x32', type: 'image/png' },
-      { url: '/assets/img/favicon-16x16.png?v=8', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon.ico?v=8' },
+      { url: '/favicon.svg?v=11', type: 'image/svg+xml' },
+      { url: '/assets/img/favicon-48x48.png?v=11', sizes: '48x48', type: 'image/png' },
+      { url: '/assets/img/favicon-32x32.png?v=11', sizes: '32x32', type: 'image/png' },
+      { url: '/assets/img/favicon-16x16.png?v=11', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico?v=11' },
     ],
     apple: [
-      { url: '/apple-icon.png?v=8', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-icon.png?v=11', sizes: '180x180', type: 'image/png' },
     ],
   },
   openGraph: {
@@ -97,11 +98,12 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png?v=8" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png?v=8" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png?v=8" />
-        <link rel="shortcut icon" href="/favicon.ico?v=8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=11" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48x48.png?v=11" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png?v=11" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png?v=11" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png?v=11" />
+        <link rel="shortcut icon" href="/favicon.ico?v=11" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

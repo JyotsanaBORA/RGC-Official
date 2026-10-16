@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGC Favicon Options Gallery — Select Your Icon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0F1218;
+      --card-bg: #171C24;
+      --card-border: #262D3D;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --gold: #D4AF37;
+      --gold-dark: #B8860B;
+      --red: #C5221F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px 24px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 24px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1 span {
+      color: var(--gold);
+    }
+    p.lead {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 700px;
+    }
+    .banner {
+      background: linear-gradient(90deg, rgba(212,175,55,0.12), rgba(197,34,31,0.12));
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .banner-text { font-size: 14px; color: #E2E8F0; }
+    .banner-text strong { color: var(--gold); }
+    
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(212,175,55,0.4);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .badge {
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+      background: #0D1016;
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid #1E2533;
+    }
+    @media (max-width: 900px) {
+      .preview-grid { grid-template-columns: 1fr; }
+    }
+    .preview-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .box-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .img-zoom {
+      border-radius: 10px;
+      background: #FFFFFF;
+      padding: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    
+    /* Google Search Snippet Mockup */
+    .google-snippet {
+      background: #202124;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      border: 1px solid #303134;
+    }
+    .google-fav {
+      border-radius: 50%;
+      background: #fff;
+      padding: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .google-meta { display: flex; flex-direction: column; overflow: hidden; }
+    .google-domain { font-size: 13px; color: #BDC1C6; font-weight: 500; }
+    .google-url { font-size: 11px; color: #9AA0A6; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+    
+    /* Chrome Tab Mockup */
+    .tab-bar-mockup {
+      background: #DEE1E6;
+      border-radius: 8px 8px 0 0;
+      padding: 6px 10px 0 10px;
+      width: 100%;
+    }
+    .chrome-tab {
+      background: #FFFFFF;
+      border-radius: 6px 6px 0 0;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 240px;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+    }
+    .tab-title {
+      font-size: 12px;
+      color: #3C4043;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+    }
+    .tab-close {
+      margin-left: auto;
+      font-size: 14px;
+      color: #5F6368;
+    }
+    
+    /* Dark Mode Tab */
+    .dark-tab-bar {
+      background: #1F2228;
+    }
+    .dark-tab {
+      background: #2B2E36;
+    }
+    .dark-tab .tab-title { color: #E8EAED; }
+    .dark-tab .tab-close { color: #9AA0A6; }
+    
+    .card-footer {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid #1E2533;
+    }
+    code {
+      font-size: 12px;
+      color: #7DD3FC;
+      background: #0F172A;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #1E293B;
+    }
+    .select-btn {
+      background: linear-gradient(135deg, #D4AF37, #B8860B);
+      color: #000;
+      font-weight: 700;
+      font-size: 12px;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s;
+    }
+    .select-btn:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span>RGC</span> Favicon Selection Gallery</h1>
+      <p class="lead">All previous and candidate favicon designs organized in one place with actual 16px tab previews, 48px Google Search mockups, and high-res masters.</p>
+    </header>
+    
+    <div class="banner">
+      <div class="banner-text">
+        📁 <strong>Folder Location:</strong> All files are saved in <code>public/favicon_options/</code>.<br>
+        To activate any option on the live website, simply let me know the option name (e.g. <em>"apply 04"</em> or <em>"apply 06"</em>).
+      </div>
+    </div>
+    
+    <div class="grid">
+      
+    <div class="card" id="01_original_consultancy">
+      <div class="card-header">
+        <span class="badge">01</span>
+        <h3>Option 1: Original with "Consultancy"</h3>
+      </div>
+      <p class="desc">The original brand logo with the small "CONSULTANCY" text underneath RGC.</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="01_original_consultancy/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 1: Original with "Consultancy"">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="01_original_consultancy/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="01_original_consultancy/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="01_original_consultancy/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/01_original_consultancy/</code>
+        <button class="select-btn" onclick="copyId('01_original_consultancy')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="02_clean_gap_28px">
+      <div class="card-header">
+        <span class="badge">02</span>
+        <h3>Option 2: Clean Gap (28px Spacing)</h3>
+      </div>
+      <p class="desc">Balanced RGC on white squircle badge with generous 28px letter separation.</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="02_clean_gap_28px/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 2: Clean Gap (28px Spacing)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="02_clean_gap_28px/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="02_clean_gap_28px/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="02_clean_gap_28px/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/02_clean_gap_28px/</code>
+        <button class="select-btn" onclick="copyId('02_clean_gap_28px')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="03_tab1_wide_full_width">
+      <div class="card-header">
+        <span class="badge">03</span>
+        <h3>Option 3: Tab 1 Wide (Full Width)</h3>
+      </div>
+      <p class="desc">Edge-to-edge RGC filling maximum width of the squircle badge (from Tab 1 in screenshot).</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="03_tab1_wide_full_width/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 3: Tab 1 Wide (Full Width)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="03_tab1_wide_full_width/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="03_tab1_wide_full_width/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="03_tab1_wide_full_width/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/03_tab1_wide_full_width/</code>
+        <button class="select-btn" onclick="copyId('03_tab1_wide_full_width')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="04_tab2_smaller_inset">
+      <div class="card-header">
+        <span class="badge">04</span>
+        <h3>Option 4: Tab 2 Inset (Smaller Centered)</h3>
+      </div>
+      <p class="desc">Smaller RGC centered inside with clean white padding on all sides (from Tab 2 in screenshot).</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="04_tab2_smaller_inset/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 4: Tab 2 Inset (Smaller Centered)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="04_tab2_smaller_inset/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="04_tab2_smaller_inset/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="04_tab2_smaller_inset/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/04_tab2_smaller_inset/</code>
+        <button class="select-btn" onclick="copyId('04_tab2_smaller_inset')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="05_infosys_cut_subtle">
+      <div class="card-header">
+        <span class="badge">05</span>
+        <h3>Option 5: Infosys Cut — Subtle (~12% Crop)</h3>
+      </div>
+      <p class="desc">Tall bold letters (72% height), clear letter gaps, with outer curve of "C" gently trimmed by right border.</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="05_infosys_cut_subtle/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 5: Infosys Cut — Subtle (~12% Crop)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="05_infosys_cut_subtle/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="05_infosys_cut_subtle/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="05_infosys_cut_subtle/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/05_infosys_cut_subtle/</code>
+        <button class="select-btn" onclick="copyId('05_infosys_cut_subtle')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="06_infosys_cut_classic">
+      <div class="card-header">
+        <span class="badge">06</span>
+        <h3>Option 6: Infosys Cut — Classic (~25% Crop)</h3>
+      </div>
+      <p class="desc">Classic Infosys-style bold crop: "C" terminates cleanly at the right squircle border, bold 75% height.</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="06_infosys_cut_classic/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 6: Infosys Cut — Classic (~25% Crop)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="06_infosys_cut_classic/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="06_infosys_cut_classic/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="06_infosys_cut_classic/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/06_infosys_cut_classic/</code>
+        <button class="select-btn" onclick="copyId('06_infosys_cut_classic')">Select This Version</button>
+      </div>
+    </div>
+    
+    <div class="card" id="07_infosys_cut_bold">
+      <div class="card-header">
+        <span class="badge">07</span>
+        <h3>Option 7: Infosys Cut — Bold (~35% Crop)</h3>
+      </div>
+      <p class="desc">Maximum glyph presence (77% height) with bold edge crop for high visual punch in busy tab bars.</p>
+      
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="box-label">512×512 Master</div>
+          <img src="07_infosys_cut_bold/icon_512.png" width="120" height="120" class="img-zoom" alt="Option 7: Infosys Cut — Bold (~35% Crop)">
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Google Search (48×48)</div>
+          <div class="google-snippet">
+            <img src="07_infosys_cut_bold/icon_48.png" width="28" height="28" class="google-fav" alt="Favicon">
+            <div class="google-meta">
+              <div class="google-domain">Reddington Global Consultancy</div>
+              <div class="google-url">https://www.reddingtonglobal.com</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="preview-box">
+          <div class="box-label">Browser Tab Mockup (16×16)</div>
+          <div class="tab-bar-mockup">
+            <div class="chrome-tab">
+              <img src="07_infosys_cut_bold/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+          
+          <div class="tab-bar-mockup dark-tab-bar" style="margin-top: 8px;">
+            <div class="chrome-tab dark-tab">
+              <img src="07_infosys_cut_bold/icon_16.png" width="16" height="16" alt="Tab Icon">
+              <span class="tab-title">Reddington Global Consultancy</span>
+              <span class="tab-close">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <code>Folder: public/favicon_options/07_infosys_cut_bold/</code>
+        <button class="select-btn" onclick="copyId('07_infosys_cut_bold')">Select This Version</button>
+      </div>
+    </div>
+    
+    </div>
+  </div>
+  
+  <div id="toast" class="toast">Selected option copied to clipboard!</div>
+  
+  <script>
+    function copyId(id) {
+      navigator.clipboard.writeText('Apply ' + id).then(() => {
+        const t = document.getElementById('toast');
+        t.innerText = 'Selected: ' + id + ' (Copied to clipboard!)';
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 2500);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -57,7 +57,7 @@ export default function MotionServices() {
         'Tax Support',
         'Reporting',
       ],
-      badge: 'ZERO-PENALTY GUARANTEE · 5TH OF MO. CLOSING',
+      badge: 'AUDIT-READY COMPLIANCE · TIMELY BOOKS CLOSING',
     },
   ];
 
