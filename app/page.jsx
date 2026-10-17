@@ -4,7 +4,6 @@ import GlobalDeliveryTree from '../components/GlobalDeliveryTree';
 import MotionContact from '../components/MotionContact';
 import SiteNav from '../components/SiteNav';
 import SiteFooter from '../components/SiteFooter';
-import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -31,6 +30,7 @@ export default function Home() {
 
       {/* ══════════ SCROLL 1: HERO ══════════ */}
       <section className="hero" id="top">
+        <h1 className="sr-only">Reddington Global — Operational Scale, Engineered for Enterprise</h1>
         <div className="hero__bg" aria-hidden="true">
           <video
             autoPlay
@@ -40,42 +40,14 @@ export default function Home() {
             preload="auto"
             className="hero__video"
           >
-            <source src="/assets/video/hero-casual-backup.mp4" type="video/mp4" />
-            <source src="/assets/video/hero_casual_backup.mp4" type="video/mp4" />
+            <source src="/assets/video/Hero-Services-RGC.mp4" type="video/mp4" />
           </video>
-          <div className="hero__veil"></div>
-          <svg className="hero__grid" width="100%" height="100%" aria-hidden="true">
-            <defs>
-              <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
-                <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(212,159,45,0.08)" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
         </div>
-        <div className="container hero__content">
-          <p className="eyebrow reveal">Talent · Customer Operations · SaaS Engineering · Statutory Compliance</p>
-          <h1 className="hero__title">
-            <span className="w">Operational</span>{' '}
-            <span className="w">scale,</span>{' '}
-            <span className="w">engineered</span>{' '}
-            <span className="w">for</span>{' '}
-            <span className="w">enterprise.</span>
-          </h1>
-          <p className="hero__sub reveal">
-            From specialized staffing and 24/7 BPO to full-stack digital solutions and statutory tax compliance, we deliver integrated operational muscle to scale your business with confidence.
-          </p>
-          <div className="hero__cta reveal">
-            <a href="#contact" className="btn btn--gold">Consultancy @ ₹99</a>
-            <a href="#services" className="btn btn--ghost">Explore Services</a>
-            <Link href="/bpo-partnerships" className="btn btn--ghost">BPO Partnerships</Link>
-          </div>
-          <div className="hero__trust reveal">
-            <span className="hero__trust-badge">NASSCOM Certified</span>
-            <span className="hero__trust-item">GSTN & MCA Ready</span>
-            <span className="hero__trust-item">PCI-DSS & AES-256</span>
-            <span className="hero__trust-item">Dual-Shore (India & USA)</span>
-          </div>
+      </section>
+
+      {/* ══════════ STATS STRIP (BELOW HERO VIDEO) ══════════ */}
+      <section className="hero-stats-strip" aria-label="Key Performance Metrics">
+        <div className="container">
           <div className="hero__stats reveal">
             <div className="stat">
               <span className="stat__num" data-count="20">0</span>
@@ -99,7 +71,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <a href="#services" className="hero__scroll" aria-label="Scroll to services"><span></span></a>
       </section>
 
       {/* ══════════ SCROLL 2: SERVICES ══════════ */}
