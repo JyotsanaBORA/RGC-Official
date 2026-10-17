@@ -6,6 +6,44 @@ import Link from 'next/link';
 export default function SiteNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('services');
+  const [theme, setTheme] = useState('light');
+  const [mounted, setMounted] = useState(false);
+
+  // Initialize theme from storage/DOM on mount (Default: light)
+  useEffect(() => {
+    setMounted(true);
+    const currentTheme =
+      document.documentElement.getAttribute('data-theme') ||
+      localStorage.getItem('rgc-theme') ||
+      'light';
+    setTheme(currentTheme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.body.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark') {
+      document.documentElement.classList.add('dark-theme');
+      document.body.classList.add('dark-theme');
+    } else {
+      document.documentElement.classList.remove('dark-theme');
+      document.body.classList.remove('dark-theme');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    document.body.setAttribute('data-theme', nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark-theme');
+      document.body.classList.add('dark-theme');
+    } else {
+      document.documentElement.classList.remove('dark-theme');
+      document.body.classList.remove('dark-theme');
+    }
+    try {
+      localStorage.setItem('rgc-theme', nextTheme);
+    } catch (e) {}
+  };
 
   // Close on Escape & toggle body scroll
   useEffect(() => {
@@ -170,6 +208,42 @@ export default function SiteNav() {
             >
               Consultancy @ ₹99
             </Link>
+
+            {/* Dark / Light Theme Toggle Button — Placed at the Last */}
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+            >
+              <span className="theme-toggle-btn__track">
+                <span className="theme-toggle-btn__thumb">
+                  {theme === 'light' ? (
+                    /* Show Moon to switch to Dark */
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                  ) : (
+                    /* Show Sun to switch to Light */
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="5" />
+                      <line x1="12" y1="1" x2="12" y2="3" />
+                      <line x1="12" y1="21" x2="12" y2="23" />
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                      <line x1="1" y1="12" x2="3" y2="12" />
+                      <line x1="21" y1="12" x2="23" y2="12" />
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                  )}
+                </span>
+                <span className="theme-toggle-btn__label">
+                  {theme === 'light' ? 'Dark' : 'Light'}
+                </span>
+              </span>
+            </button>
           </div>
         </div>
       </header>
