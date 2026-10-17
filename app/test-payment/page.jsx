@@ -150,7 +150,7 @@ export default function TestPaymentPage() {
               customerDetails={{
                 name: 'Test Client',
                 email: 'client@example.com',
-                phone: '9818224495'
+                phone: '9818224995'
               }}
               buttonLabel={`Pay ₹${amount} with Razorpay`}
               className="btn btn--gold"

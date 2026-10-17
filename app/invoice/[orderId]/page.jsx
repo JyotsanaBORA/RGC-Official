@@ -28,7 +28,7 @@ export default async function InvoicePage({ params }) {
     customer: {
       name: 'Alex Morgan',
       email: 'alex@company.com',
-      phone: '+91 98182 24495',
+      phone: '+91 98182 24995',
       company: 'Enterprise Client Corp',
     },
     amount: 9900,
@@ -128,7 +128,7 @@ export default async function InvoicePage({ params }) {
                 750 Udyog Vihar Phase 5, Sector 19<br />
                 Gurugram, Haryana 122016, India<br />
                 Email: sales@reddingtonglobal.com<br />
-                Contact: +91 98182 24495
+                Contact: +91 98182 24995
               </div>
             </div>
 

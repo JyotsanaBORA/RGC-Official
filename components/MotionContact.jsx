@@ -23,7 +23,7 @@ const IconPin = () => (
 
 const CONTACTS = [
   { Icon: IconEmail, label: 'Email us', value: 'sales@reddingtonglobal.com', href: 'mailto:sales@reddingtonglobal.com' },
-  { Icon: IconPhone, label: 'Call us', value: '+91 98182 24495', href: 'tel:+919818224495' },
+  { Icon: IconPhone, label: 'Call us', value: '+91 98182 24995', href: 'tel:+919818224995' },
 ];
 
 const OFFICES = [
@@ -237,7 +237,7 @@ export default function MotionContact() {
                   📄 Download Invoice (PDF)
                 </a>
                 <a
-                  href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation @ ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
+                  href={`https://wa.me/919818224995?text=${encodeURIComponent(`Hi Reddington Global, I have booked a consultation @ ₹99 (Order: ${paymentSuccess.orderId}). Here are my details.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--gold"

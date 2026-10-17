@@ -9,7 +9,7 @@ You provide helpful, concise, professional, and accurate information to prospect
 Company Details:
 - Website: https://www.reddingtonglobal.com
 - Email: sales@reddingtonglobal.com
-- Phone: +91 98182 24495
+- Phone: +91 98182 24995
 - Headquarters: 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India (Dual-shore delivery: India & USA)
 - Initial consultation price: ₹99 online booking for an introductory strategy call.
 
@@ -52,7 +52,7 @@ Guidelines & Sales Conversion Behavior:
   • Digital Marketing & Growth: https://www.reddingtonglobal.com/services/digital-marketing
   • Recruitment & Staffing: https://www.reddingtonglobal.com/services/recruitment-hiring
   • General Inquiry / Multiple Services: https://www.reddingtonglobal.com/contact
-- IF USER ASKS FOR WHATSAPP, PHONE, OR CONTACT: Provide our WhatsApp & Phone (+91 98182 24495), WhatsApp link (https://wa.me/919818224495), and email sales@reddingtonglobal.com, followed by an engaging sales question.
+- IF USER ASKS FOR WHATSAPP, PHONE, OR CONTACT: Provide our WhatsApp & Phone (+91 98182 24995), WhatsApp link (https://wa.me/919818224995), and email sales@reddingtonglobal.com, followed by an engaging sales question.
 - NEVER REPEAT OR PARROT: Do NOT repeat lists of features or capabilities that were already mentioned earlier in the conversation.
 - NO COMPOUND QUESTIONS: Ask only ONE single, clear question at a time.
 `;
@@ -153,7 +153,7 @@ export async function POST(req) {
 
       // Direct handling for affirmative responses ("yes", "sure", "ok", "interested", "proceed", "book")
       if (['yes', 'yeah', 'sure', 'ok', 'okay', 'yup', 'yep', 'interested', 'yesplease', 'proceed', 'book'].includes(cleanMsg)) {
-        return `You can book your ₹99 ${targetService.name} strategy consultation directly on our dashboard: ${targetService.url} (or call/WhatsApp +91 98182 24495).\nWhat is your target launch timeline or volume so our senior consultants can prepare customized blueprints for your call?`;
+        return `You can book your ₹99 ${targetService.name} strategy consultation directly on our dashboard: ${targetService.url} (or call/WhatsApp +91 98182 24995).\nWhat is your target launch timeline or volume so our senior consultants can prepare customized blueprints for your call?`;
       }
 
       // Consultative "how to improve / get better" requests (compliant advisory language, NO guarantees)
@@ -173,7 +173,7 @@ export async function POST(req) {
       }
 
       if (lastUserMsg.includes('whatsapp') || lastUserMsg.includes('phone') || lastUserMsg.includes('contact') || lastUserMsg.includes('number')) {
-        return "You can reach our senior consultants directly on WhatsApp or call at +91 98182 24495 (https://wa.me/919818224495), or email sales@reddingtonglobal.com.\nWould you like our leadership to reserve a 1-on-1 strategy slot for you today to review your business scope?";
+        return "You can reach our senior consultants directly on WhatsApp or call at +91 98182 24995 (https://wa.me/919818224995), or email sales@reddingtonglobal.com.\nWould you like our leadership to reserve a 1-on-1 strategy slot for you today to review your business scope?";
       }
 
       if (lastUserMsg.includes('web') || lastUserMsg.includes('dev') || lastUserMsg.includes('ai') || lastUserMsg.includes('agent') || lastUserMsg.includes('software') || lastUserMsg.includes('saas') || lastUserMsg.includes('ecommerce') || lastUserMsg.includes('app')) {

@@ -130,7 +130,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               📄 Download Invoice (PDF)
             </a>
             <a
-              href={`https://wa.me/919818224495?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} @ ₹99 (Order: ${status.orderId}).`)}`}
+              href={`https://wa.me/919818224995?text=${encodeURIComponent(`Hi Reddington Global, I booked a consultation for ${serviceTitle} @ ₹99 (Order: ${status.orderId}).`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn--gold svc-form-card__wa-btn"

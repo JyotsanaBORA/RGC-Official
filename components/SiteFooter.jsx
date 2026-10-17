@@ -30,7 +30,7 @@ export default function SiteFooter() {
         <div className="footer__col">
           <h4>Contact</h4>
           <a href="mailto:sales@reddingtonglobal.com">sales@reddingtonglobal.com</a>
-          <a href="tel:+919818224495">+91 98182 24495</a>
+          <a href="tel:+919818224995">+91 98182 24995</a>
         </div>
       </div>
       <div className="container footer__bar">

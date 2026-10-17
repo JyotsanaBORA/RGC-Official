@@ -98,7 +98,7 @@ export default function ServicePage({ params }) {
                     Explore Capabilities ↓
                   </a>
                   <a
-                    href="https://wa.me/919818224495"
+                    href="https://wa.me/919818224995"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="svc-dash__quick-wa"
@@ -240,8 +240,8 @@ export default function ServicePage({ params }) {
                 <a href="#consultation-form" className="btn btn--gold">
                   Consultancy @ ₹99 &rarr;
                 </a>
-                <a href="tel:+919818224495" className="btn btn--secondary">
-                  📞 +91 98182 24495
+                <a href="tel:+919818224995" className="btn btn--secondary">
+                  📞 +91 98182 24995
                 </a>
               </div>
             </div>

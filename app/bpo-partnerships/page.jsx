@@ -298,11 +298,11 @@ export default function BpoPartnershipsPage() {
               </p>
 
               <div className="ct-channels" style={{ marginTop: '28px' }}>
-                <a href="tel:+919818224495" className="ct-channel">
+                <a href="tel:+919818224995" className="ct-channel">
                   <span className="ct-channel__icon">📞</span>
                   <span className="ct-channel__text">
                     <span className="ct-channel__label">Call Our Partnership Desk</span>
-                    <span className="ct-channel__value">+91 98182 24495</span>
+                    <span className="ct-channel__value">+91 98182 24995</span>
                   </span>
                 </a>
                 <a href="mailto:sales@reddingtonglobal.com" className="ct-channel">

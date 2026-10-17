@@ -3,8 +3,8 @@
 import { usePathname } from 'next/navigation';
 import { trackContactClick } from '../lib/analytics/events';
 
-// WhatsApp support number (+91 98182 24495)
-const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919818224495';
+// WhatsApp support number (+91 98182 24995)
+const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919818224995';
 const PREFILLED_TEXT = encodeURIComponent('Hello Reddington Global, I would like to inquire about your services.');
 
 export default function FloatingWhatsApp() {

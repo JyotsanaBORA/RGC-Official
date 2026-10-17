@@ -73,7 +73,7 @@ const jsonLd = {
   logo: 'https://www.reddingtonglobal.com/assets/img/rgc-logo-opt.png',
   description:
     'Reddington Global delivers enterprise BPO services (Sales, Back Office, Customer Care), strategic consultancy (SaaS, Bookkeeping & Accountancy, IT Services), and performance Digital Marketing for businesses worldwide.',
-  telephone: '+919818224495',
+  telephone: '+919818224995',
   email: 'sales@reddingtonglobal.com',
   address: {
     '@type': 'PostalAddress',

@@ -45,33 +45,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════ STATS STRIP (BELOW HERO VIDEO) ══════════ */}
-      <section className="hero-stats-strip" aria-label="Key Performance Metrics">
-        <div className="container">
-          <div className="hero__stats reveal">
-            <div className="stat">
-              <span className="stat__num" data-count="20">0</span>
-              <span className="stat__suffix">+</span>
-              <span className="stat__label">Years Experience</span>
-            </div>
-            <div className="stat">
-              <span className="stat__num" data-count="3">0</span>
-              <span className="stat__suffix"></span>
-              <span className="stat__label">Global Delivery Hubs</span>
-            </div>
-            <div className="stat">
-              <span className="stat__num" data-count="24">0</span>
-              <span className="stat__suffix">/7</span>
-              <span className="stat__label">Continuous Uptime</span>
-            </div>
-            <div className="stat">
-              <span className="stat__num" data-count="100">0</span>
-              <span className="stat__suffix">%</span>
-              <span className="stat__label">Compliance-First</span>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ══════════ SCROLL 2: SERVICES ══════════ */}
       <section className="section services" id="services">

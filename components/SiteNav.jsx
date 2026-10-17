@@ -254,7 +254,7 @@ export default function SiteNav() {
                   </svg>
                 </a>
                 <a
-                  href="tel:+919818224495"
+                  href="tel:+919818224995"
                   aria-label="Phone"
                   className="infosys-drawer__social-link"
                 >

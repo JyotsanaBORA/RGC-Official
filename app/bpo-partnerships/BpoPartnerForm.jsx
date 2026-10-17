@@ -225,7 +225,7 @@ export default function BpoPartnerForm() {
             <button type="submit" className="btn btn--gold">
               Register Your Call Center →
             </button>
-            <a href="tel:+919818224495" className="btn btn--ghost btn--sm">
+            <a href="tel:+919818224995" className="btn btn--ghost btn--sm">
               Speak With Our Partnership Team
             </a>
           </div>
