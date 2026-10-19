@@ -40,7 +40,7 @@ export default function Home() {
             preload="auto"
             className="hero__video"
           >
-            <source src="/assets/video/Hero-Services-RGC.mp4?v=2" type="video/mp4" />
+            <source src="/assets/video/hero_casual_backup.mp4" type="video/mp4" />
           </video>
         </div>
       </section>
