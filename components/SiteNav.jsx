@@ -416,6 +416,12 @@ export default function SiteNav() {
                       </div>
                       <ul className="infosys-cat-box__list">
                         <li>
+                          <Link href="/services/web-development" onClick={() => setIsOpen(false)}>
+                            <span>Web Development</span>
+                            <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                          </Link>
+                        </li>
+                        <li>
                           <Link href="/services/saas-digital-solutions" onClick={() => setIsOpen(false)}>
                             <span>AI & SaaS Solutions</span>
                             <svg className="infosys-cat-box__arrow" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>

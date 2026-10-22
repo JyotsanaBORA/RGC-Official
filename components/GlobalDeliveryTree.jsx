@@ -26,9 +26,9 @@ export default function GlobalDeliveryTree() {
       accent: '#38BDF8',
       href: '/services/saas-digital-solutions',
       capabilities: [
+        { name: 'Web Development', href: '/services/web-development' },
         { name: 'AI & Automation', href: '/services/saas-digital-solutions' },
-        { name: 'Web / SaaS', href: '/services/saas-digital-solutions' },
-        { name: 'Applications', href: '/services/saas-digital-solutions#capabilities' },
+        { name: 'SaaS & Applications', href: '/services/saas-digital-solutions' },
         { name: 'APIs & Integrations', href: '/services/saas-digital-solutions#capabilities' },
         { name: 'Cloud', href: '/services/saas-digital-solutions#capabilities' },
       ],

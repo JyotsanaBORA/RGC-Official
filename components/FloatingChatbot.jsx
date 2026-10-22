@@ -123,7 +123,9 @@ function ChatMessageContent({ content }) {
     const matchedUrl = serviceUrlMatch[0].replace(/[.,;:!?]+$/, '');
     const localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
     let btnLabel = 'Go to Payment & Dashboard →';
-    if (matchedUrl.includes('saas-digital-solutions')) {
+    if (matchedUrl.includes('web-development')) {
+      btnLabel = 'Open Web Development Dashboard (₹99 Form) →';
+    } else if (matchedUrl.includes('saas-digital-solutions')) {
       btnLabel = 'Open Web & AI Dashboard (₹99 Form) →';
     } else if (matchedUrl.includes('bookkeeping-accountancy')) {
       btnLabel = 'Open Bookkeeping Dashboard (₹99 Form) →';
