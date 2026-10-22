@@ -164,7 +164,7 @@ export default function FloatingChatbot() {
     {
       role: 'assistant',
       content:
-        "Hello! I am Reddington Global's Enterprise Solutions Advisor for BPO, Software & AI, and Bookkeeping services.\nWhich service area or operational challenge can I help scale for your business today?",
+        "Hello! I'm Argo, Reddington Global's Executive AI Advisor for BPO, Software & AI, and Bookkeeping services.\nWhich service area or operational challenge can I help scale for your business today?",
     },
   ]);
   const [input, setInput] = useState('');
@@ -230,7 +230,7 @@ export default function FloatingChatbot() {
 
   return (
     <div className="floating-chat-container">
-      {/* Floating launcher button directly above WhatsApp */}
+      {/* Floating launcher button directly above WhatsApp with Cutout Mascot */}
       <button
         type="button"
         className={`floating-ai-btn ${isOpen ? 'is-active' : ''}`}
@@ -238,14 +238,15 @@ export default function FloatingChatbot() {
         aria-label="Open Reddington AI Assistant"
         id="floatingChatLauncher"
       >
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
-          <rect x="3" y="8" width="18" height="12" rx="4"/>
-          <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
-          <circle cx="16" cy="14" r="1.5" fill="currentColor"/>
-          <path d="M9 18h6"/>
-        </svg>
-        <span>{isOpen ? 'Close' : 'Ask AI'}</span>
+        <span className="floating-ai-btn__mascot-wrap">
+          <img
+            src="/assets/img/mascot-symbol.png"
+            alt="Argo - Reddington Mascot"
+            className="floating-ai-btn__mascot-img"
+          />
+          <span className="floating-ai-btn__online-dot" aria-hidden="true"></span>
+        </span>
+        <span className="floating-ai-btn__text">{isOpen ? 'Close' : 'Ask Argo'}</span>
       </button>
 
       {/* Chat Window */}
@@ -255,14 +256,16 @@ export default function FloatingChatbot() {
           <div className="floating-chat-header">
             <div className="floating-chat-header-info">
               <div className="floating-chat-avatar">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                </svg>
+                <img
+                  src="/assets/img/mascot-symbol.png"
+                  alt="Argo - Reddington AI Mascot"
+                  className="floating-chat-avatar__img"
+                />
               </div>
               <div>
-                <div className="floating-chat-title">Reddington AI</div>
+                <div className="floating-chat-title">Argo · Reddington AI</div>
                 <div className="floating-chat-status">
-                  <span className="floating-chat-status-dot"></span> Online
+                  <span className="floating-chat-status-dot"></span> Online · Executive Advisor
                 </div>
               </div>
             </div>
@@ -278,8 +281,40 @@ export default function FloatingChatbot() {
 
           {/* Messages */}
           <div className="floating-chat-messages">
+            {/* Mascot Intro Card on first load - Full Desk Scene */}
+            {messages.length === 1 && !loading && (
+              <div className="chat-mascot-card">
+                <div className="chat-mascot-card__banner">
+                  <img
+                    src="/assets/img/mascot-desk.png"
+                    alt="Argo - Executive Snow Leopard Mascot at Desk"
+                    className="chat-mascot-card__img"
+                  />
+                </div>
+                <div className="chat-mascot-card__content">
+                  <div className="chat-mascot-card__badge-row">
+                    <span className="chat-mascot-card__badge">24/7 AI EXECUTIVE MASCOT</span>
+                    <span className="chat-mascot-card__sub-badge">Live Support</span>
+                  </div>
+                  <h4 className="chat-mascot-card__title">Meet Argo · Solutions Advisor</h4>
+                  <p className="chat-mascot-card__desc">
+                    Seated at our operations desk with enterprise intelligence for BPO scaling, Web & AI development, and audit-ready finance.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {messages.map((m, idx) => (
               <div key={idx} className={`chat-bubble-row ${m.role === 'user' ? 'is-user' : 'is-assistant'}`}>
+                {m.role === 'assistant' && (
+                  <div className="chat-bubble-avatar" aria-hidden="true">
+                    <img
+                      src="/assets/img/mascot-symbol.png"
+                      alt="Argo"
+                      className="chat-bubble-avatar__img"
+                    />
+                  </div>
+                )}
                 <div className="chat-bubble">
                   <ChatMessageContent content={m.content} />
                 </div>
@@ -288,6 +323,13 @@ export default function FloatingChatbot() {
 
             {loading && (
               <div className="chat-bubble-row is-assistant">
+                <div className="chat-bubble-avatar" aria-hidden="true">
+                  <img
+                    src="/assets/img/mascot-symbol.png"
+                    alt="Argo"
+                    className="chat-bubble-avatar__img"
+                  />
+                </div>
                 <div className="chat-bubble chat-bubble-loading">
                   <span></span>
                   <span></span>
