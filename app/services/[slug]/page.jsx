@@ -254,11 +254,32 @@ export default function ServicePage({ params }) {
                   <span className="eyebrow">Executive Clarity</span>
                   <h2 className="svc-sec-title">Questions Before You Begin?</h2>
                   <p className="svc-sec-sub">
-                    Everything you need to know about our ₹99 introductory advisory, onboarding timeline, and SLA governance.
+                    Everything you need to know about our {svc.shortTitle || svc.title} delivery, ₹99 introductory advisory, and SLA governance.
                   </p>
                 </div>
 
                 <ServiceFaqAccordion service={svc} />
+
+                {/* Schema.org FAQPage JSON-LD for Search Engine Rich Snippets */}
+                {svc.faqs && svc.faqs.length > 0 && (
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: svc.faqs.map((faq) => ({
+                          '@type': 'Question',
+                          name: faq.q,
+                          acceptedAnswer: {
+                            '@type': 'Answer',
+                            text: faq.a,
+                          },
+                        })),
+                      }),
+                    }}
+                  />
+                )}
               </section>
 
               {/* 8. Institutional Verification & Headquarters Notice */}

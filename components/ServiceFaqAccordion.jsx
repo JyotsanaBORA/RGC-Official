@@ -28,13 +28,15 @@ const DEFAULT_FAQS = [
 export default function ServiceFaqAccordion({ service }) {
   const [openIdx, setOpenIdx] = useState(0);
 
+  const faqs = service?.faqs && service.faqs.length > 0 ? service.faqs : DEFAULT_FAQS;
+
   const toggle = (idx) => {
     setOpenIdx(openIdx === idx ? -1 : idx);
   };
 
   return (
     <div className="svc-faq-list">
-      {DEFAULT_FAQS.map((item, i) => {
+      {faqs.map((item, i) => {
         const isOpen = openIdx === i;
         return (
           <div key={i} className={`svc-faq-item ${isOpen ? 'is-open' : ''}`}>
