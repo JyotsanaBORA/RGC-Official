@@ -155,6 +155,44 @@ const SERVICE_CONFIGS = {
       { value: 'SOC-2 / PCI', label: 'Security Grade' },
     ],
   },
+  'web-development': {
+    badge: 'Enterprise Web Engineering',
+    systemId: 'SYS-WEB-REACT-NEXTJS',
+    accentColor: '#3B82F6',
+    accentGradient: 'linear-gradient(135deg, #3B82F6, #60A5FA)',
+    flowTitle: 'Modern Next.js, Headless CMS & Cloud Web Pipeline',
+    steps: [
+      {
+        num: '01',
+        title: 'Component Design & UX Architecture',
+        meta: 'Responsive Figma to React System',
+        tag: 'Design System',
+      },
+      {
+        num: '02',
+        title: 'Full-Stack Next.js / React Engine',
+        meta: 'Server-Side Rendering & Edge Routing',
+        tag: 'Modern Framework',
+      },
+      {
+        num: '03',
+        title: 'Headless CMS & API Integrations',
+        meta: 'REST, GraphQL & Webhook Fabrics',
+        tag: 'API Fabric',
+      },
+      {
+        num: '04',
+        title: 'Edge Deployment & Vitals Optimization',
+        meta: 'Sub-second LCP & Global CDN Caching',
+        tag: 'Edge Performance',
+      },
+    ],
+    kpis: [
+      { value: '< 1.2s', label: 'Largest Contentful Paint' },
+      { value: '99.9%', label: 'Cloud Uptime SLA' },
+      { value: '100%', label: 'Mobile Responsive Score' },
+    ],
+  },
   'bookkeeping-accountancy': {
     badge: 'Bookkeeping & Accountancy',
     systemId: 'SYS-FIN-GOVERNANCE',

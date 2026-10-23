@@ -18,9 +18,10 @@ export const SERVICE_CATEGORIES = [
   {
     category: 'Software Development and IT Solutions',
     options: [
-      { value: 'SaaS and IT Digital Solutions', label: 'SaaS and IT Digital Solutions' },
+      { value: 'Web Development', label: 'Web Development' },
+      { value: 'Web Development & Modern Engineering', label: 'Web Development & Modern Engineering' },
+      { value: 'SaaS and IT Digital Solutions', label: 'AI & SaaS Solutions' },
       { value: 'Digital Marketing and Growth', label: 'Digital Marketing and Growth' },
-      { value: 'Web / SaaS Development', label: 'Web / SaaS Development' },
       { value: 'Custom Applications and APIs', label: 'Custom Applications and APIs' },
       { value: 'Cloud Infrastructure and Integrations', label: 'Cloud and Integrations' },
     ],

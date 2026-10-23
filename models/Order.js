@@ -37,6 +37,30 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    // GST Number (Optional corporate tax identifier)
+    customerGst: {
+      type: String,
+      default: '',
+      index: true,
+    },
+    gstNumber: {
+      type: String,
+      default: '',
+    },
+
+    // Selected Service Package / Tier
+    selectedPackage: {
+      type: String,
+      default: '',
+    },
+    packageId: {
+      type: String,
+      default: '',
+    },
+    packagePrice: {
+      type: Number,
+      default: 0,
+    },
 
     // Amount representation
     amount: {
@@ -70,6 +94,7 @@ const OrderSchema = new mongoose.Schema(
       email: { type: String, default: '' },
       phone: { type: String, default: '' },
       company: { type: String, default: '' },
+      gstNumber: { type: String, default: '' },
     },
     paymentId: {
       type: String,
@@ -85,6 +110,19 @@ const OrderSchema = new mongoose.Schema(
     notes: {
       type: mongoose.Schema.Types.Mixed,
       default: {},
+    },
+
+    // Marketing & Ad Campaign Attribution (Meta Ads, Google, UTMs)
+    attribution: {
+      source: { type: String, default: 'direct', index: true },
+      medium: { type: String, default: 'none' },
+      campaign: { type: String, default: 'none', index: true },
+      content: { type: String, default: '' },
+      term: { type: String, default: '' },
+      fbclid: { type: String, default: '' },
+      gclid: { type: String, default: '' },
+      landingPage: { type: String, default: '' },
+      referrer: { type: String, default: '' },
     },
 
     // Call Tracking / CRM Status

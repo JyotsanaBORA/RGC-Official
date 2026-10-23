@@ -39,9 +39,9 @@ export default function MotionServices() {
       href: '/services/saas-digital-solutions',
       capabilitiesHeader: 'CORE PRACTICE CAPABILITIES:',
       services: [
+        'Web Development',
         'AI & Automation',
-        'Web / SaaS',
-        'Applications',
+        'SaaS & Applications',
         'APIs & Integrations',
         'Cloud',
       ],

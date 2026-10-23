@@ -37,6 +37,9 @@ export default async function InvoicePage({ params }) {
   };
 
   const invoiceNo = `INV-${displayOrder.orderId.replace('order_', '').toUpperCase()}`;
+  const totalAmount = displayOrder.amountInRupees || (displayOrder.amount ? Math.round(displayOrder.amount / 100) : (displayOrder.packagePrice || 4999));
+  const taxableSubtotal = (totalAmount / 1.18).toFixed(2);
+  const gstAmount = (totalAmount - Number(taxableSubtotal)).toFixed(2);
   const orderDate = new Date(displayOrder.createdAt || Date.now()).toLocaleDateString('en-IN', {
     day: '2-digit',
     month: 'short',
@@ -116,7 +119,7 @@ export default async function InvoicePage({ params }) {
         <div style={{ padding: '36px 40px' }}>
           {/* Status Badge */}
           <div style={{ display: 'inline-block', background: '#ECFDF5', color: '#047857', fontWeight: '700', fontSize: '12px', padding: '4px 12px', borderRadius: '999px', marginBottom: '24px', border: '1px solid #A7F3D0' }}>
-            &bull; Payment Verified (₹99.00)
+            &bull; Payment Verified (₹{Number(totalAmount).toLocaleString('en-IN')}.00)
           </div>
 
           {/* Supplier & Customer Columns */}
@@ -137,6 +140,9 @@ export default async function InvoicePage({ params }) {
               <strong style={{ fontSize: '15px', color: '#0F172A' }}>{displayOrder.customer?.name || displayOrder.customerName || 'Valued Client'}</strong>
               <div style={{ fontSize: '13px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
                 {(displayOrder.customer?.company || displayOrder.customerCompany) && <>{displayOrder.customer?.company || displayOrder.customerCompany}<br /></>}
+                {(displayOrder.customerGst || displayOrder.gstNumber || displayOrder.customer?.gstNumber) && (
+                  <><strong>GSTIN:</strong> {displayOrder.customerGst || displayOrder.gstNumber || displayOrder.customer?.gstNumber}<br /></>
+                )}
                 Email: {displayOrder.customer?.email || displayOrder.customerEmail || displayOrder.email || 'N/A'}<br />
                 Phone: {displayOrder.customer?.phone || displayOrder.customerPhone || 'N/A'}
               </div>
@@ -190,33 +196,40 @@ export default async function InvoicePage({ params }) {
             <tbody>
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td style={{ padding: '14px 12px' }}>
-                  <strong style={{ fontSize: '14px', color: '#0F172A' }}>{displayOrder.service || 'Strategic Business Consultancy'}</strong>
-                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>1-on-1 Senior Consultant Strategy Session (30 mins)</div>
+                  <strong style={{ fontSize: '14px', color: '#0F172A' }}>{displayOrder.service || 'Website Development Service'}</strong>
+                  {displayOrder.selectedPackage && (
+                    <div style={{ fontSize: '12px', color: '#B47814', fontWeight: '700', marginTop: '2px' }}>
+                      Package / Plan: {displayOrder.selectedPackage}
+                    </div>
+                  )}
+                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
+                    {displayOrder.selectedPackage ? `Dedicated Service Booking: ${displayOrder.selectedPackage}` : 'Dedicated Developer Service Booking'}
+                  </div>
                 </td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>9983</td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>1</td>
-                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '14px', color: '#0F172A' }}>₹83.90</td>
+                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '14px', color: '#0F172A' }}>₹{Number(taxableSubtotal).toLocaleString('en-IN')}</td>
               </tr>
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#64748B' }}>Taxable Subtotal:</td>
-                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹83.90</td>
+                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{Number(taxableSubtotal).toLocaleString('en-IN')}</td>
               </tr>
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#64748B' }}>GST (18%):</td>
-                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹15.10</td>
+                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{Number(gstAmount).toLocaleString('en-IN')}</td>
               </tr>
               <tr style={{ borderTop: '2px solid #0F172A', background: '#FFFDF9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '14px 12px', fontSize: '15px', fontWeight: '800', color: '#0F172A' }}>Total Amount Paid:</td>
-                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '18px', fontWeight: '800', color: '#D49F2D' }}>₹99.00</td>
+                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '18px', fontWeight: '800', color: '#D49F2D' }}>₹{Number(totalAmount).toLocaleString('en-IN')}.00</td>
               </tr>
             </tbody>
           </table>
 
           {/* Notes and Terms */}
           <div style={{ background: '#FFFBEB', border: '1px solid #FEF3C7', borderRadius: '8px', padding: '16px 20px', marginBottom: '24px' }}>
-            <h4 style={{ margin: '0 0 6px', color: '#92400E', fontSize: '13px' }}>Consultancy Scheduling</h4>
+            <h4 style={{ margin: '0 0 6px', color: '#92400E', fontSize: '13px' }}>Service Delivery & Onboarding</h4>
             <p style={{ margin: 0, color: '#78350F', fontSize: '12.5px', lineHeight: '1.5' }}>
-              Your dedicated consulting partner will contact you at <strong>{displayOrder.customer?.email || displayOrder.customerEmail || displayOrder.email || 'your email'}</strong> or <strong>{displayOrder.customer?.phone || displayOrder.customerPhone || 'your phone'}</strong> within 24 business hours to coordinate your strategic briefing.
+              Your dedicated project lead will contact you at <strong>{displayOrder.customer?.email || displayOrder.customerEmail || displayOrder.email || 'your email'}</strong> or <strong>{displayOrder.customer?.phone || displayOrder.customerPhone || 'your phone'}</strong> within 24 business hours to initiate project kickoff and delivery requirements.
             </p>
           </div>
 

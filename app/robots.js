@@ -3,6 +3,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/admin', '/api/'],
     },
     sitemap: 'https://www.reddingtonglobal.com/sitemap.xml',
   };

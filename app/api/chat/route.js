@@ -42,7 +42,8 @@ Guidelines & Sales Conversion Behavior:
   When high numbers are mentioned (e.g. ₹50L–₹1Cr payroll, 50+ agent seats, high volume), treat them as an enterprise client by citing audit-grade statutory compliance, structured risk controls, and dedicated SLA governance.
 - DEDICATED SERVICE PAYMENT & DASHBOARD ENDPOINTS:
   Each service has its own dedicated dashboard with an embedded ₹99 consultation & payment form:
-  • Web Development, AI, Apps, SaaS, Tech & eCommerce: https://www.reddingtonglobal.com/services/saas-digital-solutions
+  • Web Development, Next.js, Frontend & Portals: https://www.reddingtonglobal.com/services/web-development
+  • AI Engineering, SaaS, Cloud & Automation: https://www.reddingtonglobal.com/services/saas-digital-solutions
   • Bookkeeping, Accounts, Tax Compliance, GST & TDS: https://www.reddingtonglobal.com/services/bookkeeping-accountancy
   • Payroll & Compensation: https://www.reddingtonglobal.com/services/payroll-compensation
   • Customer Service & Omnichannel CX: https://www.reddingtonglobal.com/services/bpo-customer-service
@@ -109,9 +110,14 @@ export async function POST(req) {
         url: 'https://www.reddingtonglobal.com/contact',
       };
 
-      if (allText.includes('web') || allText.includes('saas') || allText.includes('software') || allText.includes('ecommerce') || allText.includes('e-commerce') || allText.includes('ai') || allText.includes('agent') || allText.includes('app') || allText.includes('dev')) {
+      if (allText.includes('web development') || allText.includes('website') || allText.includes('frontend') || allText.includes('landing page') || allText.includes('next.js') || allText.includes('react web')) {
         targetService = {
-          name: 'AI, Web & Software Development',
+          name: 'Web Development & Modern Engineering',
+          url: 'https://www.reddingtonglobal.com/services/web-development',
+        };
+      } else if (allText.includes('web') || allText.includes('saas') || allText.includes('software') || allText.includes('ecommerce') || allText.includes('e-commerce') || allText.includes('ai') || allText.includes('agent') || allText.includes('app') || allText.includes('dev')) {
+        targetService = {
+          name: 'AI, SaaS & Digital Solutions',
           url: 'https://www.reddingtonglobal.com/services/saas-digital-solutions',
         };
       } else if (allText.includes('bookkeeping') || allText.includes('account') || allText.includes('tax') || allText.includes('gst') || allText.includes('tds') || allText.includes('ledger') || allText.includes('penalty')) {

@@ -62,6 +62,8 @@ export async function GET(req) {
         customerEmail: order.customer?.email || order.customerEmail || order.email || '',
         customerPhone: order.customer?.phone || order.customerPhone || '',
         customerCompany: order.customer?.company || order.customerCompany || '',
+        customerGst: order.customerGst || order.gstNumber || order.customer?.gstNumber || order.notes?.gst_number || '',
+        selectedPackage: order.selectedPackage || order.notes?.selected_package || '',
         callStatus: callStatus,
         callNotes: order.callNotes || '',
         calledAt: order.calledAt || null,
@@ -69,6 +71,13 @@ export async function GET(req) {
         paidAt: order.paidAt || null,
         createdAtIST: order.createdAtIST || '',
         paidAtIST: order.paidAtIST || '',
+        notes: order.notes || {},
+        attribution: order.attribution || {
+          source: order.notes?.utm_source || 'direct',
+          medium: order.notes?.utm_medium || 'none',
+          campaign: order.notes?.utm_campaign || 'none',
+          landingPage: order.notes?.landing_page || '/',
+        },
       };
     });
 
