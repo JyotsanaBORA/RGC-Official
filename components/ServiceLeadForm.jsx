@@ -6,22 +6,26 @@ import { startConsultationPayment } from '../lib/payment';
 import { getPackagesForService } from '../lib/packages-data';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
+  // Strictly isolate Website Development from all other enterprise practices
   const isWebDev =
-    (serviceSlug || '').includes('web') ||
-    (serviceTitle || '').toLowerCase().includes('web') ||
-    !serviceSlug;
+    serviceSlug === 'web-development' ||
+    serviceSlug === 'web-dev' ||
+    serviceSlug === 'website-development' ||
+    (serviceTitle || '').toLowerCase().includes('website development');
 
-  const packages = getPackagesForService(serviceSlug || serviceTitle || 'web-development');
+  const packages = getPackagesForService(serviceSlug || serviceTitle);
   const defaultPkg = packages.find((p) => p.isDefault) || packages[0];
+
+  const defaultServiceArea = serviceTitle || 'Customer Service & Support';
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     company: '',
-    businessType: 'Clinic / Health',
+    businessType: isWebDev ? 'Clinic / Healthcare' : defaultServiceArea,
     gstNumber: '',
-    packageId: defaultPkg?.id || 'web-business-4999',
+    packageId: defaultPkg?.id || (isWebDev ? 'web-business-4999' : 'consultation-99'),
     requirement: '',
   });
 
@@ -37,9 +41,13 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     const pkgs = getPackagesForService(serviceSlug || serviceTitle);
     const def = pkgs.find((p) => p.isDefault) || pkgs[0];
     if (def) {
-      setFormData((prev) => ({ ...prev, packageId: def.id }));
+      setFormData((prev) => ({
+        ...prev,
+        packageId: def.id,
+        businessType: isWebDev ? prev.businessType : (serviceTitle || prev.businessType),
+      }));
     }
-  }, [serviceSlug, serviceTitle]);
+  }, [serviceSlug, serviceTitle, isWebDev]);
 
   const currentPackage =
     packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
@@ -58,12 +66,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
 
-    const activeService = serviceTitle || 'Website Development';
-    const activePrice = currentPackage?.price || 4999;
+    const activeService = serviceTitle || (isWebDev ? 'Website Development' : 'Strategic Consultation');
+    const activePrice = currentPackage?.price || (isWebDev ? 4999 : 99);
 
     trackLeadSubmission({
-      form_name: `service_booking_${serviceSlug || 'web'}`,
-      form_location: `service_card_${serviceSlug || 'web'}`,
+      form_name: `service_booking_${serviceSlug || (isWebDev ? 'web' : 'consultation')}`,
+      form_location: `service_card_${serviceSlug || (isWebDev ? 'web' : 'consultation')}`,
       service_requested: `${activeService} - ${currentPackage?.name}`,
       amount: activePrice,
     });
@@ -76,12 +84,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           phone: formData.phone,
           company: formData.company || formData.businessType,
           gstNumber: formData.gstNumber,
-          selectedPackage: currentPackage?.name || 'Complete Business Website',
-          packageId: currentPackage?.id || 'web-business-4999',
+          selectedPackage: currentPackage?.name || (isWebDev ? 'Basic Bundle' : '1-on-1 Strategic Consultation'),
+          packageId: currentPackage?.id || (isWebDev ? 'web-business-4999' : 'consultation-99'),
           packagePrice: activePrice,
-          message: `Business Type: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard 5-page setup'}`,
+          message: `${isWebDev ? 'Business Type' : 'Practice Area'}: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard engagement'}`,
         },
-        serviceName: `${activeService} — ${currentPackage?.name || 'Booking'}`,
+        serviceName: isWebDev ? 'Website Development — Basic Bundle' : `${activeService} — Strategic Consultation`,
         amount: activePrice,
         onSuccess: (data) => {
           setStatus({
@@ -116,7 +124,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
       setStatus({
         loading: false,
         success: false,
-        error: err.message || 'Error initializing booking.',
+        error: err.message || 'Error initializing booking gateway.',
         orderId: '',
         paymentId: '',
       });
@@ -135,69 +143,55 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
 
         <div className="svc-curved-title">
           <span className="svc-curved-title-icon">⚡</span>
-          <span>RGC DEV STUDIO // WORKSTATION</span>
+          <span>{isWebDev ? 'RGC DEV STUDIO // WORKSTATION' : 'RGC ADVISORY // CONSULTATION'}</span>
         </div>
 
         <div className="svc-curved-status">
           <span className="svc-screen-status-dot"></span>
-          <span>LIVE IN 7 DAYS</span>
+          <span>{isWebDev ? 'LIVE IN 7 DAYS' : 'DIRECTOR SLOTS OPEN'}</span>
         </div>
       </div>
 
       {/* ── Screen Ambient Inner Area ── */}
       <div className="svc-curved-display">
-        {/* Floating Center Glassmorphic Card (matching Image 3) */}
+        {/* Floating Center Glassmorphic Card */}
         <div className="svc-clean-card">
-          <h3 className="svc-clean-title">Book Your Website</h3>
+          <h3 className="svc-clean-title">
+            {isWebDev ? 'Book Your Website' : 'Schedule Consultation'}
+          </h3>
           <p className="svc-clean-subtitle">
-            Get your business live in 7 days &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
+            {isWebDev ? (
+              <>
+                Get your business live in 7 days &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
+              </>
+            ) : (
+              <>
+                1-on-1 strategy call for {serviceTitle || 'Enterprise Operations'} &bull; <strong>{currentPackage?.priceDisplay || '₹99 (One-Time)'}</strong>
+              </>
+            )}
           </p>
 
           {status.success ? (
             <div className="svc-clean-success">
               <div className="svc-clean-success-icon">✓</div>
-              <h4>Project Registered Successfully!</h4>
+              <h4>{isWebDev ? 'Project Registered Successfully!' : 'Consultation Scheduled Successfully!'}</h4>
               <p>
                 Thank you, <strong>{formData.name || 'Partner'}</strong>. Your booking for{' '}
-                <strong>{currentPackage?.name || 'Website Development'}</strong> is confirmed.
+                <strong>{currentPackage?.name || (isWebDev ? 'Basic Bundle' : 'Strategic Consultation')}</strong> is confirmed.
               </p>
               <div className="svc-clean-success-box">
                 <div>
                   <strong>Order ID:</strong> {status.orderId}
                 </div>
                 <div>
-                  <strong>Selected Plan:</strong> {currentPackage?.name} ({currentPackage?.priceDisplay})
-                </div>
-                <div>
-                  <strong>Turnaround SLA:</strong> {currentPackage?.timeline || 'Live in 7 Days'}
-                </div>
-                {formData.gstNumber && (
-                  <div>
-                    <strong>GSTIN:</strong> {formData.gstNumber}
-                  </div>
-                )}
-                <div className="svc-clean-success-note">
-                  ✉️ Tax invoice and specification onboarding dispatched to <strong>{formData.email}</strong>.
+                  <strong>{isWebDev ? 'Selected Plan:' : 'Session Type:'}</strong> {currentPackage?.name} ({currentPackage?.priceDisplay})
                 </div>
               </div>
-              <div className="svc-clean-success-actions">
-                <a
-                  href={`/invoice/${status.orderId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--secondary svc-clean-btn-compact"
-                >
-                  📄 View Tax Invoice (PDF)
-                </a>
-                <a
-                  href={`https://wa.me/919818224995?text=${encodeURIComponent(`Hi Reddington Global Developers, I have booked the ${currentPackage?.name || 'Website'} package (Order: ${status.orderId}). Here are my details to start Day 1 design.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="svc-clean-btn svc-clean-btn--wa"
-                >
-                  Connect on WhatsApp Now ›
-                </a>
-              </div>
+              <p style={{ marginTop: '14px', fontSize: '13px', color: '#D4C5B9' }}>
+                {isWebDev
+                  ? 'Our lead developer has received your specifications. We will contact you on WhatsApp within 2 hours.'
+                  : 'Our Practice Director has reserved your strategic slot. A calendar invitation and briefing note have been sent.'}
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="svc-clean-form">
@@ -214,7 +208,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   name="name"
                   type="text"
                   required
-                  placeholder="First & Last Name *"
+                  placeholder={isWebDev ? 'First & Last Name *' : 'Full Name *'}
                   value={formData.name}
                   onChange={handleChange}
                   className="svc-clean-input"
@@ -231,14 +225,14 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 />
               </div>
 
-              {/* Row 2: Email & Business Name */}
+              {/* Row 2: Email & Business / Company Name */}
               <div className="svc-clean-row">
                 <input
                   id="svc-email"
                   name="email"
                   type="email"
                   required
-                  placeholder="Email Address *"
+                  placeholder={isWebDev ? 'Email Address *' : 'Corporate Email *'}
                   value={formData.email}
                   onChange={handleChange}
                   className="svc-clean-input"
@@ -247,35 +241,57 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   id="svc-company"
                   name="company"
                   type="text"
-                  placeholder="Business / Brand Name"
+                  placeholder={isWebDev ? 'Business / Brand Name' : 'Company / Organization'}
                   value={formData.company}
                   onChange={handleChange}
                   className="svc-clean-input"
                 />
               </div>
 
-              {/* Row 3: Business Type & GSTIN */}
+              {/* Row 3: Business Type / Practice Area & GSTIN */}
               <div className="svc-clean-row">
                 <div className="svc-clean-select-wrap">
-                  <select
-                    id="svc-businessType"
-                    name="businessType"
-                    value={formData.businessType}
-                    onChange={handleChange}
-                    className="svc-clean-input svc-clean-select"
-                  >
-                    <option value="Clinic / Healthcare">Clinic / Healthcare</option>
-                    <option value="Café / Restaurant">Café / Restaurant</option>
-                    <option value="Salon / Spa">Salon / Spa</option>
-                    <option value="Coaching / Institute">Coaching / Education</option>
-                    <option value="Boutique / Fashion">Boutique / Retail</option>
-                    <option value="Gym / Fitness">Gym / Fitness</option>
-                    <option value="CA / Legal / Consultant">CA / Legal / Advisory</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Interior Studio">Interior / Architect</option>
-                    <option value="Tech / Startup">Tech / Startup</option>
-                    <option value="Other Business">Other Business</option>
-                  </select>
+                  {isWebDev ? (
+                    <select
+                      id="svc-businessType"
+                      name="businessType"
+                      value={formData.businessType}
+                      onChange={handleChange}
+                      className="svc-clean-input svc-clean-select"
+                    >
+                      <option value="Clinic / Healthcare">Clinic / Healthcare</option>
+                      <option value="Café / Restaurant">Café / Restaurant</option>
+                      <option value="Salon / Spa">Salon / Spa</option>
+                      <option value="Coaching / Institute">Coaching / Education</option>
+                      <option value="Boutique / Fashion">Boutique / Retail</option>
+                      <option value="Gym / Fitness">Gym / Fitness</option>
+                      <option value="CA / Legal / Consultant">CA / Legal / Advisory</option>
+                      <option value="Real Estate">Real Estate</option>
+                      <option value="Interior Studio">Interior / Architect</option>
+                      <option value="Tech / Startup">Tech / Startup</option>
+                      <option value="Other Business">Other Business</option>
+                    </select>
+                  ) : (
+                    <select
+                      id="svc-businessType"
+                      name="businessType"
+                      value={formData.businessType}
+                      onChange={handleChange}
+                      className="svc-clean-input svc-clean-select"
+                    >
+                      <option value="Customer Service & Support">Customer Service & CX</option>
+                      <option value="Back Office Operations & KYC">Back Office Operations & KYC</option>
+                      <option value="Sales & Lead Generation">Sales & Lead Generation</option>
+                      <option value="Performance Management & QA">Performance Management & QA</option>
+                      <option value="Recruitment & Talent Staffing">Recruitment & Staffing</option>
+                      <option value="AI Engineering & SaaS Solutions">AI Engineering & SaaS</option>
+                      <option value="Bookkeeping & Accountancy">Bookkeeping & Tax (GST/TDS)</option>
+                      <option value="Payroll & Compensation Management">Payroll & Compensation</option>
+                      <option value="Digital Marketing & Growth">Digital Marketing & Growth</option>
+                      <option value="BPO Partnership / Campaign">BPO Partnership / Campaign</option>
+                      <option value="General Enterprise Advisory">General Enterprise Advisory</option>
+                    </select>
+                  )}
                   <span className="svc-clean-arrow" aria-hidden="true">▾</span>
                 </div>
 
@@ -291,42 +307,31 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 />
               </div>
 
-              {/* Row 4: Website Package Selection (Single Basic Plan or Multi-tier Dropdown) */}
-              {packages.length > 1 ? (
-                <div className="svc-clean-select-wrap svc-clean-full">
-                  <select
-                    id="svc-package"
-                    name="packageId"
-                    value={formData.packageId}
-                    onChange={handleChange}
-                    className="svc-clean-input svc-clean-select"
-                  >
-                    {packages.map((pkg) => (
-                      <option key={pkg.id} value={pkg.id}>
-                        {pkg.name} — {pkg.priceDisplay}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="svc-clean-arrow" aria-hidden="true">▾</span>
+              {/* Row 4: Plan Chip / Consultation Display */}
+              <div className="svc-clean-plan-chip svc-clean-full">
+                <div className="svc-clean-plan-chip__left">
+                  <span className="svc-clean-plan-chip__tag">
+                    {isWebDev ? 'PLAN' : 'SESSION'}
+                  </span>
+                  <strong className="svc-clean-plan-chip__name">
+                    {currentPackage?.name || (isWebDev ? 'Basic Bundle' : '1-on-1 Strategic Consultation')}
+                  </strong>
                 </div>
-              ) : (
-                <div className="svc-clean-plan-chip svc-clean-full">
-                  <div className="svc-clean-plan-chip__left">
-                    <span className="svc-clean-plan-chip__tag">PLAN</span>
-                    <strong className="svc-clean-plan-chip__name">{currentPackage?.name || 'Basic Bundle'}</strong>
-                  </div>
-                  <div className="svc-clean-plan-chip__price">
-                    {currentPackage?.priceDisplay || '₹4,999 + GST'}
-                  </div>
+                <div className="svc-clean-plan-chip__price">
+                  {currentPackage?.priceDisplay || (isWebDev ? '₹4,999 + GST' : '₹99 (One-Time)')}
                 </div>
-              )}
+              </div>
 
               {/* Row 5: Notes & Requirements */}
               <input
                 id="svc-requirement"
                 name="requirement"
                 type="text"
-                placeholder="Message / Requirements (e.g. 5 pages, logo ready, need booking)"
+                placeholder={
+                  isWebDev
+                    ? 'Message / Requirements (e.g. 5 pages, logo ready, need booking)'
+                    : `Scope / Objectives (e.g. team size, current challenges, timeline for ${serviceTitle || 'operations'})...`
+                }
                 value={formData.requirement}
                 onChange={handleChange}
                 className="svc-clean-input svc-clean-full"
@@ -340,29 +345,63 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               >
                 {status.loading ? (
                   <span className="svc-clean-loading">
-                    <span className="svc-form-spinner"></span> Initializing Booking...
+                    <span className="svc-form-spinner"></span> Initializing Gateway...
                   </span>
                 ) : (
-                  isWebDev ? 'Book your website @4999 +gst ›' : `Book Service (${currentPackage?.priceDisplay || '₹4,999'}) ›`
+                  isWebDev ? 'Book your website @4999 +gst ›' : 'Confirm Slot & Pay ₹99 →'
                 )}
               </button>
 
               {/* Micro-Trust Strip */}
               <div className="svc-clean-trust">
-                <span>⚡ Live in 7 Days</span>
-                <span>&bull;</span>
-                <span>✔ 30-Day Free Support</span>
-                <span>&bull;</span>
-                <span>🔒 100% Code Ownership</span>
+                {isWebDev ? (
+                  <>
+                    <span>⚡ Live in 7 Days</span>
+                    <span>&bull;</span>
+                    <span>✔ 30-Day Free Support</span>
+                    <span>&bull;</span>
+                    <span>🔒 100% Code Ownership</span>
+                  </>
+                ) : (
+                  <>
+                    <span>🔒 Strict Mutual NDA</span>
+                    <span>&bull;</span>
+                    <span>⚡ Instant Gateway</span>
+                    <span>&bull;</span>
+                    <span>📄 GST Tax Invoice</span>
+                  </>
+                )}
               </div>
 
-
+              {/* Direct WhatsApp Fast-Track */}
+              <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                <a
+                  href={`https://wa.me/919818224995?text=${encodeURIComponent(
+                    isWebDev
+                      ? 'Hi Reddington Global, I want to book the Basic Website package for ₹4,999.'
+                      : `Hi Reddington Global, I would like to schedule a ₹99 strategic consultation for ${serviceTitle || 'our enterprise operations'}.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    color: '#F6D97E',
+                    fontSize: '0.8rem',
+                    fontWeight: 650,
+                    textDecoration: 'none',
+                    opacity: 0.9,
+                    transition: 'opacity 0.2s',
+                  }}
+                >
+                  <span>💬 Fast-Track via WhatsApp (+91 98182 24995)</span>
+                </a>
+              </div>
             </form>
           )}
         </div>
       </div>
-
-
     </div>
   );
 }

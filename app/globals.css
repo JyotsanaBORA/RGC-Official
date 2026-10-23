@@ -8645,6 +8645,9 @@ html.dark-theme,
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .svc-clean-plan-chip__tag {
@@ -8660,15 +8663,17 @@ html.dark-theme,
 }
 
 .svc-clean-plan-chip__name {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: #FFFFFF;
   font-weight: 800;
   letter-spacing: 0.01em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .svc-clean-plan-chip__price {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 900;
   color: #F6D97E;
   white-space: nowrap;
