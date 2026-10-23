@@ -23,6 +23,10 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         window.fbq('track', 'ViewContent', {
           content_name: serviceTitle,
           content_category: 'Consulting & BPO Services',
+          content_ids: [serviceSlug || 'service'],
+          content_type: 'product',
+          value: 99,
+          currency: 'INR',
         });
       }
     }

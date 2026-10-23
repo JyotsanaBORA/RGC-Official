@@ -467,8 +467,42 @@ export default function AdminPage() {
                               🏢 {order.customerCompany}
                             </div>
                           )}
-                          <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '4px' }}>
+                          <div style={{ fontSize: '11px', color: '#64748B', marginTop: '4px' }}>
                             {order.service}
+                          </div>
+
+                          {/* Traffic Source & Ad Campaign Attribution Badge */}
+                          <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '4px', alignItems: 'center' }}>
+                            {order.attribution?.source && order.attribution.source !== 'direct' ? (
+                              <span
+                                style={{
+                                  fontSize: '10px',
+                                  padding: '2px 7px',
+                                  borderRadius: '4px',
+                                  background: (order.attribution.source === 'meta' || order.attribution.source === 'facebook' || order.attribution.source === 'instagram') ? '#EFF6FF' : '#F1F5F9',
+                                  color: (order.attribution.source === 'meta' || order.attribution.source === 'facebook' || order.attribution.source === 'instagram') ? '#1D4ED8' : '#334155',
+                                  fontWeight: '700',
+                                  border: '1px solid rgba(0,0,0,0.08)',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '3px',
+                                }}
+                              >
+                                🎯 {order.attribution.source.toUpperCase()}{order.attribution.campaign && order.attribution.campaign !== 'none' ? ` · ${order.attribution.campaign}` : ''}
+                              </span>
+                            ) : (
+                              <span style={{ fontSize: '10px', color: '#94A3B8', background: '#F8FAFC', padding: '2px 6px', borderRadius: '4px', border: '1px solid #E2E8F0' }}>
+                                Direct / Organic
+                              </span>
+                            )}
+                            {order.attribution?.landingPage && (
+                              <span
+                                style={{ fontSize: '10px', color: '#64748B', background: '#F8FAFC', padding: '2px 6px', borderRadius: '4px', border: '1px solid #E2E8F0' }}
+                                title={`Full Landing URL: ${order.attribution.landingPage}`}
+                              >
+                                🔗 {order.attribution.landingPage.split('?')[0]}
+                              </span>
+                            )}
                           </div>
                         </td>
 

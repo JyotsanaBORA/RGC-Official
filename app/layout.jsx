@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import './globals.css';
 import GoogleTracking from '../components/GoogleTracking';
 import MetaPixel from '../components/MetaPixel';
+import MetaPixelTracker from '../components/MetaPixelTracker';
 import FloatingWhatsApp from '../components/FloatingWhatsApp';
 import FloatingChatbot from '../components/FloatingChatbot';
 
@@ -117,6 +119,9 @@ export default function RootLayout({ children }) {
       <body>
         <GoogleTracking />
         <MetaPixel />
+        <Suspense fallback={null}>
+          <MetaPixelTracker />
+        </Suspense>
         {children}
         <FloatingWhatsApp />
         <FloatingChatbot />

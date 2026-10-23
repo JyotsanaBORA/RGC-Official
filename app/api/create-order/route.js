@@ -50,6 +50,19 @@ export async function POST(req) {
     const customerCompany = body.notes?.company || body.customer?.company || '';
     const amountInRupees = Math.round(Number(order.amount) / 100);
 
+    const attr = body.attribution || {};
+    const attributionData = {
+      source: attr.source || body.notes?.utm_source || 'direct',
+      medium: attr.medium || body.notes?.utm_medium || 'none',
+      campaign: attr.campaign || body.notes?.utm_campaign || 'none',
+      content: attr.content || body.notes?.utm_content || '',
+      term: attr.term || body.notes?.utm_term || '',
+      fbclid: attr.fbclid || body.notes?.fbclid || '',
+      gclid: attr.gclid || body.notes?.gclid || '',
+      landingPage: attr.landingPage || body.notes?.landing_page || '/',
+      referrer: attr.referrer || '',
+    };
+
     // 3. Persist Order in MongoDB (if connected)
     if (db) {
       try {
@@ -73,6 +86,7 @@ export async function POST(req) {
             company: customerCompany,
           },
           notes: body.notes || {},
+          attribution: attributionData,
           status: 'created',
           createdAtIST: getISTTimestamp(),
         });

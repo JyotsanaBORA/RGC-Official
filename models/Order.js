@@ -87,6 +87,19 @@ const OrderSchema = new mongoose.Schema(
       default: {},
     },
 
+    // Marketing & Ad Campaign Attribution (Meta Ads, Google, UTMs)
+    attribution: {
+      source: { type: String, default: 'direct', index: true },
+      medium: { type: String, default: 'none' },
+      campaign: { type: String, default: 'none', index: true },
+      content: { type: String, default: '' },
+      term: { type: String, default: '' },
+      fbclid: { type: String, default: '' },
+      gclid: { type: String, default: '' },
+      landingPage: { type: String, default: '' },
+      referrer: { type: String, default: '' },
+    },
+
     // Call Tracking / CRM Status
     callStatus: {
       type: String,

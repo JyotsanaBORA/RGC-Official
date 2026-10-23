@@ -17,9 +17,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const svc = getServiceBySlug(params.slug);
   if (!svc) return {};
+  const canonicalUrl = `https://www.reddingtonglobal.com/services/${svc.slug}`;
   return {
     title: `${svc.title} — Reddington Global`,
     description: svc.tagline,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${svc.title} — Reddington Global`,
+      description: svc.tagline,
+      url: canonicalUrl,
+      images: [
+        {
+          url: svc.image || '/assets/img/rgc-logo-opt.png',
+          alt: svc.title,
+        },
+      ],
+    },
   };
 }
 
