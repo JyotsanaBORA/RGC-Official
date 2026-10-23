@@ -467,9 +467,19 @@ export default function AdminPage() {
                               🏢 {order.customerCompany}
                             </div>
                           )}
+                          {order.customerGst && (
+                            <div style={{ fontSize: '11px', color: '#0369A1', marginTop: '2px', fontWeight: '600' }}>
+                              🧾 GSTIN: {order.customerGst}
+                            </div>
+                          )}
                           <div style={{ fontSize: '11px', color: '#64748B', marginTop: '4px' }}>
                             {order.service}
                           </div>
+                          {order.selectedPackage && (
+                            <div style={{ fontSize: '11px', color: '#B47814', fontWeight: '700', marginTop: '2px' }}>
+                              📦 {order.selectedPackage}
+                            </div>
+                          )}
 
                           {/* Traffic Source & Ad Campaign Attribution Badge */}
                           <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '4px', alignItems: 'center' }}>

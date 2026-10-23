@@ -10,8 +10,15 @@ export async function POST(req) {
     const keySecret = process.env.RAZORPAY_KEY_SECRET || '75LPU9tRuBp8YZ1OJJrI0eAJ';
 
     const body = await req.json().catch(() => ({}));
-    // Authoritative server-side price: ₹99 (9900 paise) prevents client-side price tampering
-    const amount = 9900;
+    // Support package price or requested amount (default to 499900 paise for ₹4,999 website booking)
+    let amount = 499900;
+    if (body.amount && Number(body.amount) > 0) {
+      amount = Number(body.amount);
+    } else if (body.notes?.package_price && Number(body.notes?.package_price) > 0) {
+      amount = Number(body.notes.package_price) * 100;
+    } else if (body.packagePrice && Number(body.packagePrice) > 0) {
+      amount = Number(body.packagePrice) * 100;
+    }
     const currency = body.currency || 'INR';
     const receipt = body.receipt || `rcpt_${Date.now()}`;
     const idempotencyKey = body.idempotency_key || req.headers.get('x-idempotency-key') || null;
@@ -48,6 +55,10 @@ export async function POST(req) {
     const customerEmail = body.notes?.customer_email || body.customer?.email || '';
     const customerPhone = body.notes?.customer_phone || body.customer?.phone || '';
     const customerCompany = body.notes?.company || body.customer?.company || '';
+    const customerGst = (body.notes?.gst_number || body.customer?.gstNumber || body.customer?.customerGst || '').toUpperCase().trim();
+    const selectedPackage = body.notes?.selected_package || body.selectedPackage || body.package?.name || '';
+    const packageId = body.notes?.package_id || body.packageId || body.package?.id || '';
+    const packagePrice = Number(body.notes?.package_price || body.packagePrice || body.package?.price || 0);
     const amountInRupees = Math.round(Number(order.amount) / 100);
 
     const attr = body.attribution || {};
@@ -74,18 +85,28 @@ export async function POST(req) {
           customerEmail,
           customerPhone,
           customerCompany,
+          customerGst,
+          gstNumber: customerGst,
+          selectedPackage,
+          packageId,
+          packagePrice,
           amount: order.amount,
           amountInRupees,
           currency: order.currency,
           receipt,
-          service: body.notes?.service || body.service || 'Strategic Business Consultancy',
+          service: body.notes?.service || body.service || 'Website Development Service',
           customer: {
             name: customerName,
             email: customerEmail,
             phone: customerPhone,
             company: customerCompany,
+            gstNumber: customerGst,
           },
-          notes: body.notes || {},
+          notes: {
+            ...(body.notes || {}),
+            gst_number: customerGst,
+            selected_package: selectedPackage,
+          },
           attribution: attributionData,
           status: 'created',
           createdAtIST: getISTTimestamp(),

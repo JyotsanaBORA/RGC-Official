@@ -62,6 +62,8 @@ export async function GET(req) {
         customerEmail: order.customer?.email || order.customerEmail || order.email || '',
         customerPhone: order.customer?.phone || order.customerPhone || '',
         customerCompany: order.customer?.company || order.customerCompany || '',
+        customerGst: order.customerGst || order.gstNumber || order.customer?.gstNumber || order.notes?.gst_number || '',
+        selectedPackage: order.selectedPackage || order.notes?.selected_package || '',
         callStatus: callStatus,
         callNotes: order.callNotes || '',
         calledAt: order.calledAt || null,

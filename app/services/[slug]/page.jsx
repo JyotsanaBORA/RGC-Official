@@ -6,6 +6,7 @@ import ClientScripts from '../../../components/ClientScripts';
 import ServiceLeadForm from '../../../components/ServiceLeadForm';
 import ServiceVisualizer from '../../../components/ServiceVisualizer';
 import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
+import WebDevPoster from '../../../components/WebDevPoster';
 
 export async function generateStaticParams() {
   return SERVICES.flatMap((s) => [
@@ -41,6 +42,7 @@ export async function generateMetadata({ params }) {
 export default function ServicePage({ params }) {
   const svc = getServiceBySlug(params?.slug);
   if (!svc) notFound();
+  const isWebDev = svc.slug === 'web-development' || svc.slug === 'web-dev';
 
   return (
     <>
@@ -86,12 +88,19 @@ export default function ServicePage({ params }) {
 
                 <h1 className="svc-dash__title reveal">{svc.title}</h1>
                 <p className="svc-dash__tagline reveal">{svc.tagline}</p>
-                <p className="svc-dash__overview reveal">{svc.overview}</p>
 
-                {/* Service Architecture Visualizer Canvas */}
-                <div className="svc-dash__hero-visualizer reveal">
-                  <ServiceVisualizer service={svc} />
-                </div>
+                {isWebDev ? (
+                  <WebDevPoster />
+                ) : (
+                  <p className="svc-dash__overview reveal">{svc.overview}</p>
+                )}
+
+                {/* Service Architecture Visualizer Canvas (Excluded for 4999 basic website development) */}
+                {!isWebDev && (
+                  <div className="svc-dash__hero-visualizer reveal">
+                    <ServiceVisualizer service={svc} />
+                  </div>
+                )}
 
                 {/* Proof Telemetry Stats Bar */}
                 {svc.stats && svc.stats.length > 0 && (
@@ -106,42 +115,77 @@ export default function ServicePage({ params }) {
                 )}
               </section>
 
-              {/* 2. Institutional Trust Pillars Row (matching rgcare .trust-row) */}
+              {/* 2. Institutional Trust Pillars Row */}
               <section className="svc-trust-sec reveal">
                 <div className="svc-trust-grid">
-                  <div className="svc-trust-item">
-                    <span className="svc-trust-icon">⚡</span>
-                    <div>
-                      <strong>Contractual SLAs</strong>
-                      <small>Defined uptime & daily QA metrics</small>
-                    </div>
-                  </div>
-                  <div className="svc-trust-item">
-                    <span className="svc-trust-icon">🌐</span>
-                    <div>
-                      <strong>Dual-Shore Delivery</strong>
-                      <small>Gurugram HQ + Global operations</small>
-                    </div>
-                  </div>
-                  <div className="svc-trust-item">
-                    <span className="svc-trust-icon">🔒</span>
-                    <div>
-                      <strong>Zero-Compromise Security</strong>
-                      <small>Strict Mutual NDA & ISO protocols</small>
-                    </div>
-                  </div>
-                  <div className="svc-trust-item">
-                    <span className="svc-trust-icon">📄</span>
-                    <div>
-                      <strong>₹99 Strategy Advisory</strong>
-                      <small>1-on-1 Senior Director discovery</small>
-                    </div>
-                  </div>
+                  {isWebDev ? (
+                    <>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">⚡</span>
+                        <div>
+                          <strong>Live in 7 Days</strong>
+                          <small>Turnaround guarantee from Day 1</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">📱</span>
+                        <div>
+                          <strong>100% Mobile Ready</strong>
+                          <small>Sharp on every smartphone & tablet</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🔒</span>
+                        <div>
+                          <strong>Zero Monthly Fees</strong>
+                          <small>100% custom code & ownership</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🛠️</span>
+                        <div>
+                          <strong>30 Days Free Support</strong>
+                          <small>2 revision rounds & post-launch care</small>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">⚡</span>
+                        <div>
+                          <strong>Contractual SLAs</strong>
+                          <small>Defined uptime & daily QA metrics</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🌐</span>
+                        <div>
+                          <strong>Dual-Shore Delivery</strong>
+                          <small>Gurugram HQ + Global operations</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🔒</span>
+                        <div>
+                          <strong>Zero-Compromise Security</strong>
+                          <small>Strict Mutual NDA & ISO protocols</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">📄</span>
+                        <div>
+                          <strong>Enterprise Architecture</strong>
+                          <small>1-on-1 Practice Director discovery</small>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </section>
 
-              {/* 3. The Enterprise Challenge vs. Reddington Solution */}
-              {svc.challengeVsSolution && (
+              {/* 3. The Enterprise Challenge vs. Reddington Solution (Excluded on web-dev to reduce content) */}
+              {!isWebDev && svc.challengeVsSolution && (
                 <section className="svc-matrix-sec reveal">
                   <div className="svc-sec-head">
                     <span className="eyebrow">Strategic Analysis</span>
@@ -172,71 +216,162 @@ export default function ServicePage({ params }) {
                 </section>
               )}
 
-              {/* 4. Core Capabilities & Execution Deliverables */}
-              <section className="svc-cap-sec reveal" id="capabilities">
-                <div className="svc-sec-head">
-                  <span className="eyebrow">Practice Areas & Deliverables</span>
-                  <h2 className="svc-sec-title">
-                    Core Capabilities & <span className="gold-italic">Execution Deliverables.</span>
-                  </h2>
-                  <p className="svc-sec-sub">
-                    Institutional-grade operational rigor tailored for mid-market and enterprise scale.
-                  </p>
-                </div>
+              {/* 4. Core Capabilities & Execution Deliverables / Everything in ₹4,999 - Creative Poster Showcase */}
+              {isWebDev ? (
+                <section className="svc-cap-sec svc-cap-sec--poster reveal" id="capabilities">
+                  <div className="svc-poster-banner">
+                    <a
+                      href="#consultation-form"
+                      className="svc-poster-link"
+                      title="Click to Book Your ₹4,999 Website Package"
+                    >
+                      <img
+                        src="/assets/img/webdev_creative_poster.jpg"
+                        alt="Reddington Global - Everything in ₹4,999 All-Inclusive Business Website Package"
+                        className="svc-poster-img"
+                        loading="eager"
+                      />
+                    </a>
+                  </div>
+                </section>
+              ) : (
+                <section className="svc-cap-sec reveal" id="capabilities">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow">Practice Areas & Deliverables</span>
+                    <h2 className="svc-sec-title">
+                      Core Capabilities & <span className="gold-italic">Execution Deliverables.</span>
+                    </h2>
+                    <p className="svc-sec-sub">
+                      Institutional-grade operational rigor tailored for mid-market and enterprise scale.
+                    </p>
+                  </div>
 
-                <div className="svc-cap-grid">
-                  {svc.offerings.map((off, idx) => (
-                    <div key={idx} className="svc-cap-card">
-                      <div className="svc-cap-top">
-                        <span className="svc-cap-num">{off.num}</span>
-                        <span className="svc-cap-dot"></span>
+                  <div className="svc-cap-grid">
+                    {svc.offerings.map((off, idx) => (
+                      <div key={idx} className="svc-cap-card">
+                        <div className="svc-cap-top">
+                          <span className="svc-cap-num">{off.num}</span>
+                          <span className="svc-cap-dot"></span>
+                        </div>
+                        <h3 className="svc-cap-title">{off.title}</h3>
+                        <p className="svc-cap-desc">{off.desc}</p>
                       </div>
-                      <h3 className="svc-cap-title">{off.title}</h3>
-                      <p className="svc-cap-desc">{off.desc}</p>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* 5. Process Roadmap */}
+              {isWebDev ? (
+                <section className="svc-journey-sec reveal">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow" style={{ color: '#10B981' }}>SIMPLE, 3-STEP PROCESS</span>
+                    <h2 className="svc-sec-title">Idea to live site in a week.</h2>
+                    <p className="svc-sec-sub">
+                      From Day 1 onboarding to your live domain in just 7 calendar days.
+                    </p>
+                  </div>
+
+                  <div className="svc-process-timeline">
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">1</div>
+                      <div className="svc-process-day">DAY 1</div>
+                      <h4>Share your details</h4>
+                      <p>Send your logo, photos, services and contact info on WhatsApp.</p>
                     </div>
-                  ))}
-                </div>
-              </section>
 
-              {/* 5. 4-Stage Operational Roadmap (How It Works) */}
-              <section className="svc-journey-sec reveal">
-                <div className="svc-sec-head">
-                  <span className="eyebrow">Engagement Cadence</span>
-                  <h2 className="svc-sec-title">
-                    How We Execute: <span className="gold-italic">The 4-Stage Roadmap.</span>
-                  </h2>
-                  <p className="svc-sec-sub">
-                    From ₹99 introductory discovery to full-scale production delivery.
-                  </p>
-                </div>
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">2</div>
+                      <div className="svc-process-day">DAY 2–5</div>
+                      <h4>We design & build</h4>
+                      <p>You get a preview link and up to 2 rounds of changes.</p>
+                    </div>
 
-                <div className="svc-journey-grid">
-                  <div className="svc-journey-card">
-                    <div className="svc-journey-num">01</div>
-                    <h4>Discovery & Audit</h4>
-                    <p>1-on-1 strategy session to assess existing bottlenecks, team sizing, and technical requirements.</p>
-                    <small>Stage 1 · ₹99 Consultation →</small>
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">3</div>
+                      <div className="svc-process-day">DAY 7</div>
+                      <h4>Go live</h4>
+                      <p>Your site launches, connected to WhatsApp, Maps and Google.</p>
+                    </div>
                   </div>
-                  <div className="svc-journey-card">
-                    <div className="svc-journey-num">02</div>
-                    <h4>Solution Architecture</h4>
-                    <p>Custom operational roadmap, workflow integration, SLA definitions, and security sign-off.</p>
-                    <small>Stage 2 · Governance Blueprint →</small>
+                </section>
+              ) : (
+                <section className="svc-journey-sec reveal">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow">Engagement Cadence</span>
+                    <h2 className="svc-sec-title">
+                      How We Execute: <span className="gold-italic">The 4-Stage Roadmap.</span>
+                    </h2>
+                    <p className="svc-sec-sub">
+                      Structured transition from discovery to full-scale production delivery.
+                    </p>
                   </div>
-                  <div className="svc-journey-card">
-                    <div className="svc-journey-num">03</div>
-                    <h4>Deployment & Ramp</h4>
-                    <p>Dual-shore team mobilization, tooling integration, workflow calibration, and shadow trials.</p>
-                    <small>Stage 3 · Live Deployment →</small>
+
+                  <div className="svc-journey-grid">
+                    <div className="svc-journey-card">
+                      <div className="svc-journey-num">01</div>
+                      <h4>Discovery & Audit</h4>
+                      <p>Technical briefing to assess existing bottlenecks, team sizing, and technical requirements.</p>
+                      <small>Stage 1 · Initial Discovery →</small>
+                    </div>
+                    <div className="svc-journey-card">
+                      <div className="svc-journey-num">02</div>
+                      <h4>Solution Architecture</h4>
+                      <p>Custom operational roadmap, workflow integration, SLA definitions, and security sign-off.</p>
+                      <small>Stage 2 · Governance Blueprint →</small>
+                    </div>
+                    <div className="svc-journey-card">
+                      <div className="svc-journey-num">03</div>
+                      <h4>Deployment & Ramp</h4>
+                      <p>Dual-shore team mobilization, tooling integration, workflow calibration, and shadow trials.</p>
+                      <small>Stage 3 · Live Deployment →</small>
+                    </div>
+                    <div className="svc-journey-card">
+                      <div className="svc-journey-num">04</div>
+                      <h4>SLA Optimization</h4>
+                      <p>Continuous QA audits, bi-weekly leadership reviews, and proactive scaling governance.</p>
+                      <small>Stage 4 · Ongoing Calibration →</small>
+                    </div>
                   </div>
-                  <div className="svc-journey-card">
-                    <div className="svc-journey-num">04</div>
-                    <h4>SLA Optimization</h4>
-                    <p>Continuous QA audits, bi-weekly leadership reviews, and proactive scaling governance.</p>
-                    <small>Stage 4 · Ongoing Calibration →</small>
+                </section>
+              )}
+
+              {/* 5b. Made for Local Businesses Section (Image 5) */}
+              {isWebDev && (
+                <section className="svc-business-types-sec reveal">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow" style={{ color: '#10B981' }}>MADE FOR LOCAL BUSINESSES</span>
+                    <h2 className="svc-sec-title">Perfect if you run a...</h2>
                   </div>
-                </div>
-              </section>
+
+                  <div className="svc-business-tags">
+                    {[
+                      'Clinic',
+                      'Café',
+                      'Salon',
+                      'Coaching centre',
+                      'Boutique',
+                      'Gym',
+                      'CA / Consultant',
+                      'Real estate',
+                      'Interior studio',
+                      'Startup',
+                    ].map((tag, idx) => (
+                      <span key={idx} className="svc-biz-chip">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="svc-trust-callout">
+                    <div className="svc-trust-callout__icon">💡</div>
+                    <div>
+                      <h4>Customers Google you before they call.</h4>
+                      <p>Be there with a site that builds trust and brings enquiries.</p>
+                    </div>
+                  </div>
+                </section>
+              )}
 
               {/* 6. Institutional SLAs & Governance Benchmarks */}
               {svc.slas && svc.slas.length > 0 && (
@@ -269,7 +404,9 @@ export default function ServicePage({ params }) {
                   <span className="eyebrow">Executive Clarity</span>
                   <h2 className="svc-sec-title">Questions Before You Begin?</h2>
                   <p className="svc-sec-sub">
-                    Everything you need to know about our {svc.shortTitle || svc.title} delivery, ₹99 introductory advisory, and SLA governance.
+                    {isWebDev
+                      ? 'Everything you need to know about our ₹4,999 business website package, 7-day launch timeline, and developer support.'
+                      : `Everything you need to know about our ${svc.shortTitle || svc.title} delivery, service scope, and SLA governance.`}
                   </p>
                 </div>
 
@@ -304,7 +441,7 @@ export default function ServicePage({ params }) {
                   <div className="svc-verify-text">
                     <strong>Institutional Verification & Compliance Notice</strong>
                     <p>
-                      Reddington Global Consultancy Pvt Ltd (RGC) operates from 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India. All consultation bookings generate an automated GST-compliant tax invoice. All client data and IP are strictly protected under mutual non-disclosure agreements (NDA).
+                      Reddington Global Consultancy Pvt Ltd (RGC) operates from 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India. All service bookings generate an automated GST-compliant tax invoice. All client data and IP are strictly protected under mutual non-disclosure agreements (NDA).
                     </p>
                   </div>
                 </div>
@@ -326,11 +463,11 @@ export default function ServicePage({ params }) {
         {/* Mobile Sticky Bottom CTA */}
         <div className="svc-mobile-sticky-bar">
           <div className="svc-mobile-sticky-bar__info">
-            <strong>{svc.shortTitle || svc.title}</strong>
-            <span>1-on-1 Strategy Session • ₹99</span>
+            <strong>{isWebDev ? 'Basic Bundle' : (svc.shortTitle || svc.title)}</strong>
+            <span>{isWebDev ? 'Complete Website • ₹4,999 + GST' : '1-on-1 Strategy Session • ₹99'}</span>
           </div>
           <a href="#consultation-form" className="btn btn--gold svc-mobile-sticky-bar__btn">
-            Book @ ₹99 &rarr;
+            {isWebDev ? 'Book your website @4999 +gst →' : 'Book @ ₹99 →'}
           </a>
         </div>
       </main>

@@ -37,6 +37,30 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    // GST Number (Optional corporate tax identifier)
+    customerGst: {
+      type: String,
+      default: '',
+      index: true,
+    },
+    gstNumber: {
+      type: String,
+      default: '',
+    },
+
+    // Selected Service Package / Tier
+    selectedPackage: {
+      type: String,
+      default: '',
+    },
+    packageId: {
+      type: String,
+      default: '',
+    },
+    packagePrice: {
+      type: Number,
+      default: 0,
+    },
 
     // Amount representation
     amount: {
@@ -70,6 +94,7 @@ const OrderSchema = new mongoose.Schema(
       email: { type: String, default: '' },
       phone: { type: String, default: '' },
       company: { type: String, default: '' },
+      gstNumber: { type: String, default: '' },
     },
     paymentId: {
       type: String,

@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function SiteNav() {
+  const pathname = usePathname();
+  const isHome = pathname === '/' || pathname === '';
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('services');
   const [theme, setTheme] = useState('light');
@@ -156,6 +159,10 @@ export default function SiteNav() {
     },
   ];
 
+  const displayedNavMenuItems = isHome
+    ? navMenuItems
+    : navMenuItems.filter((item) => item.id !== 'bpo-partnerships');
+
   return (
     <>
       {/* ══════════ TOP HEADER (Infosys Standard: Hamburger + Logo) ══════════ */}
@@ -190,24 +197,28 @@ export default function SiteNav() {
           </div>
 
           <div className="infosys-header__right">
-            <Link href="/bpo-partnerships" className="infosys-header__pill-link">
-              BPO Partnerships
-            </Link>
-            <Link
-              href="/contact"
-              className="btn btn--gold btn--sm"
-              onClick={() => {
-                if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-                  window.fbq('track', 'InitiateCheckout', {
-                    value: 99,
-                    currency: 'INR',
-                    content_name: 'Consultancy @ ₹99',
-                  });
-                }
-              }}
-            >
-              Consultancy @ ₹99
-            </Link>
+            {isHome && (
+              <>
+                <Link href="/bpo-partnerships" className="infosys-header__pill-link">
+                  BPO Partnerships
+                </Link>
+                <Link
+                  href="/contact"
+                  className="btn btn--gold btn--sm"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                      window.fbq('track', 'InitiateCheckout', {
+                        value: 99,
+                        currency: 'INR',
+                        content_name: 'Consultancy @ ₹99',
+                      });
+                    }
+                  }}
+                >
+                  Consultancy @ ₹99
+                </Link>
+              </>
+            )}
 
             {/* Dark / Light Theme Toggle Button — Placed at the Last */}
             <button
@@ -278,7 +289,7 @@ export default function SiteNav() {
             {/* ── Left Sidebar Navigation Column ── */}
             <aside className="infosys-drawer__sidebar">
               <div className="infosys-drawer__menu">
-                {navMenuItems.map((item) => {
+                {displayedNavMenuItems.map((item) => {
                   const isActive = activeTab === item.id;
                   return (
                     <div
@@ -506,19 +517,21 @@ export default function SiteNav() {
                   </div>
 
                   {/* Unified Global Delivery Partner Strip */}
-                  <div className="infosys-partner-banner">
-                    <div className="infosys-partner-banner__meta">
-                      <span className="infosys-partner-banner__tag">GLOBAL DELIVERY PARTNER</span>
-                      <p className="infosys-partner-banner__title">Campaign Opportunities for BPOs & Call Centers</p>
+                  {isHome && (
+                    <div className="infosys-partner-banner">
+                      <div className="infosys-partner-banner__meta">
+                        <span className="infosys-partner-banner__tag">GLOBAL DELIVERY PARTNER</span>
+                        <p className="infosys-partner-banner__title">Campaign Opportunities for BPOs & Call Centers</p>
+                      </div>
+                      <Link href="/bpo-partnerships" className="btn btn--gold btn--sm" onClick={() => setIsOpen(false)}>
+                        Explore BPO Partnerships →
+                      </Link>
                     </div>
-                    <Link href="/bpo-partnerships" className="btn btn--gold btn--sm" onClick={() => setIsOpen(false)}>
-                      Explore BPO Partnerships →
-                    </Link>
-                  </div>
+                  )}
                 </div>
               )}
 
-              {activeTab === 'bpo-partnerships' && (
+              {isHome && activeTab === 'bpo-partnerships' && (
                 <div className="infosys-single-view">
                   <div className="infosys-panel__header">
                     <h2 className="infosys-panel__title">BPO Partnerships</h2>
