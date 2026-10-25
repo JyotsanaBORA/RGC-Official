@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { trackLeadSubmission } from '../../lib/analytics/events';
 
 export default function BpoPartnerForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -23,6 +24,12 @@ export default function BpoPartnerForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    trackLeadSubmission({
+      form_name: 'bpo_partnership_registration',
+      service_requested: `BPO Partnership - ${formData.campaignType} (${formData.seatCapacity || 'Seats unspecified'})`,
+      company: formData.companyName,
+      amount: 5000,
+    });
     const subject = encodeURIComponent(`BPO Partnership Registration: ${formData.companyName}`);
     const body = encodeURIComponent(
       `Company Name: ${formData.companyName}\n` +

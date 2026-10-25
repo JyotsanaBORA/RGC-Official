@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { trackEcommerceBeginCheckout } from '../lib/analytics/events';
 
 export default function SiteNav() {
   const pathname = usePathname();
@@ -206,13 +207,11 @@ export default function SiteNav() {
                   href="/contact"
                   className="btn btn--gold btn--sm"
                   onClick={() => {
-                    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-                      window.fbq('track', 'InitiateCheckout', {
-                        value: 99,
-                        currency: 'INR',
-                        content_name: 'Consultancy @ ₹99',
-                      });
-                    }
+                    trackEcommerceBeginCheckout({
+                      amount: 99,
+                      serviceName: 'Consultancy @ ₹99',
+                      orderId: 'nav_header_cta',
+                    });
                   }}
                 >
                   Consultancy @ ₹99

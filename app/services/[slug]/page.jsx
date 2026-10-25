@@ -7,6 +7,7 @@ import ServiceLeadForm from '../../../components/ServiceLeadForm';
 import ServiceVisualizer from '../../../components/ServiceVisualizer';
 import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
 import WebDevPoster from '../../../components/WebDevPoster';
+import ServicePageViewTracker from '../../../components/ServicePageViewTracker';
 
 export async function generateStaticParams() {
   return SERVICES.flatMap((s) => [
@@ -58,6 +59,8 @@ export default function ServicePage({ params }) {
       </svg>
 
       <div className="progress" id="progressBar" aria-hidden="true"></div>
+
+      <ServicePageViewTracker service={svc} />
 
       <SiteNav />
 

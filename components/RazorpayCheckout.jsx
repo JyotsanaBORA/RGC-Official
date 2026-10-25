@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { showPaymentLoader, hidePaymentLoader } from '../lib/payment';
+import { trackEcommercePurchase } from '../lib/analytics/events';
 
 /**
  * Helper to dynamically load the Razorpay checkout.js SDK
@@ -126,14 +127,13 @@ export default function RazorpayCheckout({
               text: `Payment verified! Reference ID: ${response.razorpay_payment_id}`,
             });
 
-            // Fire Meta Pixel Purchase event
-            if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-              window.fbq('track', 'Purchase', {
-                value: Number(amount) || 0,
-                currency: 'INR',
-                content_name: serviceName,
-              });
-            }
+            // Fire Unified Meta Pixel & GA4 Purchase events
+            trackEcommercePurchase({
+              amount: Number(amount) || 0,
+              serviceName,
+              orderId: response.razorpay_order_id,
+              paymentId: response.razorpay_payment_id,
+            });
 
             if (onSuccess) {
               onSuccess({

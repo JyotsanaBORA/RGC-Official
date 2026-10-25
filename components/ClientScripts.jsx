@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { trackMetaCustom, trackEvent } from '../lib/analytics/events';
 
 export default function ClientScripts() {
   useEffect(() => {
@@ -187,9 +188,43 @@ export default function ClientScripts() {
       el.classList.add('is-visible');
     });
 
+    // ── Interaction Tracking: Creative Poster, Mobile Sticky CTA, Invoice Print ──
+    const posterLink = document.querySelector('.svc-poster-link');
+    const onPosterClick = () => {
+      trackMetaCustom('PosterBannerClick', {
+        creative: 'red_gold_4999_bundle',
+        destination: '#consultation-form',
+      });
+      trackEvent('poster_banner_click', {
+        creative: 'red_gold_4999_bundle',
+      });
+    };
+    posterLink?.addEventListener('click', onPosterClick);
+
+    const mobileStickyBtn = document.querySelector('.svc-mobile-sticky-bar__btn');
+    const onStickyCtaClick = () => {
+      trackMetaCustom('MobileStickyCtaClick', {
+        destination: '#consultation-form',
+      });
+      trackEvent('mobile_sticky_cta_click');
+    };
+    mobileStickyBtn?.addEventListener('click', onStickyCtaClick);
+
+    const printBtn = document.getElementById('printBtn');
+    const onPrintClick = () => {
+      trackMetaCustom('InvoiceDownloaded', {
+        type: 'print_pdf',
+      });
+      trackEvent('invoice_pdf_download');
+    };
+    printBtn?.addEventListener('click', onPrintClick);
+
     // Cleanup
     return () => {
       window.removeEventListener('scroll', onScroll);
+      posterLink?.removeEventListener('click', onPosterClick);
+      mobileStickyBtn?.removeEventListener('click', onStickyCtaClick);
+      printBtn?.removeEventListener('click', onPrintClick);
     };
   }, []);
 

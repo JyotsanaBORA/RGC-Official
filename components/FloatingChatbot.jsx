@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { trackMetaCustom, trackEvent } from '../lib/analytics/events';
 
 const QUICK_PROMPTS = [
   'What 24/7 BPO & Customer Support services do you provide?',
@@ -149,7 +150,20 @@ function ChatMessageContent({ content }) {
 
     elements.push(
       <div key="action-cta-wrap" className="chat-bubble-cta-wrap">
-        <a href={localHref || matchedUrl} className="chat-bubble-cta">
+        <a
+          href={localHref || matchedUrl}
+          className="chat-bubble-cta"
+          onClick={() => {
+            trackMetaCustom('ChatbotCtaClick', {
+              destination: localHref || matchedUrl,
+              cta_label: btnLabel,
+            });
+            trackEvent('chatbot_cta_click', {
+              destination: localHref || matchedUrl,
+              cta_label: btnLabel,
+            });
+          }}
+        >
           {btnLabel}
         </a>
       </div>
@@ -187,6 +201,8 @@ export default function FloatingChatbot() {
   const sendMessage = async (textToSend) => {
     const userText = (textToSend || input).trim();
     if (!userText || loading) return;
+
+    trackEvent('chatbot_message_sent', { query_length: userText.length });
 
     const newMessages = [...messages, { role: 'user', content: userText }];
     setMessages(newMessages);
@@ -236,7 +252,14 @@ export default function FloatingChatbot() {
       <button
         type="button"
         className={`floating-ai-btn ${isOpen ? 'is-active' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const nextState = !isOpen;
+          setIsOpen(nextState);
+          if (nextState) {
+            trackMetaCustom('ChatbotOpened', { page: pathname });
+            trackEvent('chatbot_open', { page: pathname });
+          }
+        }}
         aria-label="Open Reddington AI Assistant"
         id="floatingChatLauncher"
       >
@@ -349,7 +372,11 @@ export default function FloatingChatbot() {
                     key={i}
                     type="button"
                     className="chat-chip-btn"
-                    onClick={() => sendMessage(prompt)}
+                    onClick={() => {
+                      trackMetaCustom('ChatbotQuickPrompt', { prompt });
+                      trackEvent('chatbot_quick_prompt', { prompt });
+                      sendMessage(prompt);
+                    }}
                   >
                     {prompt}
                   </button>

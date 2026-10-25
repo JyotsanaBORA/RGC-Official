@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { trackMetaCustom, trackEvent } from '../lib/analytics/events';
 
 const DEFAULT_FAQS = [
   {
@@ -31,7 +32,19 @@ export default function ServiceFaqAccordion({ service }) {
   const faqs = service?.faqs && service.faqs.length > 0 ? service.faqs : DEFAULT_FAQS;
 
   const toggle = (idx) => {
-    setOpenIdx(openIdx === idx ? -1 : idx);
+    const isOpening = openIdx !== idx;
+    setOpenIdx(isOpening ? idx : -1);
+
+    if (isOpening && faqs[idx]) {
+      trackMetaCustom('FaqQuestionViewed', {
+        question: faqs[idx].q,
+        service: service?.title || 'General',
+      });
+      trackEvent('faq_interaction', {
+        question: faqs[idx].q,
+        service: service?.title || 'General',
+      });
+    }
   };
 
   return (

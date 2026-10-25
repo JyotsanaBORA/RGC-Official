@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { SERVICES } from '../lib/services-data';
+import { trackContactClick } from '../lib/analytics/events';
 
 export default function SiteFooter() {
   return (
@@ -29,8 +32,18 @@ export default function SiteFooter() {
         </nav>
         <div className="footer__col">
           <h4>Contact</h4>
-          <a href="mailto:sales@reddingtonglobal.com">sales@reddingtonglobal.com</a>
-          <a href="tel:+919818224995">+91 98182 24995</a>
+          <a
+            href="mailto:sales@reddingtonglobal.com"
+            onClick={() => trackContactClick('email', 'sales@reddingtonglobal.com')}
+          >
+            sales@reddingtonglobal.com
+          </a>
+          <a
+            href="tel:+919818224995"
+            onClick={() => trackContactClick('phone', '+919818224995')}
+          >
+            +91 98182 24995
+          </a>
         </div>
       </div>
       <div className="container footer__bar">

@@ -1,9 +1,20 @@
 'use client';
 
+import { trackContactClick, trackMetaCustom } from '../lib/analytics/events';
+
 export default function WebDevPoster() {
   const whatsappUrl = `https://wa.me/919818224995?text=${encodeURIComponent(
     'Hi Reddington Global, I want to get my business online for ₹4,999.'
   )}`;
+
+  const handleContactClick = () => {
+    trackContactClick('whatsapp', '+919818224995');
+    trackMetaCustom('WebDevPosterDirectContact', {
+      channel: 'whatsapp',
+      package: 'Basic Bundle ₹4,999',
+      destination: whatsappUrl,
+    });
+  };
 
   return (
     <div className="rgc-poster reveal">
@@ -35,6 +46,7 @@ export default function WebDevPoster() {
           rel="noopener noreferrer"
           className="rgc-poster__phone-btn"
           aria-label="WhatsApp or Call +91 98182 24995"
+          onClick={handleContactClick}
         >
           [+91 98182 24995]
         </a>

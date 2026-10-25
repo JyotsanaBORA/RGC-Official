@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { initAttribution } from '../lib/analytics/attribution';
+import { ANALYTICS_CONFIG } from '../lib/analytics/config';
 
 /**
  * MetaPixelTracker
@@ -30,12 +31,25 @@ export default function MetaPixelTracker() {
       window.fbq('track', 'PageView');
     }
 
-    // Also notify GTM dataLayer for GA4 / Google Ads unified multi-page tracking
+    // 3. Notify GTM dataLayer for GA4 / Google Ads unified multi-page tracking
     if (typeof window !== 'undefined' && Array.isArray(window.dataLayer)) {
       window.dataLayer.push({
         event: 'page_view',
         page_path: pathname,
         page_search: searchParams?.toString() || '',
+      });
+    }
+
+    // 4. Notify GA4 direct tracking of client-side SPA route changes
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('config', ANALYTICS_CONFIG.gaId, {
+        page_path: pathname,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
+      window.gtag('event', 'page_view', {
+        page_path: pathname,
+        page_location: window.location.href,
       });
     }
   }, [pathname, searchParams]);
