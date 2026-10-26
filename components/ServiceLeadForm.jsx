@@ -7,12 +7,18 @@ import { getPackagesForService } from '../lib/packages-data';
 import { getAttributionData } from '../lib/analytics/attribution';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
-  // Strictly isolate Website Development from all other enterprise practices
+  // Strictly isolate Website Development and Payroll from generic consultation
   const isWebDev =
     serviceSlug === 'web-development' ||
     serviceSlug === 'web-dev' ||
     serviceSlug === 'website-development' ||
     (serviceTitle || '').toLowerCase().includes('website development');
+
+  const isPayroll =
+    serviceSlug === 'payroll-compensation' ||
+    serviceSlug === 'payroll' ||
+    serviceSlug === 'payroll-services' ||
+    (serviceTitle || '').toLowerCase().includes('payroll');
 
   const packages = getPackagesForService(serviceSlug || serviceTitle);
   const defaultPkg = packages.find((p) => p.isDefault) || packages[0];
@@ -24,9 +30,15 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     email: '',
     phone: '',
     company: '',
-    businessType: isWebDev ? 'Clinic / Healthcare' : defaultServiceArea,
+    businessType: isWebDev
+      ? 'Clinic / Healthcare'
+      : isPayroll
+      ? 'Upto 10 Employees (₹4,999 Package)'
+      : defaultServiceArea,
     gstNumber: '',
-    packageId: defaultPkg?.id || (isWebDev ? 'web-business-4999' : 'consultation-99'),
+    packageId:
+      defaultPkg?.id ||
+      (isWebDev ? 'web-business-4999' : isPayroll ? 'payroll-starter-4999' : 'consultation-99'),
     requirement: '',
   });
 
@@ -48,10 +60,14 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
       setFormData((prev) => ({
         ...prev,
         packageId: def.id,
-        businessType: isWebDev ? prev.businessType : (serviceTitle || prev.businessType),
+        businessType: isWebDev
+          ? prev.businessType
+          : isPayroll
+          ? (prev.businessType.includes('Employees') ? prev.businessType : 'Upto 10 Employees (₹4,999 Package)')
+          : (serviceTitle || prev.businessType),
       }));
     }
-  }, [serviceSlug, serviceTitle, isWebDev]);
+  }, [serviceSlug, serviceTitle, isWebDev, isPayroll]);
 
   const currentPackage =
     packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
@@ -65,8 +81,14 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     }
 
     try {
-      const activeService = serviceTitle || (isWebDev ? 'Website Development' : 'Strategic Consultation');
-      const activePrice = currentPackage?.price || (isWebDev ? 4999 : 99);
+      const activeService =
+        serviceTitle ||
+        (isWebDev
+          ? 'Website Development'
+          : isPayroll
+          ? 'Payroll & Compensation Management'
+          : 'Strategic Consultation');
+      const activePrice = currentPackage?.price || (isWebDev || isPayroll ? 4999 : 99);
       const attribution = getAttributionData();
 
       const res = await fetch('/api/lead-draft', {
@@ -80,7 +102,13 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           company: dataToSave.company || dataToSave.businessType,
           gstNumber: dataToSave.gstNumber,
           service: activeService,
-          selectedPackage: currentPackage?.name || (isWebDev ? 'Basic Bundle' : 'Strategic Consultation'),
+          selectedPackage:
+            currentPackage?.name ||
+            (isWebDev
+              ? 'Basic Bundle'
+              : isPayroll
+              ? 'Payroll Starter Package'
+              : 'Strategic Consultation'),
           packageId: currentPackage?.id || '',
           packagePrice: activePrice,
           attribution,
@@ -129,12 +157,18 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
 
-    const activeService = serviceTitle || (isWebDev ? 'Website Development' : 'Strategic Consultation');
-    const activePrice = currentPackage?.price || (isWebDev ? 4999 : 99);
+    const activeService =
+      serviceTitle ||
+      (isWebDev
+        ? 'Website Development'
+        : isPayroll
+        ? 'Payroll & Compensation Management'
+        : 'Strategic Consultation');
+    const activePrice = currentPackage?.price || (isWebDev || isPayroll ? 4999 : 99);
 
     trackLeadSubmission({
-      form_name: `service_booking_${serviceSlug || (isWebDev ? 'web' : 'consultation')}`,
-      form_location: `service_card_${serviceSlug || (isWebDev ? 'web' : 'consultation')}`,
+      form_name: `service_booking_${serviceSlug || (isWebDev ? 'web' : isPayroll ? 'payroll' : 'consultation')}`,
+      form_location: `service_card_${serviceSlug || (isWebDev ? 'web' : isPayroll ? 'payroll' : 'consultation')}`,
       service_requested: `${activeService} - ${currentPackage?.name}`,
       amount: activePrice,
     });
@@ -148,12 +182,28 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           phone: formData.phone,
           company: formData.company || formData.businessType,
           gstNumber: formData.gstNumber,
-          selectedPackage: currentPackage?.name || (isWebDev ? 'Basic Bundle' : '1-on-1 Strategic Consultation'),
-          packageId: currentPackage?.id || (isWebDev ? 'web-business-4999' : 'consultation-99'),
+          selectedPackage:
+            currentPackage?.name ||
+            (isWebDev
+              ? 'Basic Bundle'
+              : isPayroll
+              ? 'Payroll Starter Package'
+              : '1-on-1 Strategic Consultation'),
+          packageId:
+            currentPackage?.id ||
+            (isWebDev
+              ? 'web-business-4999'
+              : isPayroll
+              ? 'payroll-starter-4999'
+              : 'consultation-99'),
           packagePrice: activePrice,
-          message: `${isWebDev ? 'Business Type' : 'Practice Area'}: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard engagement'}`,
+          message: `${isWebDev ? 'Business Type' : isPayroll ? 'Team Size' : 'Practice Area'}: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard engagement'}`,
         },
-        serviceName: isWebDev ? 'Website Development — Basic Bundle' : `${activeService} — Strategic Consultation`,
+        serviceName: isWebDev
+          ? 'Website Development — Basic Bundle'
+          : isPayroll
+          ? 'Payroll Services — Starter Package (Upto 10 Staff)'
+          : `${activeService} — Strategic Consultation`,
         amount: activePrice,
         onSuccess: (data) => {
           setStatus({
@@ -206,13 +256,24 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         </div>
 
         <div className="svc-curved-title">
-          <span className="svc-curved-title-icon">⚡</span>
-          <span>{isWebDev ? 'RGC DEV STUDIO // WORKSTATION' : 'RGC ADVISORY // CONSULTATION'}</span>
+          <span>
+            {isWebDev
+              ? 'Dev Studio'
+              : isPayroll
+              ? 'Payroll Desk'
+              : 'Consultation'}
+          </span>
         </div>
 
         <div className="svc-curved-status">
           <span className="svc-screen-status-dot"></span>
-          <span>{isWebDev ? 'LIVE IN 7 DAYS' : 'DIRECTOR SLOTS OPEN'}</span>
+          <span>
+            {isWebDev
+              ? 'Live in 7 Days'
+              : isPayroll
+              ? 'Active'
+              : 'Available'}
+          </span>
         </div>
       </div>
 
@@ -221,12 +282,20 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         {/* Floating Center Glassmorphic Card */}
         <div className="svc-clean-card">
           <h3 className="svc-clean-title">
-            {isWebDev ? 'Book Your Website' : 'Schedule Consultation'}
+            {isWebDev
+              ? 'Book Your Website'
+              : isPayroll
+              ? 'Book Payroll'
+              : 'Schedule Consultation'}
           </h3>
           <p className="svc-clean-subtitle">
             {isWebDev ? (
               <>
                 Get your business live in 7 days &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
+              </>
+            ) : isPayroll ? (
+              <>
+                Complete payroll data &amp; balance &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
               </>
             ) : (
               <>
@@ -238,22 +307,38 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           {status.success ? (
             <div className="svc-clean-success">
               <div className="svc-clean-success-icon">✓</div>
-              <h4>{isWebDev ? 'Project Registered Successfully!' : 'Consultation Scheduled Successfully!'}</h4>
+              <h4>
+                {isWebDev
+                  ? 'Project Registered Successfully!'
+                  : isPayroll
+                  ? 'Payroll Onboarding Confirmed!'
+                  : 'Consultation Scheduled Successfully!'}
+              </h4>
               <p>
                 Thank you, <strong>{formData.name || 'Partner'}</strong>. Your booking for{' '}
-                <strong>{currentPackage?.name || (isWebDev ? 'Basic Bundle' : 'Strategic Consultation')}</strong> is confirmed.
+                <strong>
+                  {currentPackage?.name ||
+                    (isWebDev
+                      ? 'Basic Bundle'
+                      : isPayroll
+                      ? 'Payroll Starter Package'
+                      : 'Strategic Consultation')}
+                </strong>{' '}
+                is confirmed.
               </p>
               <div className="svc-clean-success-box">
                 <div>
                   <strong>Order ID:</strong> {status.orderId}
                 </div>
                 <div>
-                  <strong>{isWebDev ? 'Selected Plan:' : 'Session Type:'}</strong> {currentPackage?.name} ({currentPackage?.priceDisplay})
+                  <strong>{isWebDev || isPayroll ? 'Selected Plan:' : 'Session Type:'}</strong> {currentPackage?.name} ({currentPackage?.priceDisplay})
                 </div>
               </div>
               <p style={{ marginTop: '14px', fontSize: '13px', color: '#D4C5B9' }}>
                 {isWebDev
                   ? 'Our lead developer has received your specifications. We will contact you on WhatsApp within 2 hours.'
+                  : isPayroll
+                  ? 'Our Payroll Director has received your onboarding request. We will contact you on WhatsApp / Phone within 2 hours to collect attendance logs and payroll master data.'
                   : 'Our Practice Director has reserved your strategic slot. A calendar invitation and briefing note have been sent.'}
               </p>
             </div>
@@ -308,7 +393,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   id="svc-company"
                   name="company"
                   type="text"
-                  placeholder={isWebDev ? 'Business / Brand Name' : 'Company / Organization'}
+                  placeholder={isWebDev ? 'Business / Brand Name' : isPayroll ? 'Company Name' : 'Company / Organization'}
                   value={formData.company}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -339,6 +424,17 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                       <option value="Interior Studio">Interior / Architect</option>
                       <option value="Tech / Startup">Tech / Startup</option>
                       <option value="Other Business">Other Business</option>
+                    </select>
+                  ) : isPayroll ? (
+                    <select
+                      id="svc-businessType"
+                      name="businessType"
+                      value={formData.businessType}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="svc-clean-input svc-clean-select"
+                    >
+                      <option value="Upto 10 Employees (₹4,999 Package)">Upto 10 Employees</option>
                     </select>
                   ) : (
                     <select
@@ -382,14 +478,20 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               <div className="svc-clean-plan-chip svc-clean-full">
                 <div className="svc-clean-plan-chip__left">
                   <span className="svc-clean-plan-chip__tag">
-                    {isWebDev ? 'PLAN' : 'SESSION'}
+                    {isWebDev ? 'PLAN' : isPayroll ? 'PACKAGE' : 'SESSION'}
                   </span>
                   <strong className="svc-clean-plan-chip__name">
-                    {currentPackage?.name || (isWebDev ? 'Basic Bundle' : '1-on-1 Strategic Consultation')}
+                    {currentPackage?.name ||
+                      (isWebDev
+                        ? 'Basic Bundle'
+                        : isPayroll
+                        ? 'Payroll Package'
+                        : '1-on-1 Strategic Consultation')}
                   </strong>
                 </div>
                 <div className="svc-clean-plan-chip__price">
-                  {currentPackage?.priceDisplay || (isWebDev ? '₹4,999 + GST' : '₹99 (One-Time)')}
+                  {currentPackage?.priceDisplay ||
+                    (isWebDev || isPayroll ? '₹4,999 + GST' : '₹99 (One-Time)')}
                 </div>
               </div>
 
@@ -401,6 +503,8 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 placeholder={
                   isWebDev
                     ? 'Message / Requirements (e.g. 5 pages, logo ready, need booking)'
+                    : isPayroll
+                    ? 'Notes / Requirements (e.g. 8 staff, salary cycle on 1st)...'
                     : `Scope / Objectives (e.g. team size, current challenges, timeline for ${serviceTitle || 'operations'})...`
                 }
                 value={formData.requirement}
@@ -419,8 +523,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   <span className="svc-clean-loading">
                     <span className="svc-form-spinner"></span> Initializing Gateway...
                   </span>
+                ) : isWebDev ? (
+                  'Book your website @4999 +gst ›'
+                ) : isPayroll ? (
+                  'Book Payroll @ ₹4,999 + GST →'
                 ) : (
-                  isWebDev ? 'Book your website @4999 +gst ›' : 'Confirm Slot & Pay ₹99 →'
+                  'Confirm Slot & Pay ₹99 →'
                 )}
               </button>
 
@@ -433,6 +541,14 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                     <span>✔ 30-Day Free Support</span>
                     <span>&bull;</span>
                     <span>🔒 100% Code Ownership</span>
+                  </>
+                ) : isPayroll ? (
+                  <>
+                    <span>⚡ 100% Calculation Accuracy</span>
+                    <span>&bull;</span>
+                    <span>✔ Statutory PF/ESIC/PT</span>
+                    <span>&bull;</span>
+                    <span>📄 Net Salary Balance Sheets</span>
                   </>
                 ) : (
                   <>
@@ -451,6 +567,8 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   href={`https://wa.me/919818224995?text=${encodeURIComponent(
                     isWebDev
                       ? 'Hi Reddington Global, I want to book the Basic Website package for ₹4,999.'
+                      : isPayroll
+                      ? 'Hi Reddington Global, I want to book the Payroll Package for ₹4,999 (upto 10 employees).'
                       : `Hi Reddington Global, I would like to schedule a ₹99 strategic consultation for ${serviceTitle || 'our enterprise operations'}.`
                   )}`}
                   target="_blank"

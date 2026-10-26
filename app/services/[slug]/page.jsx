@@ -7,6 +7,7 @@ import ServiceLeadForm from '../../../components/ServiceLeadForm';
 import ServiceVisualizer from '../../../components/ServiceVisualizer';
 import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
 import WebDevPoster from '../../../components/WebDevPoster';
+import PayrollPoster from '../../../components/PayrollPoster';
 import ServicePageViewTracker from '../../../components/ServicePageViewTracker';
 
 export async function generateStaticParams() {
@@ -44,6 +45,8 @@ export default function ServicePage({ params }) {
   const svc = getServiceBySlug(params?.slug);
   if (!svc) notFound();
   const isWebDev = svc.slug === 'web-development' || svc.slug === 'web-dev';
+  const isPayroll = svc.slug === 'payroll-compensation' || svc.slug === 'payroll' || svc.slug === 'payroll-services';
+  const siblingServices = SERVICES.filter((s) => s.category === svc.category);
 
   return (
     <>
@@ -82,6 +85,38 @@ export default function ServicePage({ params }) {
                 <span className="svc-dash__current">{svc.title}</span>
               </div>
 
+              {/* Sibling Practice Switcher (e.g. Bookkeeping & Accounts ↔ Payroll & Compensation) */}
+              {siblingServices.length > 1 && (
+                <div className="svc-category-siblings reveal" aria-label="Practice areas in this vertical">
+                  <span className="svc-category-siblings__label">
+                    {svc.categoryName} Practice Areas:
+                  </span>
+                  <div className="svc-category-siblings__pills">
+                    {siblingServices.map((sibling) => {
+                      const isCurrent = sibling.slug === svc.slug;
+                      return isCurrent ? (
+                        <span
+                          key={sibling.slug}
+                          className="svc-sibling-pill svc-sibling-pill--active"
+                        >
+                          <span className="svc-sibling-pill__dot"></span>
+                          {sibling.shortTitle || sibling.title}
+                        </span>
+                      ) : (
+                        <a
+                          key={sibling.slug}
+                          href={`/services/${sibling.slug}`}
+                          className="svc-sibling-pill"
+                        >
+                          <span>{sibling.shortTitle || sibling.title}</span>
+                          <span className="svc-sibling-pill__arrow" aria-hidden="true">→</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* 1. Hero & Strategic Intro */}
               <section className="svc-intro-sec">
                 <div className="svc-dash__pill reveal">
@@ -94,6 +129,8 @@ export default function ServicePage({ params }) {
 
                 {isWebDev ? (
                   <WebDevPoster />
+                ) : isPayroll ? (
+                  <PayrollPoster />
                 ) : (
                   <p className="svc-dash__overview reveal">{svc.overview}</p>
                 )}
@@ -149,6 +186,37 @@ export default function ServicePage({ params }) {
                         <div>
                           <strong>30 Days Free Support</strong>
                           <small>2 revision rounds & post-launch care</small>
+                        </div>
+                      </div>
+                    </>
+                  ) : isPayroll ? (
+                    <>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🧮</span>
+                        <div>
+                          <strong>100% Calculation Accuracy</strong>
+                          <small>Zero-error gross, deductions & net wage computation</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">📑</span>
+                        <div>
+                          <strong>Complete Payroll Data</strong>
+                          <small>Structured master payroll & net balance registers</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">⚖️</span>
+                        <div>
+                          <strong>Statutory Compliance</strong>
+                          <small>PF, ESIC, PT & TDS deduction aligned with regulations</small>
+                        </div>
+                      </div>
+                      <div className="svc-trust-item">
+                        <span className="svc-trust-icon">🔒</span>
+                        <div>
+                          <strong>Strict Confidentiality</strong>
+                          <small>Encrypted employee ledger & mutual NDA protection</small>
                         </div>
                       </div>
                     </>
@@ -237,6 +305,31 @@ export default function ServicePage({ params }) {
                     </a>
                   </div>
                 </section>
+              ) : isPayroll ? (
+                <section className="svc-cap-sec reveal" id="capabilities">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow">Practice Areas & Deliverables</span>
+                    <h2 className="svc-sec-title">
+                      Payroll Data & <span className="gold-italic">Balance Computation Services.</span>
+                    </h2>
+                    <p className="svc-sec-sub">
+                      Accurate wage calculations, statutory tax deductions, and verified net balance statements for up to 10 employees under our ₹4,999 package.
+                    </p>
+                  </div>
+
+                  <div className="svc-cap-grid">
+                    {svc.offerings.map((off, idx) => (
+                      <div key={idx} className="svc-cap-card">
+                        <div className="svc-cap-top">
+                          <span className="svc-cap-num">{off.num}</span>
+                          <span className="svc-cap-dot"></span>
+                        </div>
+                        <h3 className="svc-cap-title">{off.title}</h3>
+                        <p className="svc-cap-desc">{off.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               ) : (
                 <section className="svc-cap-sec reveal" id="capabilities">
                   <div className="svc-sec-head">
@@ -295,6 +388,39 @@ export default function ServicePage({ params }) {
                       <div className="svc-process-day">DAY 7</div>
                       <h4>Go live</h4>
                       <p>Your site launches, connected to WhatsApp, Maps and Google.</p>
+                    </div>
+                  </div>
+                </section>
+              ) : isPayroll ? (
+                <section className="svc-journey-sec reveal">
+                  <div className="svc-sec-head">
+                    <span className="eyebrow" style={{ color: '#D9A93F' }}>MONTHLY PAYROLL CADENCE</span>
+                    <h2 className="svc-sec-title">Simple 3-Step Monthly Payroll Process.</h2>
+                    <p className="svc-sec-sub">
+                      From raw attendance data to verified salary balance statements in 48 hours.
+                    </p>
+                  </div>
+
+                  <div className="svc-process-timeline">
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">1</div>
+                      <div className="svc-process-day">STEP 1</div>
+                      <h4>Share Attendance & Data</h4>
+                      <p>Send monthly attendance, leave counts, overtime, and salary revisions on WhatsApp or email.</p>
+                    </div>
+
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">2</div>
+                      <div className="svc-process-day">STEP 2</div>
+                      <h4>We Compute Wages & Taxes</h4>
+                      <p>We calculate gross wages, tax deductions (TDS, PF, ESIC, PT), and statutory compliance schedules.</p>
+                    </div>
+
+                    <div className="svc-process-card">
+                      <div className="svc-process-badge">3</div>
+                      <div className="svc-process-day">STEP 3</div>
+                      <h4>Receive Balance Statements</h4>
+                      <p>You receive audit-ready payroll data registers, individual payslips, and final net balance sheets for disbursement.</p>
                     </div>
                   </div>
                 </section>
@@ -409,6 +535,8 @@ export default function ServicePage({ params }) {
                   <p className="svc-sec-sub">
                     {isWebDev
                       ? 'Everything you need to know about our ₹4,999 business website package, 7-day launch timeline, and developer support.'
+                      : isPayroll
+                      ? 'Everything you need to know about our ₹4,999 payroll package (upto 10 employees), payroll data registers, wage calculations, and balance statements.'
                       : `Everything you need to know about our ${svc.shortTitle || svc.title} delivery, service scope, and SLA governance.`}
                   </p>
                 </div>
@@ -466,11 +594,21 @@ export default function ServicePage({ params }) {
         {/* Mobile Sticky Bottom CTA */}
         <div className="svc-mobile-sticky-bar">
           <div className="svc-mobile-sticky-bar__info">
-            <strong>{isWebDev ? 'Basic Bundle' : (svc.shortTitle || svc.title)}</strong>
-            <span>{isWebDev ? 'Complete Website • ₹4,999 + GST' : '1-on-1 Strategy Session • ₹99'}</span>
+            <strong>{isWebDev ? 'Basic Bundle' : isPayroll ? 'Payroll Starter' : (svc.shortTitle || svc.title)}</strong>
+            <span>
+              {isWebDev
+                ? 'Complete Website • ₹4,999 + GST'
+                : isPayroll
+                ? 'Upto 10 Staff • ₹4,999 + GST'
+                : '1-on-1 Strategy Session • ₹99'}
+            </span>
           </div>
           <a href="#consultation-form" className="btn btn--gold svc-mobile-sticky-bar__btn">
-            {isWebDev ? 'Book your website @4999 +gst →' : 'Book @ ₹99 →'}
+            {isWebDev
+              ? 'Book your website @4999 +gst →'
+              : isPayroll
+              ? 'Book Payroll @4999 +gst →'
+              : 'Book @ ₹99 →'}
           </a>
         </div>
       </main>

@@ -23,10 +23,10 @@ function getContextualPrompts(path = '') {
   }
   if (path.includes('payroll')) {
     return [
-      'How does biometric attendance sync to pay-runs?',
-      'Do you handle PF and ESIC statutory compliance?',
-      'Can you manage payroll for 50+ employees?',
-      'How do I book a ₹99 payroll strategy session?',
+      'Tell me about the ₹4,999 Payroll Package',
+      'What payroll data & balance statements are provided?',
+      'How does statutory PF, ESIC & TDS compliance work?',
+      'How do I book the ₹4,999 Payroll package?',
     ];
   }
   if (path.includes('bpo')) {
@@ -39,9 +39,8 @@ function getContextualPrompts(path = '') {
   }
   return [
     'Tell me about the ₹4,999 Website Development Bundle',
+    'Tell me about the ₹4,999 Payroll Package',
     'What 24/7 BPO & Customer Support services do you provide?',
-    'Can you build custom AI agents & Web applications?',
-    'How does audit-ready Bookkeeping & Tax compliance work?',
     'How do I book a ₹99 strategy consultation?',
   ];
 }
@@ -151,54 +150,77 @@ function ChatMessageContent({ content }) {
 
   flushList();
 
-  // Extract service/contact URL to render a dedicated, one-tap payment/dashboard button
   const serviceUrlMatch = content.match(/https?:\/\/[^\s)]+(?:\/services\/[a-z0-9-]+|\/contact|\/bpo-partnerships)/i);
-  if (serviceUrlMatch) {
-    const matchedUrl = serviceUrlMatch[0].replace(/[.,;:!?]+$/, '');
-    const localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
-    let btnLabel = 'Go to Payment & Dashboard →';
-    if (matchedUrl.includes('web-development')) {
-      btnLabel = 'Open Web Development (₹4,999 Bundle) →';
-    } else if (matchedUrl.includes('saas-digital-solutions')) {
-      btnLabel = 'Open Web & AI Dashboard (₹99 Form) →';
-    } else if (matchedUrl.includes('bookkeeping-accountancy')) {
-      btnLabel = 'Open Bookkeeping Dashboard (₹99 Form) →';
-    } else if (matchedUrl.includes('payroll-compensation')) {
-      btnLabel = 'Open Payroll Dashboard (₹99 Form) →';
-    } else if (matchedUrl.includes('bpo-customer-service')) {
-      btnLabel = 'Open Customer Support Dashboard →';
-    } else if (matchedUrl.includes('bpo-sales')) {
-      btnLabel = 'Open BPO Sales Dashboard →';
-    } else if (matchedUrl.includes('bpo-backoffice')) {
-      btnLabel = 'Open Back Office Dashboard →';
-    } else if (matchedUrl.includes('bpo-partnerships')) {
-      btnLabel = 'Open BPO Partnerships Form →';
-    } else if (matchedUrl.includes('digital-marketing')) {
-      btnLabel = 'Open Digital Marketing Dashboard →';
-    } else if (matchedUrl.includes('recruitment-hiring')) {
-      btnLabel = 'Open Recruitment Dashboard →';
-    } else if (matchedUrl.includes('contact')) {
-      btnLabel = 'Open ₹99 Consultation Form →';
+  const hasWhatsApp = /wa\.me|\+91\s*98182\s*24995|9818224995/i.test(content);
+
+  if (serviceUrlMatch || hasWhatsApp) {
+    let btnLabel = 'Explore Service →';
+    let localHref = '';
+    let matchedUrl = '';
+
+    if (serviceUrlMatch) {
+      matchedUrl = serviceUrlMatch[0].replace(/[.,;:!?]+$/, '');
+      localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
+
+      if (matchedUrl.includes('web-development')) {
+        btnLabel = 'View Web Development (₹4,999 Bundle) →';
+      } else if (matchedUrl.includes('saas-digital-solutions')) {
+        btnLabel = 'Explore AI & Web Solutions →';
+      } else if (matchedUrl.includes('bookkeeping-accountancy')) {
+        btnLabel = 'Explore Bookkeeping & Accounting (₹4,999) →';
+      } else if (matchedUrl.includes('payroll-compensation')) {
+        btnLabel = 'View Payroll Package (₹4,999) →';
+      } else if (matchedUrl.includes('bpo-customer-service')) {
+        btnLabel = 'Explore 24/7 Customer Support →';
+      } else if (matchedUrl.includes('bpo-sales')) {
+        btnLabel = 'Explore BPO Sales & Operations →';
+      } else if (matchedUrl.includes('bpo-backoffice')) {
+        btnLabel = 'Explore Back Office Solutions →';
+      } else if (matchedUrl.includes('bpo-partnerships')) {
+        btnLabel = 'Explore BPO Partnerships →';
+      } else if (matchedUrl.includes('digital-marketing')) {
+        btnLabel = 'Explore Digital Marketing →';
+      } else if (matchedUrl.includes('recruitment-hiring')) {
+        btnLabel = 'Explore Recruitment & Staffing →';
+      } else if (matchedUrl.includes('contact')) {
+        btnLabel = 'Book ₹99 Strategic Consultation →';
+      }
     }
 
     elements.push(
       <div key="action-cta-wrap" className="chat-bubble-cta-wrap">
-        <a
-          href={localHref || matchedUrl}
-          className="chat-bubble-cta"
-          onClick={() => {
-            trackMetaCustom('ChatbotCtaClick', {
-              destination: localHref || matchedUrl,
-              cta_label: btnLabel,
-            });
-            trackEvent('chatbot_cta_click', {
-              destination: localHref || matchedUrl,
-              cta_label: btnLabel,
-            });
-          }}
-        >
-          {btnLabel}
-        </a>
+        {serviceUrlMatch && (
+          <a
+            href={localHref || matchedUrl}
+            className="chat-bubble-cta"
+            onClick={() => {
+              trackMetaCustom('ChatbotCtaClick', {
+                destination: localHref || matchedUrl,
+                cta_label: btnLabel,
+              });
+              trackEvent('chatbot_cta_click', {
+                destination: localHref || matchedUrl,
+                cta_label: btnLabel,
+              });
+            }}
+          >
+            {btnLabel}
+          </a>
+        )}
+        {hasWhatsApp && (
+          <a
+            href="https://wa.me/919818224995"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="chat-bubble-cta chat-bubble-cta--wa"
+            onClick={() => {
+              trackMetaCustom('ChatbotWhatsAppClick', { channel: 'whatsapp' });
+              trackEvent('chatbot_whatsapp_click', { channel: 'whatsapp' });
+            }}
+          >
+            💬 Chat on WhatsApp (+91 98182 24995) →
+          </a>
+        )}
       </div>
     );
   }
@@ -213,7 +235,7 @@ export default function FloatingChatbot() {
     {
       role: 'assistant',
       content:
-        "Hello! I'm Argo, Reddington Global's Executive AI Advisor for BPO, Software & AI, and Bookkeeping services.\nWhich service area or operational challenge can I help scale for your business today?",
+        "Hi! I'm Argo, Solutions Advisor at Reddington Global. How can I assist you with our BPO, Web Development (₹4,999), or Bookkeeping & Payroll (₹4,999) services today?",
     },
   ]);
   const [input, setInput] = useState('');

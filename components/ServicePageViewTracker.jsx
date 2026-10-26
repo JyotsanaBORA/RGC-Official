@@ -16,7 +16,11 @@ export default function ServicePageViewTracker({ service }) {
     trackedRef.current = true;
 
     const isWebDev = service.slug === 'web-development' || service.slug === 'web-dev';
-    const price = isWebDev ? 4999 : 99;
+    const isPayroll =
+      service.slug === 'payroll-compensation' ||
+      service.slug === 'payroll' ||
+      service.slug === 'payroll-services';
+    const price = isWebDev || isPayroll ? 4999 : 99;
 
     trackServiceView({
       slug: service.slug,

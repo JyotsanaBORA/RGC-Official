@@ -65,7 +65,7 @@ export default function MotionServices() {
       capabilitiesHeader: 'CORE PRACTICE CAPABILITIES:',
       services: [
         'Bookkeeping',
-        'Accounting',
+        'Payroll & Compensation',
         'Reconciliation',
         'Tax Support',
         'Reporting',

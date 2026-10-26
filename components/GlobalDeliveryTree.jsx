@@ -41,7 +41,7 @@ export default function GlobalDeliveryTree() {
       href: '/services/bookkeeping-accountancy',
       capabilities: [
         { name: 'Bookkeeping', href: '/services/bookkeeping-accountancy' },
-        { name: 'Accounting', href: '/services/bookkeeping-accountancy#capabilities' },
+        { name: 'Payroll', href: '/services/payroll-compensation' },
         { name: 'Reconciliation', href: '/services/bookkeeping-accountancy#capabilities' },
         { name: 'Tax Support', href: '/services/bookkeeping-accountancy#capabilities' },
         { name: 'Reporting', href: '/services/bookkeeping-accountancy#capabilities' },
