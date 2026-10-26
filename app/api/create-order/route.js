@@ -77,7 +77,7 @@ export async function POST(req) {
     // 3. Persist Order in MongoDB (if connected)
     if (db) {
       try {
-        await Order.create({
+        const orderData = {
           orderId: order.id,
           idempotencyKey: idempotencyKey || undefined,
           email: customerEmail,
@@ -110,7 +110,21 @@ export async function POST(req) {
           attribution: attributionData,
           status: 'created',
           createdAtIST: getISTTimestamp(),
-        });
+        };
+
+        const leadId = body.leadId || body.customer?.leadId || body.notes?.lead_id;
+        if (leadId) {
+          const updated = await Order.findOneAndUpdate(
+            { orderId: leadId },
+            { $set: orderData, $unset: { failureReason: 1 } },
+            { new: true }
+          );
+          if (!updated) {
+            await Order.create(orderData);
+          }
+        } else {
+          await Order.create(orderData);
+        }
       } catch (dbErr) {
         console.error('Failed to save order to MongoDB:', dbErr);
         // Do not fail the client if DB write fails; order is already created on Razorpay

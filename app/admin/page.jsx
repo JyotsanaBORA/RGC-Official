@@ -13,6 +13,8 @@ export default function AdminPage() {
     totalRevenue: 0,
     pendingCalls: 0,
     completedCalls: 0,
+    totalFailed: 0,
+    totalAbandoned: 0,
   });
 
   // Login form state
@@ -22,9 +24,41 @@ export default function AdminPage() {
   const [loginSubmitting, setLoginSubmitting] = useState(false);
 
   // Filter & Search state
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'needs_call' | 'paid' | 'failed'
+  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'needs_call' | 'paid' | 'failed' | 'abandoned'
   const [searchQuery, setSearchQuery] = useState('');
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
+
+  // Daily leads report trigger state
+  const [reportSending, setReportSending] = useState(false);
+  const [reportNotice, setReportNotice] = useState(null);
+
+  const handleSendReport = async () => {
+    setReportSending(true);
+    setReportNotice(null);
+    try {
+      const res = await fetch('/api/cron/daily-leads', { method: 'POST' });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setReportNotice({
+          type: 'success',
+          message: `✅ Report sent to ${data.recipients?.join(', ')} (${data.leadCount} leads in CSV)`,
+        });
+      } else {
+        setReportNotice({
+          type: 'error',
+          message: `⚠️ ${data.error || 'Failed to send report'}`,
+        });
+      }
+    } catch (err) {
+      setReportNotice({ type: 'error', message: 'Network error sending report' });
+    } finally {
+      setReportSending(false);
+    }
+  };
+
+  const handleDownloadCsv = () => {
+    window.open('/api/cron/daily-leads?download=csv', '_blank');
+  };
 
   // Fetch admin data
   const fetchAdminData = async () => {
@@ -163,7 +197,9 @@ export default function AdminPage() {
     } else if (activeTab === 'paid') {
       if (order.status !== 'paid') return false;
     } else if (activeTab === 'failed') {
-      if (order.status === 'paid') return false;
+      if (order.status !== 'failed') return false;
+    } else if (activeTab === 'abandoned') {
+      if (order.status !== 'abandoned') return false;
     }
 
     // Search query
@@ -174,7 +210,8 @@ export default function AdminPage() {
     const phoneMatch = (order.customerPhone || '').toLowerCase().includes(q);
     const companyMatch = (order.customerCompany || '').toLowerCase().includes(q);
     const orderMatch = (order.orderId || '').toLowerCase().includes(q);
-    return nameMatch || emailMatch || phoneMatch || companyMatch || orderMatch;
+    const reasonMatch = (order.failureReason || '').toLowerCase().includes(q);
+    return nameMatch || emailMatch || phoneMatch || companyMatch || orderMatch || reasonMatch;
   });
 
   if (loading) {
@@ -292,7 +329,46 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <button
+            onClick={handleDownloadCsv}
+            title="Download last 24h leads in CSV for Excel"
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              padding: '8px 14px',
+              borderRadius: '6px',
+              fontSize: '13px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              color: '#0F172A',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            📥 Export 24h CSV
+          </button>
+          <button
+            onClick={handleSendReport}
+            disabled={reportSending}
+            title="Dispatch 24h leads CSV email to Jyotsana, Vishal & Sales"
+            style={{
+              background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+              border: '1px solid #334155',
+              padding: '8px 14px',
+              borderRadius: '6px',
+              fontSize: '13px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              color: '#FBE5A2',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            {reportSending ? '⏳ Sending...' : '✉️ Send 24h Report'}
+          </button>
           <button
             onClick={fetchAdminData}
             style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', padding: '8px 14px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', cursor: 'pointer', color: '#334155' }}
@@ -310,30 +386,61 @@ export default function AdminPage() {
 
       {/* Main Container */}
       <main style={{ maxWidth: '1320px', margin: '28px auto', padding: '0 20px' }}>
+        {reportNotice && (
+          <div
+            style={{
+              background: reportNotice.type === 'success' ? '#ECFDF5' : '#FEF2F2',
+              border: `1px solid ${reportNotice.type === 'success' ? '#A7F3D0' : '#FECACA'}`,
+              color: reportNotice.type === 'success' ? '#065F46' : '#991B1B',
+              padding: '12px 18px',
+              borderRadius: '10px',
+              fontSize: '13px',
+              fontWeight: '600',
+              marginBottom: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <div>{reportNotice.message}</div>
+            <button
+              onClick={() => setReportNotice(null)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', color: 'inherit' }}
+            >
+              ✕
+            </button>
+          </div>
+        )}
         {/* KPI Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '18px', marginBottom: '28px' }}>
-          <div style={{ background: '#FFFFFF', padding: '20px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: '600', textTransform: 'uppercase' }}>Total Bookings</div>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: '#0F172A', marginTop: '6px' }}>{metrics.totalBookings || 0}</div>
-            <div style={{ fontSize: '12px', color: '#94A3B8', marginTop: '4px' }}>All recorded checkout attempts</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '28px' }}>
+          <div style={{ background: '#FFFFFF', padding: '18px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+            <div style={{ fontSize: '11px', color: '#64748B', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Total Records</div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: '#0F172A', marginTop: '6px' }}>{metrics.totalBookings || orders.length}</div>
+            <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '4px' }}>All leads &amp; checkouts</div>
           </div>
 
-          <div style={{ background: '#FFFFFF', padding: '20px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-            <div style={{ fontSize: '12px', color: '#047857', fontWeight: '600', textTransform: 'uppercase' }}>Confirmed Paid</div>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: '#059669', marginTop: '6px' }}>{metrics.totalPaid || 0}</div>
-            <div style={{ fontSize: '12px', color: '#059669', marginTop: '4px' }}>Revenue: ₹{(metrics.totalRevenue || 0).toLocaleString('en-IN')}</div>
+          <div style={{ background: '#FFFFFF', padding: '18px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+            <div style={{ fontSize: '11px', color: '#047857', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Confirmed Paid</div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: '#059669', marginTop: '6px' }}>{metrics.totalPaid || orders.filter(o => o.status === 'paid').length}</div>
+            <div style={{ fontSize: '11px', color: '#059669', marginTop: '4px' }}>Revenue: ₹{(metrics.totalRevenue || 0).toLocaleString('en-IN')}</div>
           </div>
 
-          <div style={{ background: '#FFFBEB', padding: '20px', borderRadius: '12px', border: '1px solid #FDE68A', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-            <div style={{ fontSize: '12px', color: '#B45309', fontWeight: '700', textTransform: 'uppercase' }}>📞 Needs Call (Action)</div>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: '#D97706', marginTop: '6px' }}>{metrics.pendingCalls || 0}</div>
-            <div style={{ fontSize: '12px', color: '#B45309', marginTop: '4px' }}>Paid clients awaiting partner briefing</div>
+          <div style={{ background: '#FFFBEB', padding: '18px', borderRadius: '12px', border: '1px solid #FDE68A', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+            <div style={{ fontSize: '11px', color: '#B45309', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>📞 Needs Call (Action)</div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: '#D97706', marginTop: '6px' }}>{metrics.pendingCalls || orders.filter(o => o.status === 'paid' && o.callStatus === 'pending').length}</div>
+            <div style={{ fontSize: '11px', color: '#B45309', marginTop: '4px' }}>Paid clients awaiting briefing</div>
           </div>
 
-          <div style={{ background: '#FFFFFF', padding: '20px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-            <div style={{ fontSize: '12px', color: '#475569', fontWeight: '600', textTransform: 'uppercase' }}>Calls Handled</div>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: '#2563EB', marginTop: '6px' }}>{metrics.completedCalls || 0}</div>
-            <div style={{ fontSize: '12px', color: '#64748B', marginTop: '4px' }}>Called, follow-up, or completed</div>
+          <div style={{ background: '#FEF2F2', padding: '18px', borderRadius: '12px', border: '1px solid #FECACA', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+            <div style={{ fontSize: '11px', color: '#B91C1C', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>❌ Failed Payments</div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: '#DC2626', marginTop: '6px' }}>{metrics.totalFailed || orders.filter(o => o.status === 'failed').length}</div>
+            <div style={{ fontSize: '11px', color: '#B91C1C', marginTop: '4px' }}>Declined or modal closed</div>
+          </div>
+
+          <div style={{ background: '#FFFDF5', padding: '18px', borderRadius: '12px', border: '1px solid #FCD34D', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+            <div style={{ fontSize: '11px', color: '#92400E', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>📝 Left in Form</div>
+            <div style={{ fontSize: '26px', fontWeight: '800', color: '#B45309', marginTop: '6px' }}>{metrics.totalAbandoned || orders.filter(o => o.status === 'abandoned').length}</div>
+            <div style={{ fontSize: '11px', color: '#92400E', marginTop: '4px' }}>Filled details without paying</div>
           </div>
         </div>
 
@@ -354,7 +461,7 @@ export default function AdminPage() {
                 color: activeTab === 'all' ? '#FFFFFF' : '#475569',
               }}
             >
-              All Users ({orders.length})
+              All Records ({orders.length})
             </button>
             <button
               onClick={() => setActiveTab('needs_call')}
@@ -384,7 +491,7 @@ export default function AdminPage() {
                 color: activeTab === 'paid' ? '#FFFFFF' : '#047857',
               }}
             >
-              Paid Only ({orders.filter(o => o.status === 'paid').length})
+              ✅ Paid Only ({orders.filter(o => o.status === 'paid').length})
             </button>
             <button
               onClick={() => setActiveTab('failed')}
@@ -399,7 +506,22 @@ export default function AdminPage() {
                 color: activeTab === 'failed' ? '#FFFFFF' : '#B91C1C',
               }}
             >
-              Incomplete ({orders.filter(o => o.status !== 'paid').length})
+              ❌ Failed Payments ({orders.filter(o => o.status === 'failed').length})
+            </button>
+            <button
+              onClick={() => setActiveTab('abandoned')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '999px',
+                fontSize: '13px',
+                fontWeight: '700',
+                border: 'none',
+                cursor: 'pointer',
+                background: activeTab === 'abandoned' ? '#B45309' : '#FFFBEB',
+                color: activeTab === 'abandoned' ? '#FFFFFF' : '#92400E',
+              }}
+            >
+              📝 Left in Form ({orders.filter(o => o.status === 'abandoned').length})
             </button>
           </div>
 
@@ -557,23 +679,82 @@ export default function AdminPage() {
                         </td>
 
                         {/* Payment Status */}
-                        <td style={{ padding: '16px 18px', verticalAlign: 'top' }}>
-                          <span
-                            style={{
-                              display: 'inline-block',
-                              padding: '4px 10px',
-                              borderRadius: '999px',
-                              fontSize: '11px',
-                              fontWeight: '700',
-                              textTransform: 'uppercase',
-                              background: isPaid ? '#ECFDF5' : order.status === 'created' ? '#FFFBEB' : '#FEF2F2',
-                              color: isPaid ? '#047857' : order.status === 'created' ? '#B45309' : '#B91C1C',
-                            }}
-                          >
-                            {isPaid ? `✓ Paid ₹${order.amount}` : order.status}
-                          </span>
+                        <td style={{ padding: '16px 18px', verticalAlign: 'top', maxWidth: '240px' }}>
+                          {isPaid ? (
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                padding: '4px 10px',
+                                borderRadius: '999px',
+                                fontSize: '11px',
+                                fontWeight: '700',
+                                textTransform: 'uppercase',
+                                background: '#ECFDF5',
+                                color: '#047857',
+                              }}
+                            >
+                              ✓ Paid ₹{order.amount}
+                            </span>
+                          ) : order.status === 'failed' ? (
+                            <div>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '4px 10px',
+                                  borderRadius: '999px',
+                                  fontSize: '11px',
+                                  fontWeight: '700',
+                                  textTransform: 'uppercase',
+                                  background: '#FEF2F2',
+                                  color: '#B91C1C',
+                                }}
+                              >
+                                ✕ Payment Failed
+                              </span>
+                              {order.failureReason && (
+                                <div style={{ fontSize: '11px', color: '#B91C1C', marginTop: '4px', lineHeight: '1.35', fontWeight: '500' }}>
+                                  ⚠️ {order.failureReason}
+                                </div>
+                              )}
+                            </div>
+                          ) : order.status === 'abandoned' ? (
+                            <div>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '4px 10px',
+                                  borderRadius: '999px',
+                                  fontSize: '11px',
+                                  fontWeight: '700',
+                                  textTransform: 'uppercase',
+                                  background: '#FFFBEB',
+                                  color: '#B45309',
+                                }}
+                              >
+                                📝 Left in Form
+                              </span>
+                              <div style={{ fontSize: '11px', color: '#92400E', marginTop: '4px', lineHeight: '1.35' }}>
+                                Filled details, did not pay
+                              </div>
+                            </div>
+                          ) : (
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                padding: '4px 10px',
+                                borderRadius: '999px',
+                                fontSize: '11px',
+                                fontWeight: '700',
+                                textTransform: 'uppercase',
+                                background: '#F1F5F9',
+                                color: '#475569',
+                              }}
+                            >
+                              ⏳ {order.status}
+                            </span>
+                          )}
                           <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '6px' }}>
-                            {order.paidAtIST || order.createdAtIST || (order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-IN') : 'N/A')}
+                            {order.paidAtIST || order.failedAtIST || order.createdAtIST || (order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-IN') : 'N/A')}
                           </div>
                         </td>
 
@@ -648,28 +829,44 @@ export default function AdminPage() {
                         {/* Action: Invoice & Delete */}
                         <td style={{ padding: '16px 18px', verticalAlign: 'top', textAlign: 'right', whiteSpace: 'nowrap' }}>
                           <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
-                            <Link
-                              href={`/invoice/${order.orderId}`}
-                              target="_blank"
-                              style={{
-                                display: 'inline-block',
-                                padding: '6px 11px',
-                                background: '#F8FAFC',
-                                color: '#0F172A',
-                                border: '1px solid #CBD5E1',
-                                borderRadius: '6px',
-                                fontSize: '12px',
-                                fontWeight: '600',
-                                textDecoration: 'none',
-                                whiteSpace: 'nowrap',
-                              }}
-                            >
-                              📄 Invoice
-                            </Link>
+                            {isPaid ? (
+                              <Link
+                                href={`/invoice/${order.orderId}`}
+                                target="_blank"
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '6px 11px',
+                                  background: '#F8FAFC',
+                                  color: '#0F172A',
+                                  border: '1px solid #CBD5E1',
+                                  borderRadius: '6px',
+                                  fontSize: '12px',
+                                  fontWeight: '600',
+                                  textDecoration: 'none',
+                                  whiteSpace: 'nowrap',
+                                }}
+                              >
+                                📄 Invoice
+                              </Link>
+                            ) : (
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '4px 8px',
+                                  background: '#F1F5F9',
+                                  color: '#64748B',
+                                  borderRadius: '6px',
+                                  fontSize: '11px',
+                                  fontWeight: '600',
+                                }}
+                              >
+                                {order.status === 'abandoned' ? 'Draft Lead' : 'No Invoice'}
+                              </span>
+                            )}
                             <button
                               type="button"
                               onClick={() => handleDeleteOrder(order.orderId, order.customerName)}
-                              title="Delete booking data & invoice"
+                              title="Delete record"
                               style={{
                                 background: '#FEF2F2',
                                 border: '1px solid #FECACA',

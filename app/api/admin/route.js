@@ -35,6 +35,8 @@ export async function GET(req) {
     let totalRevenue = 0;
     let pendingCalls = 0;
     let completedCalls = 0;
+    let totalFailed = 0;
+    let totalAbandoned = 0;
 
     const normalizedOrders = orders.map((order) => {
       const isPaid = order.status === 'paid';
@@ -48,6 +50,10 @@ export async function GET(req) {
         } else {
           completedCalls += 1;
         }
+      } else if (order.status === 'failed') {
+        totalFailed += 1;
+      } else if (order.status === 'abandoned') {
+        totalAbandoned += 1;
       }
 
       return {
@@ -55,6 +61,7 @@ export async function GET(req) {
         orderId: order.orderId,
         paymentId: order.paymentId || '',
         status: order.status || 'created',
+        failureReason: order.failureReason || (order.status === 'abandoned' ? 'Left in form before initiating payment' : ''),
         amount: order.amountInRupees || Math.round((order.amount || 0) / 100),
         currency: order.currency || 'INR',
         service: order.service || 'Strategic Business Consultancy',
@@ -69,8 +76,10 @@ export async function GET(req) {
         calledAt: order.calledAt || null,
         createdAt: order.createdAt || null,
         paidAt: order.paidAt || null,
+        failedAt: order.failedAt || null,
         createdAtIST: order.createdAtIST || '',
         paidAtIST: order.paidAtIST || '',
+        failedAtIST: order.failedAtIST || '',
         notes: order.notes || {},
         attribution: order.attribution || {
           source: order.notes?.utm_source || 'direct',
@@ -89,6 +98,8 @@ export async function GET(req) {
         totalRevenue,
         pendingCalls,
         completedCalls,
+        totalFailed,
+        totalAbandoned,
       },
       orders: normalizedOrders,
     });

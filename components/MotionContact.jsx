@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { trackLeadSubmission, trackContactClick } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
+import { getAttributionData } from '../lib/analytics/attribution';
 import CustomServiceSelect from './CustomServiceSelect';
 
 /* ── SVG icons ── */
@@ -36,7 +37,7 @@ const OFFICES = [
 ];
 
 /* ── Floating-label field ── */
-function FloatField({ id, name, label, type = 'text', required = false, rows, autoComplete, value, onChange }) {
+function FloatField({ id, name, label, type = 'text', required = false, rows, autoComplete, value, onChange, onBlur }) {
   const Tag = rows ? 'textarea' : 'input';
   return (
     <div className={`ff${rows ? ' ff--textarea' : ''}`}>
@@ -51,6 +52,7 @@ function FloatField({ id, name, label, type = 'text', required = false, rows, au
         maxLength={rows ? 2000 : undefined}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
       />
       <label htmlFor={id}>{label}</label>
       <span className="ff__bar" aria-hidden="true"></span>
@@ -71,13 +73,69 @@ export default function MotionContact() {
   const [paymentSuccess, setPaymentSuccess] = useState(null);
   const [paymentError, setPaymentError] = useState(null);
 
+  const leadIdRef = useRef(null);
+  const debounceTimerRef = useRef(null);
+
+  const saveLeadDraft = async (dataToSave = formData) => {
+    const cleanPhone = (dataToSave.phone || '').trim();
+    const cleanEmail = (dataToSave.email || '').trim();
+    if (cleanPhone.length < 7 && (!cleanEmail.includes('@') || !cleanEmail.includes('.'))) {
+      return;
+    }
+
+    try {
+      const attribution = getAttributionData();
+      const res = await fetch('/api/lead-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: leadIdRef.current,
+          name: dataToSave.name,
+          email: dataToSave.email,
+          phone: dataToSave.phone,
+          company: dataToSave.company,
+          service: dataToSave.service || 'Strategic Business Consultancy',
+          selectedPackage: '1-on-1 Strategic Consultation (₹99)',
+          packagePrice: 99,
+          amount: 9900,
+          attribution,
+          notes: {
+            message: dataToSave.message,
+            form_source: 'contact_page',
+          },
+        }),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        if (json.leadId) {
+          leadIdRef.current = json.leadId;
+        }
+      }
+    } catch (_) {}
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextData = { ...formData, [name]: value };
+    setFormData(nextData);
+
+    if (name === 'phone' || name === 'email' || name === 'name') {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = setTimeout(() => {
+        saveLeadDraft(nextData);
+      }, 1200);
+    }
+  };
+
+  const handleBlur = () => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    saveLeadDraft(formData);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     setLoading(true);
     setPaymentError(null);
 
@@ -89,6 +147,7 @@ export default function MotionContact() {
     try {
       await startConsultationPayment({
         customer: {
+          leadId: leadIdRef.current,
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
@@ -287,6 +346,7 @@ export default function MotionContact() {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                 />
                 <FloatField
                   id="fCompany"
@@ -295,6 +355,7 @@ export default function MotionContact() {
                   autoComplete="organization"
                   value={formData.company}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                 />
               </div>
 
@@ -307,6 +368,7 @@ export default function MotionContact() {
                 required
                 value={formData.email}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
               />
 
               <div className="ct-form__row">
@@ -319,6 +381,7 @@ export default function MotionContact() {
                   required
                   value={formData.phone}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                 />
                 <CustomServiceSelect
                   id="fService"
@@ -338,6 +401,7 @@ export default function MotionContact() {
                 rows={4}
                 value={formData.message}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
               />
 
               <button

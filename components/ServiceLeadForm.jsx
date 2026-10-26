@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { trackLeadSubmission } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
 import { getPackagesForService } from '../lib/packages-data';
+import { getAttributionData } from '../lib/analytics/attribution';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   // Strictly isolate Website Development from all other enterprise practices
@@ -37,6 +38,9 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     paymentId: '',
   });
 
+  const leadIdRef = useRef(null);
+  const debounceTimerRef = useRef(null);
+
   useEffect(() => {
     const pkgs = getPackagesForService(serviceSlug || serviceTitle);
     const def = pkgs.find((p) => p.isDefault) || pkgs[0];
@@ -52,18 +56,77 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   const currentPackage =
     packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
 
+  // Background auto-save for abandoned form leads
+  const saveLeadDraft = async (dataToSave = formData) => {
+    const cleanPhone = (dataToSave.phone || '').trim();
+    const cleanEmail = (dataToSave.email || '').trim();
+    if (cleanPhone.length < 7 && (!cleanEmail.includes('@') || !cleanEmail.includes('.'))) {
+      return;
+    }
+
+    try {
+      const activeService = serviceTitle || (isWebDev ? 'Website Development' : 'Strategic Consultation');
+      const activePrice = currentPackage?.price || (isWebDev ? 4999 : 99);
+      const attribution = getAttributionData();
+
+      const res = await fetch('/api/lead-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: leadIdRef.current,
+          name: dataToSave.name,
+          email: dataToSave.email,
+          phone: dataToSave.phone,
+          company: dataToSave.company || dataToSave.businessType,
+          gstNumber: dataToSave.gstNumber,
+          service: activeService,
+          selectedPackage: currentPackage?.name || (isWebDev ? 'Basic Bundle' : 'Strategic Consultation'),
+          packageId: currentPackage?.id || '',
+          packagePrice: activePrice,
+          attribution,
+          notes: {
+            requirement: dataToSave.requirement,
+            business_type: dataToSave.businessType,
+          },
+        }),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        if (json.leadId) {
+          leadIdRef.current = json.leadId;
+        }
+      }
+    } catch (_) {}
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let nextData;
     if (name === 'gstNumber') {
       const formattedGst = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-      setFormData((prev) => ({ ...prev, gstNumber: formattedGst }));
+      nextData = { ...formData, gstNumber: formattedGst };
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      nextData = { ...formData, [name]: value };
     }
+    setFormData(nextData);
+
+    if (name === 'phone' || name === 'email' || name === 'name') {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = setTimeout(() => {
+        saveLeadDraft(nextData);
+      }, 1200);
+    }
+  };
+
+  const handleBlur = () => {
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    saveLeadDraft(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
 
     const activeService = serviceTitle || (isWebDev ? 'Website Development' : 'Strategic Consultation');
@@ -79,6 +142,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     try {
       await startConsultationPayment({
         customer: {
+          leadId: leadIdRef.current,
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
@@ -211,6 +275,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   placeholder={isWebDev ? 'First & Last Name *' : 'Full Name *'}
                   value={formData.name}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className="svc-clean-input"
                 />
                 <input
@@ -221,6 +286,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   placeholder="Phone / WhatsApp *"
                   value={formData.phone}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className="svc-clean-input"
                 />
               </div>
@@ -235,6 +301,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   placeholder={isWebDev ? 'Email Address *' : 'Corporate Email *'}
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className="svc-clean-input"
                 />
                 <input
@@ -244,6 +311,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   placeholder={isWebDev ? 'Business / Brand Name' : 'Company / Organization'}
                   value={formData.company}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className="svc-clean-input"
                 />
               </div>
@@ -257,6 +325,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                       name="businessType"
                       value={formData.businessType}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       className="svc-clean-input svc-clean-select"
                     >
                       <option value="Clinic / Healthcare">Clinic / Healthcare</option>
@@ -277,6 +346,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                       name="businessType"
                       value={formData.businessType}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       className="svc-clean-input svc-clean-select"
                     >
                       <option value="Customer Service & Support">Customer Service & CX</option>
@@ -303,6 +373,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   placeholder="GSTIN (Optional for tax invoice)"
                   value={formData.gstNumber}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className="svc-clean-input svc-clean-input--uppercase"
                 />
               </div>
@@ -334,6 +405,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 }
                 value={formData.requirement}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className="svc-clean-input svc-clean-full"
               />
 
