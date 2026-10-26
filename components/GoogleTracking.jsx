@@ -10,11 +10,13 @@ export default function GoogleTracking() {
 
   return (
     <>
-      {/* ── Google Tag Manager (Recommended for running Ads) ── */}
-      {gtmId && (
+      {/* ── Primary: Google Tag Manager (Manages GA4 & Ads without duplicate scripts) ── */}
+      {gtmId ? (
         <>
           <Script id="gtm-script" strategy="afterInteractive">
             {`
+              window.dataLayer = window.dataLayer || [];
+              window.gtag = function(){window.dataLayer.push(arguments);};
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -31,24 +33,24 @@ export default function GoogleTracking() {
             />
           </noscript>
         </>
-      )}
-
-      {/* ── Google Analytics 4 (Direct Tracking) ── */}
-      {gaId && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="ga4-script" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              window.gtag = function(){window.dataLayer.push(arguments);};
-              window.gtag('js', new Date());
-              window.gtag('config', '${gaId}', { send_page_view: true });
-            `}
-          </Script>
-        </>
+      ) : (
+        /* ── Fallback: Standalone Google Analytics 4 only if GTM ID is absent ── */
+        gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-script" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function(){window.dataLayer.push(arguments);};
+                window.gtag('js', new Date());
+                window.gtag('config', '${gaId}', { send_page_view: true });
+              `}
+            </Script>
+          </>
+        )
       )}
     </>
   );
