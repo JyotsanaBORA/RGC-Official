@@ -4,14 +4,47 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { trackMetaCustom, trackEvent } from '../lib/analytics/events';
 
-const QUICK_PROMPTS = [
-  'What 24/7 BPO & Customer Support services do you provide?',
-  'Can you build custom AI agents & Web applications?',
-  'How does audit-ready Bookkeeping & Tax compliance work?',
-  'Tell me about Payroll & Compensation management',
-  'How do BPO Partnerships & Campaign opportunities work?',
-  'How do I book a ₹99 strategy consultation?',
-];
+function getContextualPrompts(path = '') {
+  if (path.includes('web-development')) {
+    return [
+      'Tell me about the ₹4,999 Basic Website bundle',
+      'What tech stack do you use (Next.js/React)?',
+      'Can you build custom corporate portals & web apps?',
+      'How fast can you launch my website?',
+    ];
+  }
+  if (path.includes('bookkeeping')) {
+    return [
+      'How does audit-ready Bookkeeping & Tax compliance work?',
+      'Do you support Zoho Books, Tally & QuickBooks?',
+      'How do monthly GSTR-1 & 3B reconciliations work?',
+      'How do I book a ₹99 consultation?',
+    ];
+  }
+  if (path.includes('payroll')) {
+    return [
+      'How does biometric attendance sync to pay-runs?',
+      'Do you handle PF and ESIC statutory compliance?',
+      'Can you manage payroll for 50+ employees?',
+      'How do I book a ₹99 payroll strategy session?',
+    ];
+  }
+  if (path.includes('bpo')) {
+    return [
+      'Tell me about 24/7 dual-shore customer care',
+      'How does inbound SDR lead qualification work?',
+      'How do BPO Partnerships & Campaign seat-filling work?',
+      'How do I book a ₹99 strategy consultation?',
+    ];
+  }
+  return [
+    'Tell me about the ₹4,999 Website Development Bundle',
+    'What 24/7 BPO & Customer Support services do you provide?',
+    'Can you build custom AI agents & Web applications?',
+    'How does audit-ready Bookkeeping & Tax compliance work?',
+    'How do I book a ₹99 strategy consultation?',
+  ];
+}
 
 function formatInline(text) {
   if (!text) return '';
@@ -125,7 +158,7 @@ function ChatMessageContent({ content }) {
     const localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
     let btnLabel = 'Go to Payment & Dashboard →';
     if (matchedUrl.includes('web-development')) {
-      btnLabel = 'Open Web Development Dashboard (₹99 Form) →';
+      btnLabel = 'Open Web Development (₹4,999 Bundle) →';
     } else if (matchedUrl.includes('saas-digital-solutions')) {
       btnLabel = 'Open Web & AI Dashboard (₹99 Form) →';
     } else if (matchedUrl.includes('bookkeeping-accountancy')) {
@@ -213,7 +246,10 @@ export default function FloatingChatbot() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({
+          messages: newMessages,
+          currentPage: pathname,
+        }),
       });
 
       const data = await res.json();
@@ -367,7 +403,7 @@ export default function FloatingChatbot() {
             {messages.length === 1 && !loading && (
               <div className="chat-quick-chips">
                 <div className="chat-chips-label">Popular queries:</div>
-                {QUICK_PROMPTS.map((prompt, i) => (
+                {getContextualPrompts(pathname).map((prompt, i) => (
                   <button
                     key={i}
                     type="button"

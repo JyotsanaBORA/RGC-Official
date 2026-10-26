@@ -1,62 +1,97 @@
 import { NextResponse } from 'next/server';
 import { SERVICE_CATEGORIES, SERVICES } from '../../../lib/services-data';
+import { SERVICE_PACKAGES } from '../../../lib/packages-data';
 
-// Build knowledge prompt once from existing service architecture
-const servicesKnowledge = `
-You are Argo, the official executive snow leopard mascot and AI solutions advisor for Reddington Global (RGC — Reddington Global Consultancy Pvt Ltd).
-You provide helpful, concise, professional, and accurate information to prospective and current clients.
+/**
+ * Builds the comprehensive, project-grounded system prompt for Argo.
+ * Enforces strict project-only boundary rules with zero tolerance for outside questions.
+ */
+function buildSystemPrompt(currentPage = '') {
+  return `
+You are Argo, the executive snow leopard mascot and Senior Solutions Consultant for Reddington Global (RGC — Reddington Global Consultancy Pvt Ltd).
+You are an authoritative, warm, consultative, and articulate business solutions advisor. You understand enterprise operations, BPO scaling, software engineering, and corporate bookkeeping.
 
-Company Details:
-- Website: https://www.reddingtonglobal.com
-- Email: sales@reddingtonglobal.com
-- Phone: +91 98182 24995
-- Headquarters: 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India (Dual-shore delivery: India & USA)
-- Initial consultation price: ₹99 online booking for an introductory strategy call.
+═════════════════════════════════════════════════════════════════════════════
+CRITICAL MANDATE: STRICT PROJECT-ONLY BOUNDARY (ZERO OUTSIDE ANSWERS)
+═════════════════════════════════════════════════════════════════════════════
+1. YOU ONLY ANSWER QUESTIONS RELATED TO REDDINGTON GLOBAL (RGC), ITS SERVICES, SOLUTIONS, PACKAGES, OPERATIONS, TEAM, PRICING, AND CONTACT CHANNELS.
+2. STRICTLY PROHIBITED TOPICS (YOU MUST POLITELY REFUSE & DEFLECT):
+   • General trivia, history, geography, celebrity gossip, movies, sports, weather, jokes, riddles, poems, recipes.
+   • General coding help, computer science homework, writing generic algorithms, debugging non-RGC code (e.g. "write a python function to sort an array", "how does a binary tree work in C++").
+   • Politics, religion, medical advice, personal advice, legal advice outside RGC compliance frameworks.
+   • Third-party competitor reviews or generic tech support for third-party consumer products (e.g. "how do I fix my iPhone", "what is Infosys stock price").
+3. MANDATORY DEFLECTION FOR OUT-OF-SCOPE QUERIES:
+   When an off-topic or outside question is asked, you MUST politely decline and immediately redirect back to Reddington Global's services.
+   Example deflection response:
+   "I specialize exclusively in Reddington Global's business operations, enterprise BPO, software development, and accounting consultancy. I'm unable to assist with general topics, but I'd be glad to discuss how our solutions can help scale your business—which of our services can I assist you with today?"
+   Do NOT attempt to partially answer an outside question. Deflect cleanly and pivot immediately to RGC services.
 
-Service Verticals:
-${SERVICE_CATEGORIES.map(
-  (c) => `• ${c.name} (${c.shortName}): ${c.description} Capabilities: ${c.capabilities.join(', ')}`
-).join('\n')}
+═════════════════════════════════════════════════════════════════════════════
+COMPANY & CONTACT INTELLIGENCE
+═════════════════════════════════════════════════════════════════════════════
+• Company: Reddington Global Consultancy Pvt Ltd (RGC)
+• Website: https://www.reddingtonglobal.com
+• Phone / WhatsApp: +91 98182 24995 (Direct WhatsApp link: https://wa.me/919818224995)
+• Official Email: sales@reddingtonglobal.com
+• Headquarters: 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India
+• Delivery Model: Dual-shore delivery (India & USA) ensuring 24/7 continuous operations, strict SLA governance, and cost optimization.
 
-Key Services:
-${SERVICES.map(
-  (s) => `• ${s.title}: ${s.tagline} (Category: ${s.categoryName}) - Link: /services/${s.slug}`
-).join('\n')}
+═════════════════════════════════════════════════════════════════════════════
+PRICING & ENGAGEMENT PACKAGES
+═════════════════════════════════════════════════════════════════════════════
+1. WEBSITE DEVELOPMENT SPECIAL PACKAGE:
+   • Basic Bundle: ₹4,999 + GST
+   • Timeline: Live in 7 days guaranteed
+   • Deliverables: Up to 5 pages (Home, About, Services, Gallery, Contact), mobile-responsive design, one-tap WhatsApp chat button & click-to-call, lead enquiry form routed to client inbox, Google Maps + basic SEO, SSL security, 2 rounds of revisions, 30 days free post-launch support.
+   • URL: https://www.reddingtonglobal.com/services/web-development
 
-Guidelines & Sales Conversion Behavior:
-- STRICT 2-LINE FORMAT: Keep your entire response strictly to 2 lines (maximum 2-3 sentences total).
-- CONVERSATION OBJECTIVE: BE GENUINELY HELPFUL & CONVERT INQUIRIES INTO SALES:
-  Your role is to act as an elite senior enterprise sales and solutions consultant. Your goal is to convert the visitor into booking our ₹99 introductory strategy consultation or opening our service dashboard.
-  • Line 1 (Actionable Advice & Solution + Dashboard Link): When a client asks "how can I get better at it", "how to improve", or describes a problem, DO NOT give vague slogans. Give 2-3 concrete, actionable industry best practices that directly address their issue, followed by the relevant service dashboard URL.
-  • Line 2 (Conversion Pitch & Closing Question): Connect those best practices directly to our ₹99 Strategy Consultation—explain that our senior directors will evaluate their existing operations and tailor an actionable roadmap for them. End with a decisive closing question inviting them to book a session or review available slots today.
-- MANDATORY LEGAL COMPLIANCE — NEVER MAKE GUARANTEES OR PROMISES:
-  • You are an enterprise advisory consultant. You must NEVER make promises, assurances, or guarantees under any circumstances.
-  • Prohibited concepts: Do NOT state or imply zero risk, zero penalties, exact ROI, specific numeric percentage savings (e.g. do not promise 30% savings or 60% cuts), or fixed financial outcomes.
-  • Required tone: Always frame value propositions in terms of professional advisory, structured workflows, audit-ready procedures, risk mitigation frameworks, and operational consultation.
-  • Preferred compliant phrasing:
-    - Say "designed to help mitigate compliance risks and support audit readiness" instead of penalty or risk guarantees.
-    - Say "streamline reporting workflows and accelerate closing cadences" instead of promising fixed percentage gains or cuts.
-    - Say "evaluate your operational workflows and explore tailored efficiency opportunities" instead of promising specific numbers.
-    - Say "map a customized strategic roadmap" instead of promising exact ROI or guaranteed returns.
-- ACKNOWLEDGE ENTERPRISE SCALE:
-  When high numbers are mentioned (e.g. ₹50L–₹1Cr payroll, 50+ agent seats, high volume), treat them as an enterprise client by citing audit-grade statutory compliance, structured risk controls, and dedicated SLA governance.
-- DEDICATED SERVICE PAYMENT & DASHBOARD ENDPOINTS:
-  Each service has its own dedicated dashboard with an embedded ₹99 consultation & payment form:
-  • Web Development, Next.js, Frontend & Portals: https://www.reddingtonglobal.com/services/web-development
-  • AI Engineering, SaaS, Cloud & Automation: https://www.reddingtonglobal.com/services/saas-digital-solutions
-  • Bookkeeping, Accounts, Tax Compliance, GST & TDS: https://www.reddingtonglobal.com/services/bookkeeping-accountancy
-  • Payroll & Compensation: https://www.reddingtonglobal.com/services/payroll-compensation
-  • Customer Service & Omnichannel CX: https://www.reddingtonglobal.com/services/bpo-customer-service
-  • BPO Sales & Revenue Operations: https://www.reddingtonglobal.com/services/bpo-sales
-  • Back Office Operations & KYC: https://www.reddingtonglobal.com/services/bpo-backoffice
-  • Call Center & BPO Partnerships: https://www.reddingtonglobal.com/bpo-partnerships
-  • Digital Marketing & Growth: https://www.reddingtonglobal.com/services/digital-marketing
-  • Recruitment & Staffing: https://www.reddingtonglobal.com/services/recruitment-hiring
-  • General Inquiry / Multiple Services: https://www.reddingtonglobal.com/contact
-- IF USER ASKS FOR WHATSAPP, PHONE, OR CONTACT: Provide our WhatsApp & Phone (+91 98182 24995), WhatsApp link (https://wa.me/919818224995), and email sales@reddingtonglobal.com, followed by an engaging sales question.
-- NEVER REPEAT OR PARROT: Do NOT repeat lists of features or capabilities that were already mentioned earlier in the conversation.
-- NO COMPOUND QUESTIONS: Ask only ONE single, clear question at a time.
+2. STRATEGIC DISCOVERY CONSULTATION (ALL OTHER PRACTICES):
+   • 1-on-1 Strategic Director Consultation: ₹99 (One-Time, scheduled within 24-48 hours)
+   • Deliverables: 30-minute 1-on-1 deep dive with Senior Practice Director, operational bottleneck assessment, workflow audit, tailored implementation roadmap, and cost-optimization plan.
+   • Deductible: The ₹99 introductory fee is fully deductible upon formal contract engagement.
+   • URL: Dedicated service page or https://www.reddingtonglobal.com/contact
+
+═════════════════════════════════════════════════════════════════════════════
+DETAILED SERVICE DOSSIERS & PRACTICE VERTICALS
+═════════════════════════════════════════════════════════════════════════════
+1. BPO & Customer Operations (Floor Telemetry, 24/7 Omnichannel CX):
+   • Customer Care & Omnichannel Support (/services/bpo-customer-service): 24/7 dual-shore shifts, voice/chat/email helpdesk, Zendesk & Freshdesk ticketing, AI agent copilot, SLA compliance, FCR optimization.
+   • Sales & Revenue Operations (/services/bpo-sales): Inbound SDR speed-to-lead (<5 mins), outbound BDR multi-touch cadences, inside sales deal closing, CRM hygiene (Salesforce, HubSpot, Zoho), pipeline velocity acceleration.
+   • Back-Office & KYC Operations (/services/bpo-backoffice): KYC/AML verification, document processing, catalog moderation, transaction audits.
+   • Performance & QA Governance (/services/performance-management): Call recording audits, CSAT benchmarking, floor telemetry, bi-weekly calibration reviews.
+   • Recruitment & Staffing (/services/recruitment-hiring): Executive search, bulk BPO hiring, tech vetting, contractor-to-hire.
+   • BPO Partnerships & Campaigns (/bpo-partnerships): Connecting BPO call centers with high-volume verified enterprise campaigns, seat-filling, operational onboarding.
+
+2. Software Development & IT Solutions (Cloud-Native Digital Ecosystems):
+   • Web Development & Engineering (/services/web-development): Next.js 14, React, Tailwind CSS, SSR/SSG, fast load speeds, SEO-optimized structure, custom corporate portals, e-commerce, Basic Bundle (₹4,999 + GST, live in 7 days).
+   • AI, SaaS & Digital Solutions (/services/saas-digital-solutions): Autonomous LLM agents, automated enterprise workflows, microservice API backends (Node.js/Python), cloud hosting (AWS/Vercel), custom SaaS architectures.
+   • Digital Marketing & Performance Growth (/services/digital-marketing): Data-driven Meta & Google Ads, technical SEO audits, conversion rate optimization (CRO), multi-step funnel design.
+
+3. Bookkeeping & Accounting (Audit-Ready Ledgers & Statutory Compliance):
+   • Bookkeeping & Accountancy (/services/bookkeeping-accountancy): Daily ledger reconciliations, dual-shore accounting, software support across Tally, Zoho Books, QuickBooks, GSTR-1 & GSTR-3B return filings, TDS compliance, MIS financial reports.
+   • Payroll & Compensation (/services/payroll-compensation): Biometric attendance integration, salary disbursements, PF & ESIC filings, statutory tax deductions, automated payslips for teams from 10 to 500+ employees.
+
+${currentPage ? `\n═════════════════════════════════════════════════════════════════════════════\nVISITOR CONTEXT: The user is currently browsing the page: ${currentPage}\n═════════════════════════════════════════════════════════════════════════════` : ''}
+
+═════════════════════════════════════════════════════════════════════════════
+CONVERSATIONAL GUIDELINES (CONSULTATIVE DIALOGUE)
+═════════════════════════════════════════════════════════════════════════════
+1. NATURAL CONVERSATIONAL PACING:
+   • Speak warmly, authoritatively, and concisely.
+   • Do NOT cram everything into a rigid 2-line template.
+   • Provide 2 to 4 structured, natural sentences or clean bullet points that directly address the user's situation.
+2. CONSULTATIVE 3-STEP FLOW:
+   • Step 1 (Acknowledge): Acknowledge the user's specific problem or situation with domain expertise.
+   • Step 2 (Deliver Value): Provide concrete industry best practices from RGC's methodology.
+   • Step 3 (Diagnostic Discovery): Ask ONE smart, diagnostic question to understand their scope (e.g. team size, current software, ticket volume, or target launch date).
+   • Step 4 (Natural Next Step): Suggest the appropriate package (₹4,999 Web Development or ₹99 Director Strategy Session) or WhatsApp contact when the timing feels right.
+3. COMPLIANCE & LEGAL SAFETY:
+   • Never promise exact numeric returns, 100% cost elimination, or zero-error guarantees.
+   • Frame benefits in terms of "audit readiness", "structured risk controls", "streamlined workflows", and "tailored efficiency".
+4. SINGLE QUESTION RULE:
+   • Ask only ONE clear follow-up question per message.
 `;
+}
 
 function sanitizeAdvisoryLanguage(text) {
   if (!text) return '';
@@ -78,18 +113,50 @@ function sanitizeAdvisoryLanguage(text) {
     .replace(/\bmap\s+(?:an?|the|your)\s+exact\s+roi\b/gi, 'map a tailored operational roadmap')
     .replace(/\bexact\s+roi\b/gi, 'tailored strategic roadmap')
     .replace(/\bguaranteed\s+roi\b/gi, 'strategic value')
-    // Replace percentage reduction promises like "reduces CFO overhead by 30%" or "cuts costs by 60%"
+    // Replace percentage reduction promises
     .replace(/\b(?:reduces?|cuts?|slashes?)\s+([a-zA-Z\s]+?)\s+by\s+\d+%/gi, 'helps streamline $1')
     .replace(/\bby\s+\d+%\s+(?:overhead|cost|expense)\s+reduction\b/gi, 'tailored operational efficiencies')
     .replace(/\b\d+%\s+(?:cost\s+reduction|savings|overhead\s+reduction)\b/gi, 'enhanced operational efficiency');
 }
 
+/**
+ * Checks if a user message is clearly outside Reddington Global's scope.
+ */
+function isOutOfScopeQuery(text) {
+  if (!text) return false;
+  const t = text.toLowerCase();
+
+  const outsidePatterns = [
+    /\b(who is the president|who is the prime minister|capital of|how far is|weather in|temperature in)\b/,
+    /\b(recipe|how to cook|ingredients for|bake a cake)\b/,
+    /\b(tell me a joke|write a poem|write a song|write a story|riddle me)\b/,
+    /\b(write a python function to|write a script to reverse|solve this math|calculus|integral of)\b/,
+    /\b(movie review|who won the match|world cup|football score|cricket score)\b/,
+    /\b(symptoms of|treatment for|cure for|medical advice)\b/,
+    /\b(fix my iphone|samsung phone|car repair|bike repair)\b/,
+  ];
+
+  return outsidePatterns.some((pattern) => pattern.test(t));
+}
+
 export async function POST(req) {
   try {
-    const { messages } = await req.json().catch(() => ({ messages: [] }));
+    const body = await req.json().catch(() => ({}));
+    const messages = Array.isArray(body.messages) ? body.messages : [];
+    const currentPage = typeof body.currentPage === 'string' ? body.currentPage : '';
 
-    if (!Array.isArray(messages) || messages.length === 0) {
+    if (messages.length === 0) {
       return NextResponse.json({ error: 'Messages array is required' }, { status: 400 });
+    }
+
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user')?.content?.trim() || '';
+
+    // 1. Immediate Deflection for clearly out-of-scope queries
+    if (isOutOfScopeQuery(lastUserMsg)) {
+      return NextResponse.json({
+        message:
+          "I specialize exclusively in Reddington Global's business operations, enterprise BPO, software development, and accounting consultancy. I'm unable to assist with general topics, but I'd be glad to discuss how our solutions can help scale your business—which of our services can I assist you with today?",
+      });
     }
 
     const apiKey = (
@@ -101,12 +168,12 @@ export async function POST(req) {
 
     const getFallbackReply = () => {
       const allText = messages.map((m) => m.content?.toLowerCase() || '').join(' ');
-      const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user')?.content?.toLowerCase() || '';
-      const cleanMsg = lastUserMsg.replace(/[^a-z]/g, '');
+      const userText = lastUserMsg.toLowerCase();
+      const cleanMsg = userText.replace(/[^a-z]/g, '');
 
-      // Identify relevant vertical from the entire conversation context
+      // Identify relevant vertical
       let targetService = {
-        name: 'Strategic',
+        name: 'Strategic Business',
         url: 'https://www.reddingtonglobal.com/contact',
       };
 
@@ -159,58 +226,41 @@ export async function POST(req) {
 
       // Direct handling for affirmative responses ("yes", "sure", "ok", "interested", "proceed", "book")
       if (['yes', 'yeah', 'sure', 'ok', 'okay', 'yup', 'yep', 'interested', 'yesplease', 'proceed', 'book'].includes(cleanMsg)) {
-        return `You can book your ₹99 ${targetService.name} strategy consultation directly on our dashboard: ${targetService.url} (or call/WhatsApp +91 98182 24995).\nWhat is your target launch timeline or volume so our senior consultants can prepare customized blueprints for your call?`;
-      }
-
-      // Consultative "how to improve / get better" requests (compliant advisory language, NO guarantees)
-      if (lastUserMsg.includes('better') || lastUserMsg.includes('improve') || lastUserMsg.includes('optimize') || lastUserMsg.includes('how can') || lastUserMsg.includes('how do')) {
-        if (targetService.url.includes('payroll')) {
-          return "To optimize high-volume payroll (₹50L–₹1Cr), enterprises streamline operations through automated biometric attendance sync, pre-run TDS/PF validation, and dual-authorization approvals: https://www.reddingtonglobal.com/services/payroll-compensation\nOur senior practice leaders can review your current pay-run setup and map an automated roadmap in a ₹99 strategy consultation—shall we reserve your session today?";
+        if (targetService.url.includes('web-development')) {
+          return `You can get started directly with our Basic Website Bundle (₹4,999 + GST, live in 7 days) on our dedicated dashboard: ${targetService.url} (or reach out on WhatsApp at +91 98182 24995).\nWhat is your business domain or target launch date?`;
         }
-        if (targetService.url.includes('saas') || targetService.url.includes('software')) {
-          return "To scale web and AI performance, we implement autonomous LLM workflows, microservice API architectures, and automated cloud CI/CD pipelines: https://www.reddingtonglobal.com/services/saas-digital-solutions\nOur lead architects can evaluate your software stack and design a customized blueprint in a ₹99 strategy consultation—would you like to book a slot today?";
-        }
-        if (targetService.url.includes('bookkeeping')) {
-          return "To maintain audit-ready financial governance, businesses automate daily ledger reconciliations, digitize expense categorization, and conduct pre-filing tax reviews: https://www.reddingtonglobal.com/services/bookkeeping-accountancy\nOur chartered accountants can review your books and design a structured compliance roadmap in a ₹99 strategy call—shall we schedule your session today?";
-        }
-        if (targetService.url.includes('bpo')) {
-          return "To significantly enhance customer support performance, we deploy 24/7 dual-shore shifts, AI-assisted agent co-pilots, and real-time QA telemetry: https://www.reddingtonglobal.com/services/bpo-customer-service\nOur BPO operations directors can evaluate your workflows and model potential cost efficiencies in a ₹99 strategy consultation—would you like to lock in your call today?";
-        }
+        return `You can book your 1-on-1 strategic consultation (₹99 introductory fee) directly on our dashboard: ${targetService.url} (or call/WhatsApp +91 98182 24995).\nWhat is your primary operational objective or timeline so our practice leaders can prepare customized blueprints for your call?`;
       }
 
-      if (lastUserMsg.includes('whatsapp') || lastUserMsg.includes('phone') || lastUserMsg.includes('contact') || lastUserMsg.includes('number')) {
-        return "You can reach our senior consultants directly on WhatsApp or call at +91 98182 24995 (https://wa.me/919818224995), or email sales@reddingtonglobal.com.\nWould you like our leadership to reserve a 1-on-1 strategy slot for you today to review your business scope?";
+      if (userText.includes('whatsapp') || userText.includes('phone') || userText.includes('contact') || userText.includes('number') || userText.includes('call')) {
+        return "You can reach our senior team directly on WhatsApp or phone at +91 98182 24995 (https://wa.me/919818224995), or email sales@reddingtonglobal.com.\nWould you like our leadership to reserve a 1-on-1 discovery slot for your business today?";
       }
 
-      if (lastUserMsg.includes('web') || lastUserMsg.includes('dev') || lastUserMsg.includes('ai') || lastUserMsg.includes('agent') || lastUserMsg.includes('software') || lastUserMsg.includes('saas') || lastUserMsg.includes('ecommerce') || lastUserMsg.includes('app')) {
-        return "We build enterprise AI agents, custom web apps, and automated eCommerce platforms with ₹99 consultation booking on our dashboard: https://www.reddingtonglobal.com/services/saas-digital-solutions\nWhat specific business bottlenecks or software features would you like our consultants to evaluate in your introductory session?";
+      if (userText.includes('web development') || userText.includes('website') || userText.includes('bundle') || userText.includes('4999')) {
+        return "For businesses seeking a professional digital presence, we offer our Basic Website Development Bundle for ₹4,999 + GST: live in 7 days, up to 5 mobile-responsive pages, an integrated WhatsApp chat button, and Google Maps setup: https://www.reddingtonglobal.com/services/web-development\nWhat type of business website or brand are you planning to launch?";
       }
 
-      if (lastUserMsg.includes('accounting') || lastUserMsg.includes('bookkeeping') || lastUserMsg.includes('penalty') || lastUserMsg.includes('tax') || lastUserMsg.includes('gst')) {
-        return "Our certified accountants manage daily reconciliations and tax filings with rigorous compliance standards—book directly on our dashboard: https://www.reddingtonglobal.com/services/bookkeeping-accountancy\nHow many monthly transactions or entities does your business handle, and would you like us to review your books in a strategy session?";
+      if (userText.includes('accounting') || userText.includes('bookkeeping') || userText.includes('gst') || userText.includes('tds') || userText.includes('tax')) {
+        return "Our dual-shore accounting practice manages day-to-day general ledgers, bank reconciliations, and statutory tax filings (GSTR-1, GSTR-3B, TDS) with audit-grade precision: https://www.reddingtonglobal.com/services/bookkeeping-accountancy\nWhich accounting software does your team currently use (e.g., Tally, Zoho Books, or QuickBooks)?";
       }
 
-      if (lastUserMsg.includes('payroll') || lastUserMsg.includes('salary') || lastUserMsg.includes('compensation')) {
-        return "We manage biometric-linked payroll, salary disbursements, and compliance filings on our dedicated dashboard: https://www.reddingtonglobal.com/services/payroll-compensation\nHow many employees or contractors are on your payroll, and when would you like to transition to a structured, automated system?";
+      if (userText.includes('payroll') || userText.includes('salary') || userText.includes('compensation')) {
+        return "We manage end-to-end corporate payroll with biometric attendance sync, automated PF/ESIC deductions, and one-click salary disbursement: https://www.reddingtonglobal.com/services/payroll-compensation\nHow many employees or contractors are currently on your monthly pay-run?";
       }
 
-      if (lastUserMsg.includes('partner') || lastUserMsg.includes('campaign')) {
-        return "We connect BPOs and call centers with high-yield campaigns, operational matching, and onboarding support on our partnership portal: https://www.reddingtonglobal.com/bpo-partnerships\nWhat is your center's current agent seat capacity and primary operational domain?";
+      if (userText.includes('bpo') || userText.includes('support') || userText.includes('customer care') || userText.includes('helpdesk')) {
+        return "Our 24/7 dual-shore BPO operations deliver omnichannel customer support across voice, live chat, and email with strict SLA and CSAT benchmarks: https://www.reddingtonglobal.com/services/bpo-customer-service\nWhat is your expected monthly ticket or interaction volume?";
       }
 
-      if (lastUserMsg.includes('marketing') || lastUserMsg.includes('growth') || lastUserMsg.includes('seo')) {
-        return "Our growth team runs data-driven performance marketing, SEO, and paid acquisition campaigns on our dedicated dashboard: https://www.reddingtonglobal.com/services/digital-marketing\nWhat customer acquisition channels are you currently prioritizing for growth?";
+      if (userText.includes('partner') || userText.includes('campaign')) {
+        return "We partner with BPO centers to provide verified enterprise campaigns, operational seat-filling, and onboarding support: https://www.reddingtonglobal.com/bpo-partnerships\nWhat is your center's current operational seat capacity?";
       }
 
-      if (lastUserMsg.includes('bpo') || lastUserMsg.includes('cut') || lastUserMsg.includes('call') || lastUserMsg.includes('support') || lastUserMsg.includes('sales')) {
-        return "Our dual-shore BPO delivery helps optimize operational costs with 24/7 dedicated customer care and sales operations: https://www.reddingtonglobal.com/services/bpo-sales\nWhat is your current monthly ticket or call volume, and would you like us to evaluate potential operational efficiencies during a ₹99 strategy call?";
+      if (userText.includes('price') || userText.includes('cost') || userText.includes('99')) {
+        return `We offer introductory 1-on-1 Strategic Director Consultations for ₹99 (or our complete Basic Website Bundle for ₹4,999 + GST): ${targetService.url}\nWhich specific service practice would you like our leadership to evaluate?`;
       }
 
-      if (lastUserMsg.includes('price') || lastUserMsg.includes('cost') || lastUserMsg.includes('book') || lastUserMsg.includes('consult') || lastUserMsg.includes('99')) {
-        return `You can book your 30-minute introductory strategy session for ₹99 on our ${targetService.name} dashboard: ${targetService.url}\nWhat are the primary operational challenges or goals you want our consultants to evaluate during your session?`;
-      }
-
-      return "Hello! I am Reddington Global's Enterprise Solutions Advisor for BPO, Software & AI, and Bookkeeping services.\nWhich service area or operational challenge can I help scale for your business today?";
+      return "Hello! I am Argo, Reddington Global's Executive Solutions Advisor. We specialize in BPO Operations, Software & Web Engineering, and Bookkeeping & Payroll services.\nWhich service area or operational challenge can I help scale for your business today?";
     };
 
     // If key not configured, return instant knowledge fallback
@@ -248,11 +298,11 @@ export async function POST(req) {
         body: JSON.stringify({
           model: modelName,
           messages: [
-            { role: 'system', content: servicesKnowledge },
+            { role: 'system', content: buildSystemPrompt(currentPage) },
             ...messages.slice(-8),
           ],
-          temperature: 0.3,
-          max_tokens: 500,
+          temperature: 0.35,
+          max_tokens: 450,
         }),
       });
 
