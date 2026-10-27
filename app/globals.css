@@ -13592,3 +13592,23 @@ html.dark-theme .svc-mono-card__glow,
     animation: rgBorderSpin 5s linear infinite;
   }
 }
+
+/* GST breakdown under the plan picker (booking form) */
+.svc-gst-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  color: rgba(248, 238, 232, 0.72);
+  background: rgba(217, 169, 63, 0.08);
+  border: 1px dashed rgba(217, 169, 63, 0.35);
+}
+
+.svc-gst-summary strong {
+  font-size: 0.86rem;
+  color: #F6D97E;
+}

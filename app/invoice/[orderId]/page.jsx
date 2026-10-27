@@ -37,9 +37,11 @@ export default async function InvoicePage({ params }) {
   };
 
   const invoiceNo = `INV-${displayOrder.orderId.replace('order_', '').toUpperCase()}`;
-  const totalAmount = displayOrder.amountInRupees || (displayOrder.amount ? Math.round(displayOrder.amount / 100) : (displayOrder.packagePrice || 4999));
-  const taxableSubtotal = (totalAmount / 1.18).toFixed(2);
+  // Amount paid is GST-inclusive (package price + 18% GST); use paise for exact rupee totals
+  const totalAmount = displayOrder.amount ? displayOrder.amount / 100 : (displayOrder.amountInRupees || displayOrder.packagePrice || 4999);
+  const taxableSubtotal = (Math.round((totalAmount / 1.18) * 100) / 100).toFixed(2);
   const gstAmount = (totalAmount - Number(taxableSubtotal)).toFixed(2);
+  const inr = (n) => Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const orderDate = new Date(displayOrder.createdAt || Date.now()).toLocaleDateString('en-IN', {
     day: '2-digit',
     month: 'short',
@@ -119,7 +121,7 @@ export default async function InvoicePage({ params }) {
         <div style={{ padding: '36px 40px' }}>
           {/* Status Badge */}
           <div style={{ display: 'inline-block', background: '#ECFDF5', color: '#047857', fontWeight: '700', fontSize: '12px', padding: '4px 12px', borderRadius: '999px', marginBottom: '24px', border: '1px solid #A7F3D0' }}>
-            &bull; Payment Verified (₹{Number(totalAmount).toLocaleString('en-IN')}.00)
+            &bull; Payment Verified (₹{inr(totalAmount)})
           </div>
 
           {/* Supplier & Customer Columns */}
@@ -208,19 +210,19 @@ export default async function InvoicePage({ params }) {
                 </td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>9983</td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>1</td>
-                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '14px', color: '#0F172A' }}>₹{Number(taxableSubtotal).toLocaleString('en-IN')}</td>
+                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '14px', color: '#0F172A' }}>₹{inr(taxableSubtotal)}</td>
               </tr>
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#64748B' }}>Taxable Subtotal:</td>
-                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{Number(taxableSubtotal).toLocaleString('en-IN')}</td>
+                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{inr(taxableSubtotal)}</td>
               </tr>
               <tr style={{ borderBottom: '1px solid #F1F5F9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#64748B' }}>GST (18%):</td>
-                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{Number(gstAmount).toLocaleString('en-IN')}</td>
+                <td style={{ textAlign: 'right', padding: '10px 12px', fontSize: '13px', color: '#0F172A' }}>₹{inr(gstAmount)}</td>
               </tr>
               <tr style={{ borderTop: '2px solid #0F172A', background: '#FFFDF9' }}>
                 <td colSpan={3} style={{ textAlign: 'right', padding: '14px 12px', fontSize: '15px', fontWeight: '800', color: '#0F172A' }}>Total Amount Paid:</td>
-                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '18px', fontWeight: '800', color: '#D49F2D' }}>₹{Number(totalAmount).toLocaleString('en-IN')}.00</td>
+                <td style={{ textAlign: 'right', padding: '14px 12px', fontSize: '18px', fontWeight: '800', color: '#D49F2D' }}>₹{inr(totalAmount)}</td>
               </tr>
             </tbody>
           </table>

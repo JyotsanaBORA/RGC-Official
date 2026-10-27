@@ -3,7 +3,7 @@ import Razorpay from 'razorpay';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import { getISTTimestamp } from '../../../lib/date';
-import { getPackageById } from '../../../lib/packages-data';
+import { getPackageById, getPackageCharge } from '../../../lib/packages-data';
 
 export async function POST(req) {
   try {
@@ -28,7 +28,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Unknown package selected.' }, { status: 400 });
     }
     if (registryPackage) {
-      amount = registryPackage.price * 100;
+      amount = Math.round(getPackageCharge(registryPackage).total * 100);
     }
     const currency = body.currency || 'INR';
     const receipt = body.receipt || `rcpt_${Date.now()}`;
@@ -70,7 +70,7 @@ export async function POST(req) {
     const selectedPackage = registryPackage?.name || body.notes?.selected_package || body.selectedPackage || body.package?.name || '';
     const packageId = requestedPackageId;
     const packagePrice = registryPackage?.price || Number(body.notes?.package_price || body.packagePrice || body.package?.price || 0);
-    const amountInRupees = Math.round(Number(order.amount) / 100);
+    const amountInRupees = Number(order.amount) / 100;
 
     const attr = body.attribution || {};
     const attributionData = {

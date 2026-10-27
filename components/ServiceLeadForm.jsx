@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { trackLeadSubmission } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
-import { getPackagesForService } from '../lib/packages-data';
+import { getPackagesForService, getPackageCharge } from '../lib/packages-data';
 import { getAttributionData } from '../lib/analytics/attribution';
 
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
@@ -83,6 +83,8 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   const currentPackage =
     packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
   const planShortName = (currentPackage?.name || 'Basic Website').replace(/ Website$/, '');
+  const charge = getPackageCharge(currentPackage);
+  const inr = (n) => n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   // Background auto-save for abandoned form leads
   const saveLeadDraft = async (dataToSave = formData) => {
@@ -216,7 +218,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           : isPayroll
           ? 'Payroll Services — Starter Package (Upto 10 Staff)'
           : `${activeService} — Strategic Consultation`,
-        amount: activePrice,
+        amount: charge.total || activePrice,
         onSuccess: (data) => {
           setStatus({
             loading: false,
@@ -524,6 +526,13 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                     (isWebDev || isPayroll ? '₹4,999 + GST' : '₹99 (One-Time)')}
                 </div>
               </div>
+              )}
+
+              {charge.gst > 0 && (
+                <div className="svc-gst-summary svc-clean-full">
+                  <span>₹{inr(charge.base)} + ₹{inr(charge.gst)} GST (18%)</span>
+                  <strong>Payable ₹{inr(charge.total)}</strong>
+                </div>
               )}
 
               {/* Row 5: Notes & Requirements */}
