@@ -602,6 +602,11 @@ export default function AdminPage() {
                               📦 {order.selectedPackage}
                             </div>
                           )}
+                          {order.interestedPlan && (
+                            <div style={{ fontSize: '11px', color: '#0F766E', fontWeight: '700', marginTop: '2px' }}>
+                              🎯 Interested: {order.interestedPlan}
+                            </div>
+                          )}
 
                           {/* Traffic Source & Ad Campaign Attribution Badge */}
                           <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '4px', alignItems: 'center' }}>

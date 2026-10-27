@@ -7,7 +7,7 @@ import { trackMetaCustom, trackEvent } from '../lib/analytics/events';
 function getContextualPrompts(path = '') {
   if (path.includes('web-development')) {
     return [
-      'Compare the 3 website plans (₹4,999 to ₹19,999)',
+      'Website plans starting @ ₹4,999',
       'What tech stack do you use (Next.js/React)?',
       'Can you build custom corporate portals & web apps?',
       'How fast can you launch my website?',
@@ -23,10 +23,10 @@ function getContextualPrompts(path = '') {
   }
   if (path.includes('payroll')) {
     return [
-      'Tell me about the ₹4,999 Payroll Package',
+      'Payroll plans starting @ ₹4,999/month',
       'What payroll data & balance statements are provided?',
       'How does statutory PF, ESIC & TDS compliance work?',
-      'How do I book the ₹4,999 Payroll package?',
+      'How do I book a payroll consultation?',
     ];
   }
   if (path.includes('bpo')) {
@@ -38,8 +38,8 @@ function getContextualPrompts(path = '') {
     ];
   }
   return [
-    'Compare the 3 website plans (₹4,999 to ₹19,999)',
-    'Tell me about the ₹4,999 Payroll Package',
+    'Website plans starting @ ₹4,999',
+    'Payroll plans starting @ ₹4,999/month',
     'What 24/7 BPO & Customer Support services do you provide?',
     'How do I book a ₹99 strategy consultation?',
   ];
@@ -163,13 +163,13 @@ function ChatMessageContent({ content }) {
       localHref = matchedUrl.replace(/^https?:\/\/(?:www\.)?reddingtonglobal\.com/, '');
 
       if (matchedUrl.includes('web-development')) {
-        btnLabel = 'View Website Plans (from ₹4,999) →';
+        btnLabel = 'View Website Plans (starting @ ₹4,999) →';
       } else if (matchedUrl.includes('saas-digital-solutions')) {
         btnLabel = 'Explore AI & Web Solutions →';
       } else if (matchedUrl.includes('bookkeeping-accountancy')) {
-        btnLabel = 'Explore Bookkeeping & Accounting (₹4,999) →';
+        btnLabel = 'Explore Bookkeeping (starting @ ₹4,999/mo) →';
       } else if (matchedUrl.includes('payroll-compensation')) {
-        btnLabel = 'View Payroll Package (₹4,999) →';
+        btnLabel = 'View Payroll Plans (starting @ ₹4,999/mo) →';
       } else if (matchedUrl.includes('bpo-customer-service')) {
         btnLabel = 'Explore 24/7 Customer Support →';
       } else if (matchedUrl.includes('bpo-sales')) {
@@ -183,7 +183,7 @@ function ChatMessageContent({ content }) {
       } else if (matchedUrl.includes('recruitment-hiring')) {
         btnLabel = 'Explore Recruitment & Staffing →';
       } else if (matchedUrl.includes('contact')) {
-        btnLabel = 'Book ₹99 Strategic Consultation →';
+        btnLabel = 'Book ₹99 Consultation →';
       }
     }
 
@@ -235,7 +235,7 @@ export default function FloatingChatbot() {
     {
       role: 'assistant',
       content:
-        "Hi! I'm Argo, Solutions Advisor at Reddington Global. How can I assist you with our BPO, Web Development (₹4,999), or Bookkeeping & Payroll (₹4,999) services today?",
+        "Hi! I'm Argo, Solutions Advisor at Reddington Global. How can I assist you with our BPO, Web Development, or Bookkeeping & Payroll services today? Every plan starts with a ₹99 consultation.",
     },
   ]);
   const [input, setInput] = useState('');

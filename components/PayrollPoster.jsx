@@ -5,14 +5,14 @@ import { trackContactClick, trackMetaCustom } from '../lib/analytics/events';
 
 export default function PayrollPoster() {
   const whatsappUrl = `https://wa.me/919818224995?text=${encodeURIComponent(
-    'Hi Reddington Global, I want to book the Payroll Package starting at ₹4,999 (upto 10 employees).'
+    'Hi Reddington Global, I want to book a ₹99 payroll consultation (plans starting @ ₹4,999/month).'
   )}`;
 
   const handleContactClick = () => {
     trackContactClick('whatsapp', '+919818224995');
     trackMetaCustom('PayrollPosterDirectContact', {
       channel: 'whatsapp',
-      package: 'Payroll Starter ₹4,999 (Upto 10 Staff)',
+      package: 'Payroll consultation (plans starting @ ₹4,999/month)',
       destination: whatsappUrl,
     });
   };
@@ -22,7 +22,7 @@ export default function PayrollPoster() {
       {/* ── Top Brand Bar ── */}
       <div className="rgc-poster__top">
         <span className="rgc-poster__brand">[ REDDINGTON GLOBAL ]</span>
-        <span className="rgc-poster__badge">STARTING @ ₹4,999/- &bull; UPTO 10 EMPLOYEES</span>
+        <span className="rgc-poster__badge">PLANS STARTING @ ₹4,999/MONTH</span>
       </div>
 
       {/* ── Hero Statement matching Creative Poster ── */}
@@ -102,10 +102,10 @@ export default function PayrollPoster() {
       <div className="rgc-payroll-banner">
         <div className="rgc-payroll-banner__content">
           <strong className="rgc-payroll-banner__title">LET US HANDLE YOUR PAYROLL.</strong>
-          <span className="rgc-payroll-banner__sub">Starting at @4999/- ( upto 10 employees )</span>
+          <span className="rgc-payroll-banner__sub">Plans starting @ ₹4,999/month · Book a ₹99 consultation</span>
         </div>
         <a href="#consultation-form" className="rgc-payroll-banner__btn">
-          <span>Book Package</span>
+          <span>Book Consultation</span>
           <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="6 3 11 8 6 13" />
           </svg>
@@ -116,7 +116,7 @@ export default function PayrollPoster() {
       <div className="rgc-poster__cta-box">
         <div className="rgc-poster__cta-lead">
           <span className="rgc-poster__wa-icon" aria-hidden="true">💬</span>
-          <span>DM &ldquo;PAYROLL&rdquo; or WhatsApp us for instant onboarding</span>
+          <span>DM &ldquo;PAYROLL&rdquo; or WhatsApp us </span>
         </div>
         <a
           href={whatsappUrl}
@@ -133,7 +133,7 @@ export default function PayrollPoster() {
       {/* ── Clear Scope & Balance Disclaimer ── */}
       <div className="rgc-poster__disclaimer">
         <p>
-          *Scope Notice: We provide verified payroll data, gross-to-net wage calculations, statutory tax deductions (PF/ESIC/PT/TDS), and final net salary balance statements under our ₹4,999 package (for up to 10 employees).
+          *Scope Notice: We provide verified payroll data, gross-to-net wage calculations, statutory tax deductions (PF/ESIC/PT/TDS), and final net salary balance statements. Your plan and final price are confirmed on your ₹99 consultation.
         </p>
       </div>
     </div>

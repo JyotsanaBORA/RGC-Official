@@ -205,7 +205,11 @@ export default async function InvoicePage({ params }) {
                     </div>
                   )}
                   <div style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }}>
-                    {displayOrder.selectedPackage ? `Dedicated Service Booking: ${displayOrder.selectedPackage}` : 'Dedicated Developer Service Booking'}
+                    {displayOrder.interestedPlan
+                      ? `Interested plan (quoted after consultation): ${displayOrder.interestedPlan}`
+                      : displayOrder.selectedPackage
+                      ? `Dedicated Service Booking: ${displayOrder.selectedPackage}`
+                      : 'Dedicated Developer Service Booking'}
                   </div>
                 </td>
                 <td style={{ textAlign: 'center', padding: '14px 12px', fontSize: '13px', color: '#64748B' }}>9983</td>

@@ -3,7 +3,7 @@ import Razorpay from 'razorpay';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import { getISTTimestamp } from '../../../lib/date';
-import { getPackageById, getPackageCharge } from '../../../lib/packages-data';
+import { CONSULTATION, getPackageCharge } from '../../../lib/packages-data';
 
 export async function POST(req) {
   try {
@@ -11,26 +11,10 @@ export async function POST(req) {
     const keySecret = process.env.RAZORPAY_KEY_SECRET || '75LPU9tRuBp8YZ1OJJrI0eAJ';
 
     const body = await req.json().catch(() => ({}));
-    // Support package price or requested amount (default to 499900 paise for ₹4,999 website booking)
-    let amount = 499900;
-    if (body.amount && Number(body.amount) > 0) {
-      amount = Number(body.amount);
-    } else if (body.notes?.package_price && Number(body.notes?.package_price) > 0) {
-      amount = Number(body.notes.package_price) * 100;
-    } else if (body.packagePrice && Number(body.packagePrice) > 0) {
-      amount = Number(body.packagePrice) * 100;
-    }
-
-    // Package bookings are always priced from the server-side registry, never the browser
-    const requestedPackageId = body.notes?.package_id || body.packageId || body.package?.id || '';
-    const registryPackage = getPackageById(requestedPackageId);
-    if (requestedPackageId && !registryPackage) {
-      return NextResponse.json({ error: 'Unknown package selected.' }, { status: 400 });
-    }
-    if (registryPackage) {
-      amount = Math.round(getPackageCharge(registryPackage).total * 100);
-    }
-    const currency = body.currency || 'INR';
+    // The prepaid consultation is the only payable item on the website; the amount never comes from the browser
+    const amount = Math.round(getPackageCharge(CONSULTATION).total * 100);
+    const interestedPlan = String(body.notes?.interested_plan || body.interestedPlan || '').slice(0, 120);
+    const currency = 'INR';
     const receipt = body.receipt || `rcpt_${Date.now()}`;
     const idempotencyKey = body.idempotency_key || req.headers.get('x-idempotency-key') || null;
 
@@ -67,9 +51,9 @@ export async function POST(req) {
     const customerPhone = body.notes?.customer_phone || body.customer?.phone || '';
     const customerCompany = body.notes?.company || body.customer?.company || '';
     const customerGst = (body.notes?.gst_number || body.customer?.gstNumber || body.customer?.customerGst || '').toUpperCase().trim();
-    const selectedPackage = registryPackage?.name || body.notes?.selected_package || body.selectedPackage || body.package?.name || '';
-    const packageId = requestedPackageId;
-    const packagePrice = registryPackage?.price || Number(body.notes?.package_price || body.packagePrice || body.package?.price || 0);
+    const selectedPackage = CONSULTATION.name;
+    const packageId = CONSULTATION.id;
+    const packagePrice = CONSULTATION.price;
     const amountInRupees = Number(order.amount) / 100;
 
     const attr = body.attribution || {};
@@ -101,6 +85,7 @@ export async function POST(req) {
           selectedPackage,
           packageId,
           packagePrice,
+          interestedPlan,
           amount: order.amount,
           amountInRupees,
           currency: order.currency,
@@ -117,6 +102,7 @@ export async function POST(req) {
             ...(body.notes || {}),
             gst_number: customerGst,
             selected_package: selectedPackage,
+            interested_plan: interestedPlan,
           },
           attribution: attributionData,
           status: 'created',

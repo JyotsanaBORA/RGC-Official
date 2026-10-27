@@ -31,7 +31,7 @@ export default function ContactPage() {
           <div className="container svc-hero__content">
             <p className="eyebrow">Get In Touch</p>
             <h1 className="svc-hero__title">Let&apos;s start a <span className="gold-italic">conversation.</span></h1>
-            <p className="svc-hero__tagline">Book 1-on-1 strategic consultancy @ ₹99, request an enterprise proposal, or explore operational scaling.</p>
+            <p className="svc-hero__tagline">Book a 1-on-1 consultancy @ ₹99, request an enterprise proposal, or explore operational scaling.</p>
           </div>
         </section>
 

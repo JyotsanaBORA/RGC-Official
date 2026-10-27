@@ -71,6 +71,7 @@ export async function GET(req) {
         customerCompany: order.customer?.company || order.customerCompany || '',
         customerGst: order.customerGst || order.gstNumber || order.customer?.gstNumber || order.notes?.gst_number || '',
         selectedPackage: order.selectedPackage || order.notes?.selected_package || '',
+        interestedPlan: order.interestedPlan || order.notes?.interested_plan || '',
         callStatus: callStatus,
         callNotes: order.callNotes || '',
         calledAt: order.calledAt || null,

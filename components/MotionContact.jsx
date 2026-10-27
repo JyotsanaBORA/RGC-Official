@@ -3,6 +3,11 @@ import React, { useState, useRef } from 'react';
 import { trackLeadSubmission, trackContactClick } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
 import { getAttributionData } from '../lib/analytics/attribution';
+import { CONSULTATION, getPackageCharge } from '../lib/packages-data';
+
+// The server charges the consultation incl. GST; show the same payable amount here
+const consultCharge = getPackageCharge(CONSULTATION);
+const payableLabel = consultCharge.total.toLocaleString('en-IN', { minimumFractionDigits: Number.isInteger(consultCharge.total) ? 0 : 2, maximumFractionDigits: 2 });
 import CustomServiceSelect from './CustomServiceSelect';
 
 /* ── SVG icons ── */
@@ -95,9 +100,10 @@ export default function MotionContact() {
           phone: dataToSave.phone,
           company: dataToSave.company,
           service: dataToSave.service || 'Strategic Business Consultancy',
-          selectedPackage: '1-on-1 Strategic Consultation (₹99)',
-          packagePrice: 99,
-          amount: 9900,
+          selectedPackage: CONSULTATION.name,
+          packageId: CONSULTATION.id,
+          packagePrice: CONSULTATION.price,
+          amount: Math.round(consultCharge.total * 100),
           attribution,
           notes: {
             message: dataToSave.message,
@@ -141,7 +147,7 @@ export default function MotionContact() {
 
     trackLeadSubmission({
       service: formData.service,
-      amount: 99,
+      amount: consultCharge.total,
     });
 
     try {
@@ -155,7 +161,7 @@ export default function MotionContact() {
           message: formData.message,
         },
         serviceName: formData.service || 'Strategic Business Consultancy',
-        amount: 99,
+        amount: consultCharge.total,
         onSuccess: (data) => {
           setLoading(false);
           setPaymentSuccess({
@@ -409,7 +415,7 @@ export default function MotionContact() {
                 disabled={loading}
                 className="btn btn--gold ct-form__submit"
               >
-                {loading ? 'Initializing Payment Gateway...' : 'Proceed to Pay ₹99 & Book →'}
+                {loading ? 'Initializing Payment Gateway...' : `Proceed to Pay ₹${payableLabel} & Book →`}
                 <svg className="ct-form__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M4 10h12M11 5l5 5-5 5"/>
                 </svg>

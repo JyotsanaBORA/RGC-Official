@@ -7,7 +7,7 @@ import ServiceLeadForm from '../../../components/ServiceLeadForm';
 import ServiceVisualizer from '../../../components/ServiceVisualizer';
 import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
 import WebDevPoster from '../../../components/WebDevPoster';
-import WebDevPlans from '../../../components/WebDevPlans';
+import ServicePlans from '../../../components/ServicePlans';
 import PayrollPoster from '../../../components/PayrollPoster';
 import ServicePageViewTracker from '../../../components/ServicePageViewTracker';
 
@@ -136,8 +136,8 @@ export default function ServicePage({ params }) {
                   <p className="svc-dash__overview reveal">{svc.overview}</p>
                 )}
 
-                {/* Service Architecture Visualizer Canvas (Excluded for 4999 basic website development) */}
-                {!isWebDev && (
+                {/* Service Architecture Visualizer Canvas (not shown for Web Development or Payroll) */}
+                {!isWebDev && !isPayroll && (
                   <div className="svc-dash__hero-visualizer reveal">
                     <ServiceVisualizer service={svc} />
                   </div>
@@ -156,7 +156,8 @@ export default function ServicePage({ params }) {
                 )}
               </section>
 
-              {/* 2. Institutional Trust Pillars Row */}
+              {/* 2. Institutional Trust Pillars Row (not shown for Payroll) */}
+              {!isPayroll && (
               <section className="svc-trust-sec reveal">
                 <div className="svc-trust-grid">
                   {isWebDev ? (
@@ -255,6 +256,10 @@ export default function ServicePage({ params }) {
                   )}
                 </div>
               </section>
+              )}
+
+              {/* 2b. Indicative plans ("Starting @" / custom quote), discussed on the ₹99 consultation */}
+              <ServicePlans serviceSlug={svc.slug} serviceTitle={svc.shortTitle || svc.title} />
 
               {/* 3. The Enterprise Challenge vs. Reddington Solution (Excluded on web-dev to reduce content) */}
               {!isWebDev && svc.challengeVsSolution && (
@@ -288,25 +293,8 @@ export default function ServicePage({ params }) {
                 </section>
               )}
 
-              {/* 4. Core Capabilities & Execution Deliverables / Everything in ₹4,999 - Creative Poster Showcase */}
-              {isWebDev ? (
-                <section className="svc-cap-sec svc-cap-sec--poster reveal" id="capabilities">
-                  <div className="svc-poster-banner">
-                    <a
-                      href="#consultation-form"
-                      className="svc-poster-link"
-                      title="Click to Book Your ₹4,999 Website Package"
-                    >
-                      <img
-                        src="/assets/img/webdev_creative_poster.jpg"
-                        alt="Reddington Global - Everything in ₹4,999 All-Inclusive Business Website Package"
-                        className="svc-poster-img"
-                        loading="eager"
-                      />
-                    </a>
-                  </div>
-                </section>
-              ) : isPayroll ? (
+              {/* 4. Core Capabilities & Execution Deliverables (Web Development shows only its plans) */}
+              {isWebDev ? null : isPayroll ? (
                 <section className="svc-cap-sec reveal" id="capabilities">
                   <div className="svc-sec-head">
                     <span className="eyebrow">Practice Areas & Deliverables</span>
@@ -314,7 +302,7 @@ export default function ServicePage({ params }) {
                       Payroll Data & <span className="gold-italic">Balance Computation Services.</span>
                     </h2>
                     <p className="svc-sec-sub">
-                      Accurate wage calculations, statutory tax deductions, and verified net balance statements for up to 10 employees under our ₹4,999 package.
+                      Workforce compensation, wage calculation, tax deduction and statutory compliance for teams of up to 10 employees, starting @ ₹4,999/month. Book a ₹99 consultation to get started.
                     </p>
                   </div>
 
@@ -358,40 +346,37 @@ export default function ServicePage({ params }) {
                 </section>
               )}
 
-              {/* 4b. Website Plans: Basic / Standard / Premium */}
-              {isWebDev && <WebDevPlans />}
-
               {/* 5. Process Roadmap */}
               {isWebDev ? (
                 <section className="svc-journey-sec reveal">
                   <div className="svc-sec-head">
                     <span className="eyebrow" style={{ color: '#10B981' }}>SIMPLE, 3-STEP PROCESS</span>
-                    <h2 className="svc-sec-title">Idea to live site in a week.</h2>
+                    <h2 className="svc-sec-title">From consultation to live site.</h2>
                     <p className="svc-sec-sub">
-                      Basic plan shown: live in 7 days. Standard launches in 10 days, Premium in 15–21 days.
+                      Your exact timeline is confirmed on the call. Basic sites can go live in as little as 7 days.
                     </p>
                   </div>
 
                   <div className="svc-process-timeline">
                     <div className="svc-process-card">
                       <div className="svc-process-badge">1</div>
-                      <div className="svc-process-day">DAY 1</div>
-                      <h4>Share your details</h4>
-                      <p>Send your logo, photos, services and contact info on WhatsApp.</p>
+                      <div className="svc-process-day">STEP 1</div>
+                      <h4>Book a ₹99 consultation</h4>
+                      <p>Pick a plan you like (or not sure yet) and book your 1-on-1 call.</p>
                     </div>
 
                     <div className="svc-process-card">
                       <div className="svc-process-badge">2</div>
-                      <div className="svc-process-day">DAY 2–5</div>
-                      <h4>We design & build</h4>
-                      <p>You get a preview link and up to 2 rounds of changes.</p>
+                      <div className="svc-process-day">STEP 2</div>
+                      <h4>Get your plan & quote</h4>
+                      <p>Our expert reviews your needs and recommends the right plan, timeline and price.</p>
                     </div>
 
                     <div className="svc-process-card">
                       <div className="svc-process-badge">3</div>
-                      <div className="svc-process-day">DAY 7</div>
-                      <h4>Go live</h4>
-                      <p>Your site launches, connected to WhatsApp, Maps and Google.</p>
+                      <div className="svc-process-day">STEP 3</div>
+                      <h4>We build & go live</h4>
+                      <p>You get preview links and revisions, then your site launches on WhatsApp, Maps and Google.</p>
                     </div>
                   </div>
                 </section>
@@ -540,7 +525,7 @@ export default function ServicePage({ params }) {
                     {isWebDev
                       ? 'Everything you need to know about our Basic, Standard and Premium website plans, launch timelines, API integrations, and developer support.'
                       : isPayroll
-                      ? 'Everything you need to know about our ₹4,999 payroll package (upto 10 employees), payroll data registers, wage calculations, and balance statements.'
+                      ? 'Everything you need to know about our payroll plans, payroll data registers, wage calculations, and balance statements.'
                       : `Everything you need to know about our ${svc.shortTitle || svc.title} delivery, service scope, and SLA governance.`}
                   </p>
                 </div>
@@ -598,21 +583,11 @@ export default function ServicePage({ params }) {
         {/* Mobile Sticky Bottom CTA */}
         <div className="svc-mobile-sticky-bar">
           <div className="svc-mobile-sticky-bar__info">
-            <strong>{isWebDev ? 'Website Plans' : isPayroll ? 'Payroll Starter' : (svc.shortTitle || svc.title)}</strong>
-            <span>
-              {isWebDev
-                ? '3 plans • From ₹4,999 + GST'
-                : isPayroll
-                ? 'Upto 10 Staff • ₹4,999 + GST'
-                : '1-on-1 Strategy Session • ₹99'}
-            </span>
+            <strong>{svc.shortTitle || svc.title}</strong>
+            <span>1-on-1 Consultation • ₹99 only</span>
           </div>
           <a href="#consultation-form" className="btn btn--gold svc-mobile-sticky-bar__btn">
-            {isWebDev
-              ? 'Book from ₹4,999 +gst →'
-              : isPayroll
-              ? 'Book Payroll @4999 +gst →'
-              : 'Book @ ₹99 →'}
+            Book Call @ ₹99 →
           </a>
         </div>
       </main>

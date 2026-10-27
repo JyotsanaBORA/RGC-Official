@@ -103,13 +103,15 @@ export default function ClientScripts() {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
+        // React-managed cards rewrite className on re-render, so track reveal in an attribute React never touches
+        entry.target.setAttribute('data-revealed', '');
         revealObserver.unobserve(entry.target);
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
     document.querySelectorAll('.reveal, .reveal-card').forEach(el => revealObserver.observe(el));
 
     // ── Service card cursor spotlight ────────────────────────
-    const spotlightCards = finePointer ? [...document.querySelectorAll('.svc-mono-card')] : [];
+    const spotlightCards = finePointer ? [...document.querySelectorAll('.svc-mono-card, .svc-plan-card')] : [];
     const onCardMove = e => {
       const card = e.currentTarget;
       const r = card.getBoundingClientRect();

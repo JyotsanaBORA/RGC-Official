@@ -61,6 +61,11 @@ const OrderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    // Plan the client showed interest in before the consultation (e.g. "Web Development — Standard")
+    interestedPlan: {
+      type: String,
+      default: '',
+    },
 
     // Amount representation
     amount: {

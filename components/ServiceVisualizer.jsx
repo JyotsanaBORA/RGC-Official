@@ -264,7 +264,7 @@ const SERVICE_CONFIGS = {
       },
     ],
     kpis: [
-      { value: '₹4,999', label: 'Starter Package (≤10 Staff)' },
+      { value: '₹4,999', label: 'Plans Starting @ (per month)' },
       { value: '100%', label: 'Calculation Accuracy' },
       { value: 'Zero', label: 'Statutory Drift' },
     ],

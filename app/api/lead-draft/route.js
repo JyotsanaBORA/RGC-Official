@@ -21,6 +21,7 @@ export async function POST(req) {
     const selectedPackage = body.selectedPackage || body.package || 'Consultation';
     const packageId = body.packageId || '';
     const packagePrice = Number(body.packagePrice || 99);
+    const interestedPlan = String(body.interestedPlan || body.notes?.interested_plan || '').slice(0, 120);
     const amountInPaise = Number(body.amount || packagePrice * 100);
     const amountInRupees = Math.round(amountInPaise / 100);
 
@@ -70,6 +71,7 @@ export async function POST(req) {
       selectedPackage,
       packageId,
       packagePrice,
+      interestedPlan,
       amount: amountInPaise,
       amountInRupees,
       currency: 'INR',
@@ -89,6 +91,7 @@ export async function POST(req) {
         company: customerCompany,
         gst_number: customerGst,
         selected_package: selectedPackage,
+        interested_plan: interestedPlan,
         lead_stage: 'abandoned_in_form',
       },
       attribution: attributionData,

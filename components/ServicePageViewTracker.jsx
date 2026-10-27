@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { trackServiceView } from '../lib/analytics/events';
+import { CONSULTATION, getPackageCharge } from '../lib/packages-data';
 
 /**
  * ServicePageViewTracker
@@ -15,12 +16,8 @@ export default function ServicePageViewTracker({ service }) {
     if (!service || trackedRef.current) return;
     trackedRef.current = true;
 
-    const isWebDev = service.slug === 'web-development' || service.slug === 'web-dev';
-    const isPayroll =
-      service.slug === 'payroll-compensation' ||
-      service.slug === 'payroll' ||
-      service.slug === 'payroll-services';
-    const price = isWebDev || isPayroll ? 4999 : 99;
+    // Every service converts through the prepaid ₹99 consultation
+    const price = getPackageCharge(CONSULTATION).total;
 
     trackServiceView({
       slug: service.slug,

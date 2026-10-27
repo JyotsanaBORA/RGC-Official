@@ -81,36 +81,40 @@ COMPANY & DIRECT SALES CHANNELS
 • Delivery Model: Dual-shore delivery (India & USA) ensuring 24/7 continuous operations, strict SLA governance, and cost optimization.
 
 ═════════════════════════════════════════════════════════════════════════════
-CORE PRACTICES & TRANSPARENT PRICING
+CORE PRACTICES & PRICING MODEL (CONSULTATION-FIRST)
 ═════════════════════════════════════════════════════════════════════════════
+PRICING MODEL (APPLIES TO EVERY SERVICE):
+   • We NEVER quote a fixed price. Plans only have "Starting @" prices (or "Custom quote").
+   • Every engagement begins with a prepaid ₹99 1-on-1 consultation (flat ₹99, GST included). On the call our expert reviews the scope and recommends the plan, timeline (ETA) and final quote.
+   • The ₹99 fee covers the consultation only. It is NOT adjusted against or deducted from project fees. Never say otherwise.
+   • Add-on services exist for every practice but are priced only during the consultation. Never quote add-on prices.
+
 1. BOOKKEEPING & ACCOUNTING:
-   • Starting at: ₹4,999/month (up to 50 transactions).
-   • Scope: Audit-ready general ledgers, bank & credit card reconciliations, monthly P&L and Balance Sheet statements, statutory GST return filings (GSTR-1, GSTR-3B) and TDS compliance.
+   • Plans starting @ ₹4,999/month + GST (Starter, up to 50 transactions). Growth and Enterprise: custom quote.
+   • Scope: Audit-ready ledgers, bank reconciliations, monthly P&L and Balance Sheet, GST returns (GSTR-1, GSTR-3B) and TDS compliance.
    • Software supported: Tally Prime, Zoho Books, QuickBooks, Excel.
    • URL: https://www.reddingtonglobal.com/services/bookkeeping-accountancy
 
-2. PAYROLL SERVICES SPECIAL PACKAGE:
-   • Starter Package: ₹4,999 + GST (For up to 10 employees).
-   • Scope: Verified payroll data, accurate wage and overtime calculations, statutory tax deductions (PF, ESIC, Professional Tax, TDS withholding), and clean net salary balance statements for bank payout.
-   • STRICT PAYROLL RULE: Show ONLY this ₹4,999 package for payroll up to 10 employees. We provide payroll data and balance calculations only (client executes bank payouts).
+2. PAYROLL SERVICES:
+   • Payroll Package starting @ ₹4,999/month + GST for up to 10 employees: workforce compensation, wage calculation, tax deduction (TDS) and statutory compliance (PF, ESIC, PT).
+   • Scope: Payroll data, wage and overtime calculations, statutory deductions (PF, ESIC, PT, TDS) and net salary balance statements. We provide payroll data and calculations only (client executes bank payouts).
    • URL: https://www.reddingtonglobal.com/services/payroll-compensation
 
-3. WEBSITE DEVELOPMENT & API INTEGRATION PLANS (one-time, + GST, no monthly fees):
-   • Basic ₹4,999 (live in 7 days): Up to 5 pages, mobile-responsive design, WhatsApp chat button & click-to-call, lead enquiry form, Google Maps + basic SEO, SSL, 2 revisions, 30 days free support.
-   • Standard ₹9,999 (live in 10 days, MOST POPULAR): Everything in Basic + up to 10 pages, custom brand design, blog with easy editor, auto-reply emails + leads to Google Sheets, 1 API integration, SEO for 5 key pages, Google Business Profile + Analytics setup, 3 revisions, 60 days support.
-   • Premium ₹19,999 (live in 15–21 days): Everything in Standard + up to 20 pages or 50-product online store, up to 3 API integrations (Razorpay payments, WhatsApp Business alerts, appointment booking, Zoho/HubSpot CRM), admin panel + leads dashboard, full-site SEO, Google Ads & Meta Pixel tracking, 2 languages, 5 revisions, 90 days priority support.
-   • Add-ons: extra page ₹999, extra API integration ₹2,999, extra revision round ₹999. Domain & hosting billed to the client's own account.
-   • Custom enterprise portals & full-stack web applications also available.
-   • URL: https://www.reddingtonglobal.com/services/web-development
+3. WEBSITE DEVELOPMENT & API INTEGRATIONS (one-time, no monthly fees to us):
+   • Basic starting @ ₹4,999: up to 5 pages, mobile design, WhatsApp button, enquiry form, Maps, basic SEO, SSL. Can go live in as little as 7 days.
+   • Standard starting @ ₹9,999 (most popular): custom brand design, blog, lead automation, an API integration, SEO for key pages.
+   • Premium starting @ ₹19,999: online store or larger site, payments (Razorpay), bookings, CRM / WhatsApp Business integrations, admin panel.
+   • Exact plan, timeline and quote are confirmed on the ₹99 consultation. Domain & hosting are billed to the client's own account.
+   • URL: https://www.reddingtonglobal.com/services/web-development#plans
 
-4. BPO & CUSTOMER OPERATIONS:
-   • 24/7 dual-shore customer care (voice, chat, email helpdesk), inbound SDR speed-to-lead (<5 mins), outbound telecalling & pipeline generation, KYC/AML processing, QA governance.
-   • URL: https://www.reddingtonglobal.com/services/bpo-customer-service
-   • BPO Partnerships for call center owners & campaigns: https://www.reddingtonglobal.com/bpo-partnerships
+4. BPO, AI & SAAS, DIGITAL MARKETING, PERFORMANCE MANAGEMENT, RECRUITMENT:
+   • Plans (Starter / Growth / Enterprise) are custom quoted after the ₹99 consultation.
+   • BPO: 24/7 customer care, inbound SDR, outbound calling, KYC/back office: https://www.reddingtonglobal.com/services/bpo-customer-service
+   • BPO Partnerships for call center owners: https://www.reddingtonglobal.com/bpo-partnerships
 
-5. STRATEGIC DISCOVERY CONSULTATION:
-   • 1-on-1 Practice Director Strategy Session: ₹99 (30-minute deep dive with Senior Practice Director, fully deductible upon formal contract engagement).
-   • URL: https://www.reddingtonglobal.com/contact
+5. HOW TO BOOK THE ₹99 CONSULTATION:
+   • On any service page (the booking form on the right), or https://www.reddingtonglobal.com/contact
+   • Or WhatsApp +91 98182 24995.
 
 ${currentPage ? `\n═════════════════════════════════════════════════════════════════════════════\nVISITOR CONTEXT: The user is currently browsing the page: ${currentPage}\n═════════════════════════════════════════════════════` : ''}
 
@@ -121,7 +125,7 @@ SALES AGENT CONVERSATION RULES (CRITICAL)
    • Keep responses strictly under 40 to 60 words. No walls of text. Fast to read on mobile.
 2. CONSULTATIVE SALES FOCUS:
    • Immediately acknowledge what the user needs.
-   • Mention the starting package price (e.g., ₹4,999) or relevant solution with the service link.
+   • Mention "starting @" prices only (never a fixed price) and always invite the user to book the ₹99 consultation, where we recommend their plan, timeline and quote.
    • Conclude with ONE helpful qualifying question (e.g. transaction volume, employee count, or launch timeline) to encourage user response.
 3. CLEAR CALL TO ACTION:
    • Provide the relevant service link or offer direct WhatsApp support (+91 98182 24995).
@@ -188,17 +192,17 @@ function getFallbackReply(messages, lastUserMsg) {
 
   // 2. Bookkeeping & Accounting Intent (handles 'book keeping', 'bookkeeping', 'ledger', 'gst', etc.)
   if (/\b(book[\s-]*keep(?:ing|er|s)?|account(?:ing|ant|s)?|ledger|audit|balance\s*sheet|p&l|profit\s*(?:and|&)\s*loss|financials?|reconcil(?:e|iation|ing)|tally|zoho(?:\s*books)?|quickbooks?|gst(?:r)?|tds|tax(?:es|ation)?)\b/i.test(normalized)) {
-    return "Our Bookkeeping & Accounting service starts at **₹4,999/month** (up to 50 transactions), covering audit-ready ledgers, bank reconciliations, P&L reports, and GST/TDS filings: https://www.reddingtonglobal.com/services/bookkeeping-accountancy\n\nRoughly how many monthly transactions or invoices does your business process?";
+    return "Bookkeeping plans start @ **₹4,999/month**, covering audit-ready ledgers, bank reconciliations, P&L reports, and GST/TDS filings. Book a **₹99 consultation** and we will recommend the right plan, timeline and quote: https://www.reddingtonglobal.com/services/bookkeeping-accountancy\n\nRoughly how many transactions do you have each month?";
   }
 
   // 3. Payroll & Compensation Intent (handles 'pay roll', 'payroll', 'salary', 'wages', 'pf', 'esic')
   if (/\b(pay[\s-]*roll|salenc|salaries|salary|wage|wages|payslip|pay\s*slip|compensation|pf\b|provident\s*fund|esic|pt\b|professional\s*tax|staff\s*payout|employee\s*pay)\b/i.test(normalized)) {
-    return "Our Payroll Package is just **₹4,999/month** for up to 10 employees, covering accurate wage calculations, statutory tax deductions (PF/ESIC/PT/TDS), and net salary balance statements: https://www.reddingtonglobal.com/services/payroll-compensation\n\nHow many employees are currently on your payroll?";
+    return "Our Payroll Package starts @ **₹4,999/month** for up to 10 employees, covering workforce compensation, wage calculation, tax deduction and statutory compliance (PF/ESIC/PT). Book a **₹99 consultation** and we will recommend the right plan, timeline and quote: https://www.reddingtonglobal.com/services/payroll-compensation\n\nHow many employees are on your payroll?";
   }
 
   // 4. Web Development & Engineering Intent (handles 'web site', 'website', 'web dev', 'landing page')
   if (/\b(web[\s-]*dev(?:elopment)?|web[\s-]*site|landing[\s-]*page|frontend|portal|next\.?js|react|ecommerce|e-commerce|wordpress|redesign|build\s+(?:a\s+)?site|software|app\s*dev)\b/i.test(normalized)) {
-    return "We have 3 website plans (one-time, + GST):\n• **Basic ₹4,999**: 5 pages, live in 7 days\n• **Standard ₹9,999**: 10 pages, custom design, blog & 1 API integration\n• **Premium ₹19,999**: payments, bookings, CRM & up to 3 API integrations\n\nCompare plans: https://www.reddingtonglobal.com/services/web-development#plans\n\nWhat type of website or business are you looking to launch?";
+    return "Website plans start @ **₹4,999** (Basic), with Standard from ₹9,999 and Premium from ₹19,999 for payments, bookings and CRM integrations. Book a **₹99 consultation** and we will recommend the right plan, timeline and quote: https://www.reddingtonglobal.com/services/web-development#plans\n\nWhat type of website or business are you looking to launch?";
   }
 
   // 5. BPO Partnerships / Seat Filling
@@ -213,30 +217,30 @@ function getFallbackReply(messages, lastUserMsg) {
 
   // 7. Pricing & Packages Intent
   if (/\b(price|pricing|cost|how\s*much|fees?|charges?|rate\s*card|quote|packages?|4999|99|rates?)\b/i.test(normalized)) {
-    return "Websites come in 3 plans: **₹4,999 / ₹9,999 / ₹19,999 + GST** (https://www.reddingtonglobal.com/services/web-development#plans). Payroll for up to 10 staff is **₹4,999 + GST**, and a 1-on-1 Practice Director Strategy Session is **₹99**: https://www.reddingtonglobal.com/contact\n\nWhich practice can I share more details on?";
+    return "We don't sell fixed-price packages: every plan is tailored to your scope. Websites start @ **₹4,999**, and Payroll and Bookkeeping start @ **₹4,999/month**. Book a **₹99 consultation** and we will recommend the right plan, timeline and quote: https://www.reddingtonglobal.com/contact\n\nWhich service are you interested in?";
   }
 
   // 8. Affirmative Responses ("yes", "sure", "ok", "interested", "proceed", "book")
   if (['yes', 'yeah', 'sure', 'ok', 'okay', 'yup', 'yep', 'interested', 'yesplease', 'proceed', 'book', 'start'].includes(cleanMsg)) {
     if (allText.includes('web') || allText.includes('site')) {
-      return "Fantastic! Pick your plan (Basic ₹4,999, Standard ₹9,999 or Premium ₹19,999) and book directly here: https://www.reddingtonglobal.com/services/web-development#plans (or message us on WhatsApp: +91 98182 24995).\n\nDo you already have your domain or content ready?";
+      return "Fantastic! Book your ₹99 website consultation here: https://www.reddingtonglobal.com/services/web-development#plans (or WhatsApp +91 98182 24995). Our expert will recommend your plan, timeline and quote.\n\nDo you already have your domain or content ready?";
     }
     if (allText.includes('payroll') || allText.includes('salary')) {
-      return "Excellent! You can reserve your ₹4,999 Payroll Package here: https://www.reddingtonglobal.com/services/payroll-compensation (or WhatsApp +91 98182 24995).\n\nWould you like our onboarding checklist?";
+      return "Excellent! Book your ₹99 payroll consultation here: https://www.reddingtonglobal.com/services/payroll-compensation (or WhatsApp +91 98182 24995). We'll recommend the right plan for your team.\n\nWould you like our onboarding checklist?";
     }
     if (allText.includes('bookkeeping') || allText.includes('account')) {
-      return "Great! You can schedule your Bookkeeping onboarding here: https://www.reddingtonglobal.com/services/bookkeeping-accountancy (or WhatsApp +91 98182 24995).\n\nWhich accounting platform do you prefer?";
+      return "Great! Book your ₹99 bookkeeping consultation here: https://www.reddingtonglobal.com/services/bookkeeping-accountancy (or WhatsApp +91 98182 24995).\n\nWhich accounting platform do you prefer?";
     }
-    return "Excellent! You can book your 1-on-1 Strategy Session (₹99) right here: https://www.reddingtonglobal.com/contact (or message WhatsApp: +91 98182 24995).\n\nWhat is your target launch date?";
+    return "Excellent! You can book your ₹99 1-on-1 consultation right here: https://www.reddingtonglobal.com/contact (or WhatsApp +91 98182 24995).\n\nWhat is your target launch date?";
   }
 
   // 9. Standard Warm Greetings
   if (/^(hi|hello|hey|good\s*(?:morning|afternoon|evening)|greetings|hola)\b/i.test(normalized)) {
-    return "Hello! I am Argo, Senior Solutions Advisor at Reddington Global. We specialize in BPO Operations, ₹4,999 Website Development, and ₹4,999 Bookkeeping & Payroll solutions.\n\nWhich service can I help you explore today?";
+    return "Hello! I am Argo, Senior Solutions Advisor at Reddington Global. We specialize in BPO Operations, Website Development (plans starting @ ₹4,999), and Bookkeeping & Payroll (starting @ ₹4,999/month).\n\nWhich service can I help you explore today?";
   }
 
   // 10. Default Consultative Fallback
-  return "I'd be delighted to help! At Reddington Global, we provide 24/7 BPO Operations, ₹4,999 Website Development, and ₹4,999 Bookkeeping & Payroll services: https://www.reddingtonglobal.com/contact (or WhatsApp +91 98182 24995).\n\nWhich of these areas are you looking to grow or streamline?";
+  return "I'd be delighted to help! We provide 24/7 BPO Operations, Website Development (starting @ ₹4,999), and Bookkeeping & Payroll (starting @ ₹4,999/month). Every plan starts with a ₹99 consultation: https://www.reddingtonglobal.com/contact (or WhatsApp +91 98182 24995).\n\nWhich of these are you exploring?";
 }
 
 export async function POST(req) {

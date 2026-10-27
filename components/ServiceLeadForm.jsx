@@ -3,11 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { trackLeadSubmission } from '../lib/analytics/events';
 import { startConsultationPayment } from '../lib/payment';
-import { getPackagesForService, getPackageCharge } from '../lib/packages-data';
+import { CONSULTATION, getPackageCharge, getServicePlans, getPlanPriceLabel } from '../lib/packages-data';
 import { getAttributionData } from '../lib/analytics/attribution';
 
+// Every service books the same prepaid ₹99 consultation; plans are only an indication of interest
+const charge = getPackageCharge(CONSULTATION);
+const inr = (n) => n.toLocaleString('en-IN', { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 });
+
 export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
-  // Strictly isolate Website Development and Payroll from generic consultation
   const isWebDev =
     serviceSlug === 'web-development' ||
     serviceSlug === 'web-dev' ||
@@ -20,25 +23,17 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     serviceSlug === 'payroll-services' ||
     (serviceTitle || '').toLowerCase().includes('payroll');
 
-  const packages = getPackagesForService(serviceSlug || serviceTitle);
-  const defaultPkg = packages.find((p) => p.isDefault) || packages[0];
-
-  const defaultServiceArea = serviceTitle || 'Customer Service & Support';
+  const plans = getServicePlans(serviceSlug || serviceTitle)?.plans || [];
+  const activeService = serviceTitle || 'Strategic Consultation';
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     company: '',
-    businessType: isWebDev
-      ? 'Clinic / Healthcare'
-      : isPayroll
-      ? 'Upto 10 Employees (₹4,999 Package)'
-      : defaultServiceArea,
+    businessType: isWebDev ? 'Clinic / Healthcare' : isPayroll ? 'Upto 10 Employees' : activeService,
     gstNumber: '',
-    packageId:
-      defaultPkg?.id ||
-      (isWebDev ? 'web-business-4999' : isPayroll ? 'payroll-starter-4999' : 'consultation-99'),
+    planId: '', // '' = not sure yet
     requirement: '',
   });
 
@@ -53,38 +48,26 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
   const leadIdRef = useRef(null);
   const debounceTimerRef = useRef(null);
 
-  useEffect(() => {
-    const pkgs = getPackagesForService(serviceSlug || serviceTitle);
-    const def = pkgs.find((p) => p.isDefault) || pkgs[0];
-    if (def) {
-      setFormData((prev) => ({
-        ...prev,
-        packageId: def.id,
-        businessType: isWebDev
-          ? prev.businessType
-          : isPayroll
-          ? (prev.businessType.includes('Employees') ? prev.businessType : 'Upto 10 Employees (₹4,999 Package)')
-          : (serviceTitle || prev.businessType),
-      }));
-    }
-  }, [serviceSlug, serviceTitle, isWebDev, isPayroll]);
-
-  // Plan cards elsewhere on the page dispatch `rg:select-plan` with a package id
+  // Plan cards elsewhere on the page dispatch `rg:select-plan` with a plan id
   useEffect(() => {
     const onSelectPlan = (e) => {
       const id = e.detail;
-      if (!packages.some((p) => p.id === id)) return;
-      setFormData((prev) => ({ ...prev, packageId: id }));
+      if (id && !plans.some((p) => p.id === id)) return;
+      setFormData((prev) => ({ ...prev, planId: id || '' }));
     };
     window.addEventListener('rg:select-plan', onSelectPlan);
     return () => window.removeEventListener('rg:select-plan', onSelectPlan);
-  }, [packages]);
+  }, [plans]);
 
-  const currentPackage =
-    packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
-  const planShortName = (currentPackage?.name || 'Basic Website').replace(/ Website$/, '');
-  const charge = getPackageCharge(currentPackage);
-  const inr = (n) => n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // Keep plan cards elsewhere on the page in sync with the form's selection
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('rg:plan-changed', { detail: formData.planId }));
+  }, [formData.planId]);
+
+  const interestedPlan = plans.find((p) => p.id === formData.planId) || null;
+  const interestedPlanLabel = interestedPlan
+    ? `${activeService} — ${interestedPlan.name} (${interestedPlan.startingAt ? `Starting @ ${getPlanPriceLabel(interestedPlan)}` : 'Custom quote'})`
+    : '';
 
   // Background auto-save for abandoned form leads
   const saveLeadDraft = async (dataToSave = formData) => {
@@ -95,16 +78,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     }
 
     try {
-      const activeService =
-        serviceTitle ||
-        (isWebDev
-          ? 'Website Development'
-          : isPayroll
-          ? 'Payroll & Compensation Management'
-          : 'Strategic Consultation');
-      const activePrice = currentPackage?.price || (isWebDev || isPayroll ? 4999 : 99);
-      const attribution = getAttributionData();
-
+      const draftPlan = plans.find((p) => p.id === dataToSave.planId);
       const res = await fetch('/api/lead-draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,16 +90,12 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           company: dataToSave.company || dataToSave.businessType,
           gstNumber: dataToSave.gstNumber,
           service: activeService,
-          selectedPackage:
-            currentPackage?.name ||
-            (isWebDev
-              ? 'Basic Website'
-              : isPayroll
-              ? 'Payroll Starter Package'
-              : 'Strategic Consultation'),
-          packageId: currentPackage?.id || '',
-          packagePrice: activePrice,
-          attribution,
+          selectedPackage: CONSULTATION.name,
+          packageId: CONSULTATION.id,
+          packagePrice: CONSULTATION.price,
+          amount: Math.round(charge.total * 100),
+          interestedPlan: draftPlan ? `${activeService} — ${draftPlan.name}` : '',
+          attribution: getAttributionData(),
           notes: {
             requirement: dataToSave.requirement,
             business_type: dataToSave.businessType,
@@ -171,20 +141,11 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     setStatus({ loading: true, success: false, error: '', orderId: '', paymentId: '' });
 
-    const activeService =
-      serviceTitle ||
-      (isWebDev
-        ? 'Website Development'
-        : isPayroll
-        ? 'Payroll & Compensation Management'
-        : 'Strategic Consultation');
-    const activePrice = currentPackage?.price || (isWebDev || isPayroll ? 4999 : 99);
-
     trackLeadSubmission({
-      form_name: `service_booking_${serviceSlug || (isWebDev ? 'web' : isPayroll ? 'payroll' : 'consultation')}`,
-      form_location: `service_card_${serviceSlug || (isWebDev ? 'web' : isPayroll ? 'payroll' : 'consultation')}`,
-      service_requested: `${activeService} - ${currentPackage?.name}`,
-      amount: activePrice,
+      form_name: `service_booking_${serviceSlug || 'consultation'}`,
+      form_location: `service_card_${serviceSlug || 'consultation'}`,
+      service_requested: `${activeService} - Consultation${interestedPlan ? ` (interested: ${interestedPlan.name})` : ''}`,
+      amount: charge.total,
     });
 
     try {
@@ -196,29 +157,14 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           phone: formData.phone,
           company: formData.company || formData.businessType,
           gstNumber: formData.gstNumber,
-          selectedPackage:
-            currentPackage?.name ||
-            (isWebDev
-              ? 'Basic Website'
-              : isPayroll
-              ? 'Payroll Starter Package'
-              : '1-on-1 Strategic Consultation'),
-          packageId:
-            currentPackage?.id ||
-            (isWebDev
-              ? 'web-business-4999'
-              : isPayroll
-              ? 'payroll-starter-4999'
-              : 'consultation-99'),
-          packagePrice: activePrice,
-          message: `${isWebDev ? 'Business Type' : isPayroll ? 'Team Size' : 'Practice Area'}: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard engagement'}`,
+          selectedPackage: CONSULTATION.name,
+          packageId: CONSULTATION.id,
+          packagePrice: CONSULTATION.price,
+          interestedPlan: interestedPlanLabel,
+          message: `${isWebDev ? 'Business Type' : isPayroll ? 'Team Size' : 'Practice Area'}: ${formData.businessType}. Interested plan: ${interestedPlan ? interestedPlan.name : 'Not sure yet'}. Requirements: ${formData.requirement || 'Not specified'}`,
         },
-        serviceName: isWebDev
-          ? `Website Development — ${currentPackage?.name || 'Basic Website'}`
-          : isPayroll
-          ? 'Payroll Services — Starter Package (Upto 10 Staff)'
-          : `${activeService} — Strategic Consultation`,
-        amount: charge.total || activePrice,
+        serviceName: `${activeService} — 1-on-1 Consultation`,
+        amount: charge.total,
         onSuccess: (data) => {
           setStatus({
             loading: false,
@@ -270,90 +216,41 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
         </div>
 
         <div className="svc-curved-title">
-          <span>
-            {isWebDev
-              ? 'Dev Studio'
-              : isPayroll
-              ? 'Payroll Desk'
-              : 'Consultation'}
-          </span>
+          <span>Consultation</span>
         </div>
 
         <div className="svc-curved-status">
           <span className="svc-screen-status-dot"></span>
-          <span>
-            {isWebDev
-              ? `Live in ${currentPackage?.timeline || '7 Days'}`
-              : isPayroll
-              ? 'Active'
-              : 'Available'}
-          </span>
+          <span>Call in 24h</span>
         </div>
       </div>
 
       {/* ── Screen Ambient Inner Area ── */}
       <div className="svc-curved-display">
-        {/* Floating Center Glassmorphic Card */}
         <div className="svc-clean-card">
-          <h3 className="svc-clean-title">
-            {isWebDev
-              ? 'Book Your Website'
-              : isPayroll
-              ? 'Book Payroll'
-              : 'Schedule Consultation'}
-          </h3>
+          <h3 className="svc-clean-title">Book Consultation @ ₹99</h3>
           <p className="svc-clean-subtitle">
-            {isWebDev ? (
-              <>
-                Get your business live in {(currentPackage?.timeline || '7 Days').toLowerCase()} &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
-              </>
-            ) : isPayroll ? (
-              <>
-                Complete payroll data &amp; balance &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
-              </>
-            ) : (
-              <>
-                1-on-1 strategy call for {serviceTitle || 'Enterprise Operations'} &bull; <strong>{currentPackage?.priceDisplay || '₹99 (One-Time)'}</strong>
-              </>
-            )}
+            1-on-1 call for {activeService} &bull; <strong>{CONSULTATION.priceDisplay}</strong>
           </p>
 
           {status.success ? (
             <div className="svc-clean-success">
               <div className="svc-clean-success-icon">✓</div>
-              <h4>
-                {isWebDev
-                  ? 'Project Registered Successfully!'
-                  : isPayroll
-                  ? 'Payroll Onboarding Confirmed!'
-                  : 'Consultation Scheduled Successfully!'}
-              </h4>
+              <h4>Consultation Booked!</h4>
               <p>
-                Thank you, <strong>{formData.name || 'Partner'}</strong>. Your booking for{' '}
-                <strong>
-                  {currentPackage?.name ||
-                    (isWebDev
-                      ? 'Basic Website'
-                      : isPayroll
-                      ? 'Payroll Starter Package'
-                      : 'Strategic Consultation')}
-                </strong>{' '}
-                is confirmed.
+                Thank you, <strong>{formData.name || 'Partner'}</strong>. Our {activeService} expert will call you within
+                24 hours to understand your scope and recommend the right plan, timeline and quote.
               </p>
               <div className="svc-clean-success-box">
                 <div>
                   <strong>Order ID:</strong> {status.orderId}
                 </div>
                 <div>
-                  <strong>{isWebDev || isPayroll ? 'Selected Plan:' : 'Session Type:'}</strong> {currentPackage?.name} ({currentPackage?.priceDisplay})
+                  <strong>Interested plan:</strong> {interestedPlan ? interestedPlan.name : 'Not sure yet (we will advise)'}
                 </div>
               </div>
               <p style={{ marginTop: '14px', fontSize: '13px', color: '#D4C5B9' }}>
-                {isWebDev
-                  ? 'Our lead developer has received your specifications. We will contact you on WhatsApp within 2 hours.'
-                  : isPayroll
-                  ? 'Our Payroll Director has received your onboarding request. We will contact you on WhatsApp / Phone within 2 hours to collect attendance logs and payroll master data.'
-                  : 'Our Practice Director has reserved your strategic slot. A calendar invitation and briefing note have been sent.'}
+                A GST tax invoice for your ₹99 consultation has been emailed to you.
               </p>
             </div>
           ) : (
@@ -371,7 +268,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   name="name"
                   type="text"
                   required
-                  placeholder={isWebDev ? 'First & Last Name *' : 'Full Name *'}
+                  placeholder="Full Name *"
                   value={formData.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -397,7 +294,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   name="email"
                   type="email"
                   required
-                  placeholder={isWebDev ? 'Email Address *' : 'Corporate Email *'}
+                  placeholder="Email Address *"
                   value={formData.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -407,7 +304,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   id="svc-company"
                   name="company"
                   type="text"
-                  placeholder={isWebDev ? 'Business / Brand Name' : isPayroll ? 'Company Name' : 'Company / Organization'}
+                  placeholder={isWebDev ? 'Business / Brand Name' : 'Company / Organization'}
                   value={formData.company}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -415,7 +312,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 />
               </div>
 
-              {/* Row 3: Business Type / Practice Area & GSTIN */}
+              {/* Row 3: Business Type / Team Size / Practice Area & GSTIN */}
               <div className="svc-clean-row">
                 <div className="svc-clean-select-wrap">
                   {isWebDev ? (
@@ -448,7 +345,8 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                       onBlur={handleBlur}
                       className="svc-clean-input svc-clean-select"
                     >
-                      <option value="Upto 10 Employees (₹4,999 Package)">Upto 10 Employees</option>
+                      <option value="Upto 10 Employees">Upto 10 Employees</option>
+                      <option value="More than 10 Employees">More than 10 Employees</option>
                     </select>
                   ) : (
                     <select
@@ -488,52 +386,38 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 />
               </div>
 
-              {/* Row 4: Plan Picker (multi-plan services) / Plan Chip / Consultation Display */}
-              {packages.length > 1 ? (
-                <div className="svc-plan-picker svc-clean-full" role="radiogroup" aria-label="Choose your plan">
-                  {packages.map((pkg) => (
-                    <button
-                      key={pkg.id}
-                      type="button"
-                      role="radio"
-                      aria-checked={pkg.id === currentPackage?.id}
-                      className={`svc-plan-picker__opt${pkg.id === currentPackage?.id ? ' is-active' : ''}`}
-                      onClick={() => setFormData((prev) => ({ ...prev, packageId: pkg.id }))}
-                    >
-                      {pkg.isPopular && <span className="svc-plan-picker__flag">Popular</span>}
-                      <span className="svc-plan-picker__name">{pkg.name.replace(/ Website$/, '')}</span>
-                      <span className="svc-plan-picker__price">₹{pkg.price.toLocaleString('en-IN')}</span>
-                    </button>
-                  ))}
+              {/* Row 4: Interested plan (optional) — the price is discussed on the call */}
+              {plans.length > 0 && (
+                <div className="svc-clean-full">
+                  <span className="svc-plan-picker__label">Interested in (optional)</span>
+                  <div className="svc-plan-picker" role="radiogroup" aria-label="Interested plan">
+                    {[...plans, { id: '', name: 'Not sure', notSure: true }].map((plan) => (
+                      <button
+                        key={plan.id || 'not-sure'}
+                        type="button"
+                        role="radio"
+                        aria-checked={formData.planId === plan.id}
+                        className={`svc-plan-picker__opt${formData.planId === plan.id ? ' is-active' : ''}`}
+                        onClick={() => setFormData((prev) => ({ ...prev, planId: plan.id }))}
+                      >
+                        {plan.isPopular && <span className="svc-plan-picker__flag">Popular</span>}
+                        <span className="svc-plan-picker__name">{plan.name}</span>
+                        <span className="svc-plan-picker__price">
+                          {plan.notSure ? 'We advise' : plan.startingAt ? `From ${getPlanPriceLabel(plan)}` : 'Custom'}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              ) : (
-              <div className="svc-clean-plan-chip svc-clean-full">
-                <div className="svc-clean-plan-chip__left">
-                  <span className="svc-clean-plan-chip__tag">
-                    {isWebDev ? 'PLAN' : isPayroll ? 'PACKAGE' : 'SESSION'}
-                  </span>
-                  <strong className="svc-clean-plan-chip__name">
-                    {currentPackage?.name ||
-                      (isWebDev
-                        ? 'Basic Website'
-                        : isPayroll
-                        ? 'Payroll Package'
-                        : '1-on-1 Strategic Consultation')}
-                  </strong>
-                </div>
-                <div className="svc-clean-plan-chip__price">
-                  {currentPackage?.priceDisplay ||
-                    (isWebDev || isPayroll ? '₹4,999 + GST' : '₹99 (One-Time)')}
-                </div>
-              </div>
               )}
 
-              {charge.gst > 0 && (
-                <div className="svc-gst-summary svc-clean-full">
-                  <span>₹{inr(charge.base)} + ₹{inr(charge.gst)} GST (18%)</span>
-                  <strong>Payable ₹{inr(charge.total)}</strong>
-                </div>
-              )}
+              <div className="svc-gst-summary svc-clean-full">
+                <span>
+                  Consultation ₹{inr(charge.base)}
+                  {charge.gst > 0 ? ` + ₹${inr(charge.gst)} GST (18%)` : ' (incl. GST)'}
+                </span>
+                <strong>Payable ₹{inr(charge.total)}</strong>
+              </div>
 
               {/* Row 5: Notes & Requirements */}
               <input
@@ -542,10 +426,10 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 type="text"
                 placeholder={
                   isWebDev
-                    ? 'Message / Requirements (e.g. 5 pages, logo ready, need booking)'
+                    ? 'Tell us what you need (e.g. 5 pages, logo ready, need bookings)'
                     : isPayroll
-                    ? 'Notes / Requirements (e.g. 8 staff, salary cycle on 1st)...'
-                    : `Scope / Objectives (e.g. team size, current challenges, timeline for ${serviceTitle || 'operations'})...`
+                    ? 'Tell us your setup (e.g. 8 staff, salary cycle on 1st)'
+                    : `Scope / Objectives (e.g. team size, current challenges, timeline)`
                 }
                 value={formData.requirement}
                 onChange={handleChange}
@@ -554,62 +438,33 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               />
 
               {/* Submit CTA */}
-              <button
-                type="submit"
-                disabled={status.loading}
-                className="svc-clean-btn"
-              >
+              <button type="submit" disabled={status.loading} className="svc-clean-btn">
                 {status.loading ? (
                   <span className="svc-clean-loading">
                     <span className="svc-form-spinner"></span> Initializing Gateway...
                   </span>
-                ) : isWebDev ? (
-                  `Book ${planShortName} @ ${currentPackage?.priceDisplay || '₹4,999 + GST'} ›`
-                ) : isPayroll ? (
-                  'Book Payroll @ ₹4,999 + GST →'
                 ) : (
-                  'Confirm Slot & Pay ₹99 →'
+                  `Pay ₹${inr(charge.total)} & Book Call ›`
                 )}
               </button>
 
               {/* Micro-Trust Strip */}
               <div className="svc-clean-trust">
-                {isWebDev ? (
-                  <>
-                    <span>⚡ Live in {currentPackage?.timeline || '7 Days'}</span>
-                    <span>&bull;</span>
-                    <span>✔ Free Support Included</span>
-                    <span>&bull;</span>
-                    <span>🔒 100% Code Ownership</span>
-                  </>
-                ) : isPayroll ? (
-                  <>
-                    <span>⚡ 100% Calculation Accuracy</span>
-                    <span>&bull;</span>
-                    <span>✔ Statutory PF/ESIC/PT</span>
-                    <span>&bull;</span>
-                    <span>📄 Net Salary Balance Sheets</span>
-                  </>
-                ) : (
-                  <>
-                    <span>🔒 Strict Mutual NDA</span>
-                    <span>&bull;</span>
-                    <span>⚡ Instant Gateway</span>
-                    <span>&bull;</span>
-                    <span>📄 GST Tax Invoice</span>
-                  </>
-                )}
+                <span>📞 Expert call in 24h</span>
+                <span>&bull;</span>
+                <span>📋 Plan, ETA &amp; quote</span>
+                <span>&bull;</span>
+                <span>📄 GST Invoice</span>
               </div>
+              <p className="svc-consult-note">
+                ₹99 is a prepaid consultation fee. Project pricing is quoted after the call and is separate from this fee.
+              </p>
 
               {/* Direct WhatsApp Fast-Track */}
               <div style={{ textAlign: 'center', marginTop: '10px' }}>
                 <a
                   href={`https://wa.me/919818224995?text=${encodeURIComponent(
-                    isWebDev
-                      ? `Hi Reddington Global, I want to book the ${currentPackage?.name || 'Basic Website'} package for ${currentPackage?.priceDisplay || '₹4,999 + GST'}.`
-                      : isPayroll
-                      ? 'Hi Reddington Global, I want to book the Payroll Package for ₹4,999 (upto 10 employees).'
-                      : `Hi Reddington Global, I would like to schedule a ₹99 strategic consultation for ${serviceTitle || 'our enterprise operations'}.`
+                    `Hi Reddington Global, I would like to book a ₹99 consultation for ${activeService}${interestedPlan ? ` (interested in the ${interestedPlan.name} plan)` : ''}.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
