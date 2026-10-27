@@ -15,6 +15,8 @@ export default function sitemap() {
     '/projects',
     '/team',
     '/testimonials',
+    '/privacy-policy',
+    '/terms-and-conditions',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: now,

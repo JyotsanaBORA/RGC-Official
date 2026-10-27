@@ -23,6 +23,8 @@ export default function SiteFooter() {
           <Link href="/#services">Our Services</Link>
           <Link href="/team">Our Team</Link>
           <Link href="/careers">Careers</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/terms-and-conditions">Terms &amp; Conditions</Link>
         </nav>
         <nav className="footer__col" aria-label="Services">
           <h4>Services</h4>
@@ -48,6 +50,11 @@ export default function SiteFooter() {
       </div>
       <div className="container footer__bar">
         <p>© 2026 Reddington Global. All rights reserved.</p>
+        <nav className="footer__legal" aria-label="Legal">
+          <Link href="/privacy-policy">Privacy Policy</Link>
+          <span aria-hidden="true">·</span>
+          <Link href="/terms-and-conditions">Terms &amp; Conditions</Link>
+        </nav>
         <div className="footer__social">
           <a
             href="https://www.linkedin.com/company/reddington-global-consultancy-pvt-ltd/"

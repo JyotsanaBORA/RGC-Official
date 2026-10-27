@@ -448,41 +448,50 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 )}
               </button>
 
-              {/* Micro-Trust Strip */}
-              <div className="svc-clean-trust">
-                <span>📞 Expert call in 24h</span>
-                <span>&bull;</span>
-                <span>📋 Plan, ETA &amp; quote</span>
-                <span>&bull;</span>
-                <span>📄 GST Invoice</span>
-              </div>
+              {/* What happens after booking: 3-step journey */}
+              <ol className="svc-form-steps" aria-label="What happens next">
+                <li style={{ '--s': 0 }}>
+                  <span className="svc-form-steps__icon" aria-hidden="true">₹</span>
+                  <strong>Book</strong>
+                  <small>₹99 call</small>
+                </li>
+                <li style={{ '--s': 1 }}>
+                  <span className="svc-form-steps__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg>
+                  </span>
+                  <strong>Expert call</strong>
+                  <small>within 24h</small>
+                </li>
+                <li style={{ '--s': 2 }}>
+                  <span className="svc-form-steps__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                  </span>
+                  <strong>Your plan</strong>
+                  <small>ETA &amp; quote</small>
+                </li>
+              </ol>
+
               <p className="svc-consult-note">
-                ₹99 is a prepaid consultation fee. Project pricing is quoted after the call and is separate from this fee.
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                <span>Secure payment · GST invoice · ₹99 covers the consultation only; project pricing is quoted separately.</span>
               </p>
 
               {/* Direct WhatsApp Fast-Track */}
-              <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                <a
-                  href={`https://wa.me/919818224995?text=${encodeURIComponent(
-                    `Hi Reddington Global, I would like to book a ₹99 consultation for ${activeService}${interestedPlan ? ` (interested in the ${interestedPlan.name} plan)` : ''}.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    color: '#F6D97E',
-                    fontSize: '0.8rem',
-                    fontWeight: 650,
-                    textDecoration: 'none',
-                    opacity: 0.9,
-                    transition: 'opacity 0.2s',
-                  }}
-                >
-                  <span>💬 Fast-Track via WhatsApp (+91 98182 24995)</span>
-                </a>
-              </div>
+              <a
+                className="svc-wa-btn"
+                href={`https://wa.me/919818224995?text=${encodeURIComponent(
+                  `Hi Reddington Global, I would like to book a ₹99 consultation for ${activeService}${interestedPlan ? ` (interested in the ${interestedPlan.name} plan)` : ''}.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="svc-wa-btn__dot" aria-hidden="true"></span>
+                <span className="svc-wa-btn__text">
+                  <strong>Prefer WhatsApp?</strong>
+                  <small>Chat now · +91 98182 24995</small>
+                </span>
+                <span className="svc-wa-btn__arrow" aria-hidden="true">→</span>
+              </a>
             </form>
           )}
         </div>
