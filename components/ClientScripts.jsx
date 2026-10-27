@@ -96,7 +96,27 @@ export default function ClientScripts() {
       });
     }
 
-    document.querySelectorAll('.reveal, .img-reveal').forEach(el => el.classList.add('is-visible'));
+    // ── Scroll reveal ────────────────────────────────────────
+    document.querySelectorAll('.img-reveal').forEach(el => el.classList.add('is-visible'));
+    document.documentElement.classList.add('reveal-ready');
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-card').forEach(el => revealObserver.observe(el));
+
+    // ── Service card cursor spotlight ────────────────────────
+    const spotlightCards = finePointer ? [...document.querySelectorAll('.svc-mono-card')] : [];
+    const onCardMove = e => {
+      const card = e.currentTarget;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
+    spotlightCards.forEach(card => card.addEventListener('pointermove', onCardMove));
 
     // ── Testimonial slider ───────────────────────────────────
     const track = document.getElementById('tsliderTrack');
@@ -136,7 +156,11 @@ export default function ClientScripts() {
     // Hover transforms are handled in CSS to keep first render fast and stable.
 
     if (reducedMotion) {
-      return () => { window.removeEventListener('scroll', onScroll); };
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        revealObserver.disconnect();
+        spotlightCards.forEach(card => card.removeEventListener('pointermove', onCardMove));
+      };
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -222,6 +246,8 @@ export default function ClientScripts() {
     // Cleanup
     return () => {
       window.removeEventListener('scroll', onScroll);
+      revealObserver.disconnect();
+      spotlightCards.forEach(card => card.removeEventListener('pointermove', onCardMove));
       posterLink?.removeEventListener('click', onPosterClick);
       mobileStickyBtn?.removeEventListener('click', onStickyCtaClick);
       printBtn?.removeEventListener('click', onPrintClick);

@@ -3845,19 +3845,20 @@ body.has-cursor .cursor-ring {
 }
 
 /* ═══════════════ REVEAL ANIMATION ═══════════════ */
-.reveal {
+/* Gated on html.reveal-ready (set by ClientScripts) so content stays visible without JS */
+html.reveal-ready .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 700ms var(--ease), transform 700ms var(--ease);
 }
 
-.reveal.is-visible {
+html.reveal-ready .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  html.reveal-ready .reveal {
     opacity: 1;
     transform: none;
     transition: none;
@@ -5804,8 +5805,6 @@ body {
   display: none !important;
 }
 
-.reveal,
-.reveal.is-visible,
 .img-reveal,
 .img-reveal.is-visible {
   opacity: 1 !important;
@@ -13221,3 +13220,94 @@ html.dark-theme .custom-select-option.is-selected,
   }
 }
 
+
+/* ═══════════════ FUTURISTIC MOTION LAYER ═══════════════ */
+@property --rg-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Cursor spotlight (position set from ClientScripts via --mx / --my) */
+.svc-mono-card__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(212, 159, 45, 0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 300ms var(--ease);
+}
+
+.svc-mono-card:hover .svc-mono-card__glow {
+  opacity: 1;
+}
+
+html.dark-theme .svc-mono-card__glow,
+[data-theme="dark"] .svc-mono-card__glow {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(246, 217, 126, 0.12), transparent 60%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Staggered card entrance; `backwards` fill releases transform so hover lift still works */
+  html.reveal-ready .reveal-card:not(.is-visible) {
+    opacity: 0;
+  }
+
+  html.reveal-ready .reveal-card.is-visible {
+    animation: rgCardIn 800ms var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+
+  @keyframes rgCardIn {
+    from {
+      opacity: 0;
+      transform: translateY(36px) scale(0.97);
+    }
+  }
+
+  /* Rotating gold light around the card edge on hover */
+  .svc-mono-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(from var(--rg-angle), transparent 62%, var(--gold-bright), var(--gold), transparent 92%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 400ms var(--ease);
+    animation: rgBorderSpin 4s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .svc-mono-card:hover::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+
+  @keyframes rgBorderSpin {
+    to {
+      --rg-angle: 360deg;
+    }
+  }
+
+  /* Light sweep across gold accent words */
+  .section__title .gold-italic,
+  .gold-italic {
+    background-image: linear-gradient(110deg, #A87B1F 20%, #F6D97E 40%, #D49F2D 50%, #A87B1F 70%) !important;
+    background-size: 200% auto !important;
+    animation: rgGoldShimmer 6s linear infinite;
+  }
+
+  @keyframes rgGoldShimmer {
+    to {
+      background-position: 200% 0;
+    }
+  }
+}

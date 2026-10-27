@@ -83,8 +83,8 @@ export default function MotionServices() {
   return (
     <div className="svc-categories-container">
       <div className="svc-mono-grid">
-        {categories.map((cat) => (
-          <article key={cat.id} className="svc-mono-card">
+        {categories.map((cat, i) => (
+          <article key={cat.id} className="svc-mono-card reveal-card" style={{ '--i': i }}>
             <Link
               href={cat.href}
               target="_blank"
