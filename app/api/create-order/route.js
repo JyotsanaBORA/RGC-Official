@@ -3,6 +3,7 @@ import Razorpay from 'razorpay';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
 import { getISTTimestamp } from '../../../lib/date';
+import { getPackageById } from '../../../lib/packages-data';
 
 export async function POST(req) {
   try {
@@ -18,6 +19,16 @@ export async function POST(req) {
       amount = Number(body.notes.package_price) * 100;
     } else if (body.packagePrice && Number(body.packagePrice) > 0) {
       amount = Number(body.packagePrice) * 100;
+    }
+
+    // Package bookings are always priced from the server-side registry, never the browser
+    const requestedPackageId = body.notes?.package_id || body.packageId || body.package?.id || '';
+    const registryPackage = getPackageById(requestedPackageId);
+    if (requestedPackageId && !registryPackage) {
+      return NextResponse.json({ error: 'Unknown package selected.' }, { status: 400 });
+    }
+    if (registryPackage) {
+      amount = registryPackage.price * 100;
     }
     const currency = body.currency || 'INR';
     const receipt = body.receipt || `rcpt_${Date.now()}`;
@@ -56,9 +67,9 @@ export async function POST(req) {
     const customerPhone = body.notes?.customer_phone || body.customer?.phone || '';
     const customerCompany = body.notes?.company || body.customer?.company || '';
     const customerGst = (body.notes?.gst_number || body.customer?.gstNumber || body.customer?.customerGst || '').toUpperCase().trim();
-    const selectedPackage = body.notes?.selected_package || body.selectedPackage || body.package?.name || '';
-    const packageId = body.notes?.package_id || body.packageId || body.package?.id || '';
-    const packagePrice = Number(body.notes?.package_price || body.packagePrice || body.package?.price || 0);
+    const selectedPackage = registryPackage?.name || body.notes?.selected_package || body.selectedPackage || body.package?.name || '';
+    const packageId = requestedPackageId;
+    const packagePrice = registryPackage?.price || Number(body.notes?.package_price || body.packagePrice || body.package?.price || 0);
     const amountInRupees = Math.round(Number(order.amount) / 100);
 
     const attr = body.attribution || {};

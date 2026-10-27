@@ -7,6 +7,7 @@ import ServiceLeadForm from '../../../components/ServiceLeadForm';
 import ServiceVisualizer from '../../../components/ServiceVisualizer';
 import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
 import WebDevPoster from '../../../components/WebDevPoster';
+import WebDevPlans from '../../../components/WebDevPlans';
 import PayrollPoster from '../../../components/PayrollPoster';
 import ServicePageViewTracker from '../../../components/ServicePageViewTracker';
 
@@ -163,8 +164,8 @@ export default function ServicePage({ params }) {
                       <div className="svc-trust-item">
                         <span className="svc-trust-icon">⚡</span>
                         <div>
-                          <strong>Live in 7 Days</strong>
-                          <small>Turnaround guarantee from Day 1</small>
+                          <strong>Live in 7–21 Days</strong>
+                          <small>Fixed turnaround for every plan</small>
                         </div>
                       </div>
                       <div className="svc-trust-item">
@@ -184,8 +185,8 @@ export default function ServicePage({ params }) {
                       <div className="svc-trust-item">
                         <span className="svc-trust-icon">🛠️</span>
                         <div>
-                          <strong>30 Days Free Support</strong>
-                          <small>2 revision rounds & post-launch care</small>
+                          <strong>Up to 90 Days Free Support</strong>
+                          <small>Revisions & post-launch care in every plan</small>
                         </div>
                       </div>
                     </>
@@ -357,6 +358,9 @@ export default function ServicePage({ params }) {
                 </section>
               )}
 
+              {/* 4b. Website Plans: Basic / Standard / Premium */}
+              {isWebDev && <WebDevPlans />}
+
               {/* 5. Process Roadmap */}
               {isWebDev ? (
                 <section className="svc-journey-sec reveal">
@@ -364,7 +368,7 @@ export default function ServicePage({ params }) {
                     <span className="eyebrow" style={{ color: '#10B981' }}>SIMPLE, 3-STEP PROCESS</span>
                     <h2 className="svc-sec-title">Idea to live site in a week.</h2>
                     <p className="svc-sec-sub">
-                      From Day 1 onboarding to your live domain in just 7 calendar days.
+                      Basic plan shown: live in 7 days. Standard launches in 10 days, Premium in 15–21 days.
                     </p>
                   </div>
 
@@ -534,7 +538,7 @@ export default function ServicePage({ params }) {
                   <h2 className="svc-sec-title">Questions Before You Begin?</h2>
                   <p className="svc-sec-sub">
                     {isWebDev
-                      ? 'Everything you need to know about our ₹4,999 business website package, 7-day launch timeline, and developer support.'
+                      ? 'Everything you need to know about our Basic, Standard and Premium website plans, launch timelines, API integrations, and developer support.'
                       : isPayroll
                       ? 'Everything you need to know about our ₹4,999 payroll package (upto 10 employees), payroll data registers, wage calculations, and balance statements.'
                       : `Everything you need to know about our ${svc.shortTitle || svc.title} delivery, service scope, and SLA governance.`}
@@ -594,10 +598,10 @@ export default function ServicePage({ params }) {
         {/* Mobile Sticky Bottom CTA */}
         <div className="svc-mobile-sticky-bar">
           <div className="svc-mobile-sticky-bar__info">
-            <strong>{isWebDev ? 'Basic Bundle' : isPayroll ? 'Payroll Starter' : (svc.shortTitle || svc.title)}</strong>
+            <strong>{isWebDev ? 'Website Plans' : isPayroll ? 'Payroll Starter' : (svc.shortTitle || svc.title)}</strong>
             <span>
               {isWebDev
-                ? 'Complete Website • ₹4,999 + GST'
+                ? '3 plans • From ₹4,999 + GST'
                 : isPayroll
                 ? 'Upto 10 Staff • ₹4,999 + GST'
                 : '1-on-1 Strategy Session • ₹99'}
@@ -605,7 +609,7 @@ export default function ServicePage({ params }) {
           </div>
           <a href="#consultation-form" className="btn btn--gold svc-mobile-sticky-bar__btn">
             {isWebDev
-              ? 'Book your website @4999 +gst →'
+              ? 'Book from ₹4,999 +gst →'
               : isPayroll
               ? 'Book Payroll @4999 +gst →'
               : 'Book @ ₹99 →'}

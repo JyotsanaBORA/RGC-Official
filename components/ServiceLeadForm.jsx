@@ -69,8 +69,20 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
     }
   }, [serviceSlug, serviceTitle, isWebDev, isPayroll]);
 
+  // Plan cards elsewhere on the page dispatch `rg:select-plan` with a package id
+  useEffect(() => {
+    const onSelectPlan = (e) => {
+      const id = e.detail;
+      if (!packages.some((p) => p.id === id)) return;
+      setFormData((prev) => ({ ...prev, packageId: id }));
+    };
+    window.addEventListener('rg:select-plan', onSelectPlan);
+    return () => window.removeEventListener('rg:select-plan', onSelectPlan);
+  }, [packages]);
+
   const currentPackage =
     packages.find((p) => p.id === formData.packageId) || packages[0] || defaultPkg;
+  const planShortName = (currentPackage?.name || 'Basic Website').replace(/ Website$/, '');
 
   // Background auto-save for abandoned form leads
   const saveLeadDraft = async (dataToSave = formData) => {
@@ -105,7 +117,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           selectedPackage:
             currentPackage?.name ||
             (isWebDev
-              ? 'Basic Bundle'
+              ? 'Basic Website'
               : isPayroll
               ? 'Payroll Starter Package'
               : 'Strategic Consultation'),
@@ -185,7 +197,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           selectedPackage:
             currentPackage?.name ||
             (isWebDev
-              ? 'Basic Bundle'
+              ? 'Basic Website'
               : isPayroll
               ? 'Payroll Starter Package'
               : '1-on-1 Strategic Consultation'),
@@ -200,7 +212,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           message: `${isWebDev ? 'Business Type' : isPayroll ? 'Team Size' : 'Practice Area'}: ${formData.businessType}. Requirements: ${formData.requirement || 'Standard engagement'}`,
         },
         serviceName: isWebDev
-          ? 'Website Development — Basic Bundle'
+          ? `Website Development — ${currentPackage?.name || 'Basic Website'}`
           : isPayroll
           ? 'Payroll Services — Starter Package (Upto 10 Staff)'
           : `${activeService} — Strategic Consultation`,
@@ -269,7 +281,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           <span className="svc-screen-status-dot"></span>
           <span>
             {isWebDev
-              ? 'Live in 7 Days'
+              ? `Live in ${currentPackage?.timeline || '7 Days'}`
               : isPayroll
               ? 'Active'
               : 'Available'}
@@ -291,7 +303,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
           <p className="svc-clean-subtitle">
             {isWebDev ? (
               <>
-                Get your business live in 7 days &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
+                Get your business live in {(currentPackage?.timeline || '7 Days').toLowerCase()} &bull; <strong>{currentPackage?.priceDisplay || '₹4,999 + GST'}</strong>
               </>
             ) : isPayroll ? (
               <>
@@ -319,7 +331,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 <strong>
                   {currentPackage?.name ||
                     (isWebDev
-                      ? 'Basic Bundle'
+                      ? 'Basic Website'
                       : isPayroll
                       ? 'Payroll Starter Package'
                       : 'Strategic Consultation')}
@@ -474,7 +486,25 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 />
               </div>
 
-              {/* Row 4: Plan Chip / Consultation Display */}
+              {/* Row 4: Plan Picker (multi-plan services) / Plan Chip / Consultation Display */}
+              {packages.length > 1 ? (
+                <div className="svc-plan-picker svc-clean-full" role="radiogroup" aria-label="Choose your plan">
+                  {packages.map((pkg) => (
+                    <button
+                      key={pkg.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={pkg.id === currentPackage?.id}
+                      className={`svc-plan-picker__opt${pkg.id === currentPackage?.id ? ' is-active' : ''}`}
+                      onClick={() => setFormData((prev) => ({ ...prev, packageId: pkg.id }))}
+                    >
+                      {pkg.isPopular && <span className="svc-plan-picker__flag">Popular</span>}
+                      <span className="svc-plan-picker__name">{pkg.name.replace(/ Website$/, '')}</span>
+                      <span className="svc-plan-picker__price">₹{pkg.price.toLocaleString('en-IN')}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
               <div className="svc-clean-plan-chip svc-clean-full">
                 <div className="svc-clean-plan-chip__left">
                   <span className="svc-clean-plan-chip__tag">
@@ -483,7 +513,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                   <strong className="svc-clean-plan-chip__name">
                     {currentPackage?.name ||
                       (isWebDev
-                        ? 'Basic Bundle'
+                        ? 'Basic Website'
                         : isPayroll
                         ? 'Payroll Package'
                         : '1-on-1 Strategic Consultation')}
@@ -494,6 +524,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                     (isWebDev || isPayroll ? '₹4,999 + GST' : '₹99 (One-Time)')}
                 </div>
               </div>
+              )}
 
               {/* Row 5: Notes & Requirements */}
               <input
@@ -524,7 +555,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                     <span className="svc-form-spinner"></span> Initializing Gateway...
                   </span>
                 ) : isWebDev ? (
-                  'Book your website @4999 +gst ›'
+                  `Book ${planShortName} @ ${currentPackage?.priceDisplay || '₹4,999 + GST'} ›`
                 ) : isPayroll ? (
                   'Book Payroll @ ₹4,999 + GST →'
                 ) : (
@@ -536,9 +567,9 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
               <div className="svc-clean-trust">
                 {isWebDev ? (
                   <>
-                    <span>⚡ Live in 7 Days</span>
+                    <span>⚡ Live in {currentPackage?.timeline || '7 Days'}</span>
                     <span>&bull;</span>
-                    <span>✔ 30-Day Free Support</span>
+                    <span>✔ Free Support Included</span>
                     <span>&bull;</span>
                     <span>🔒 100% Code Ownership</span>
                   </>
@@ -566,7 +597,7 @@ export default function ServiceLeadForm({ serviceTitle, serviceSlug }) {
                 <a
                   href={`https://wa.me/919818224995?text=${encodeURIComponent(
                     isWebDev
-                      ? 'Hi Reddington Global, I want to book the Basic Website package for ₹4,999.'
+                      ? `Hi Reddington Global, I want to book the ${currentPackage?.name || 'Basic Website'} package for ${currentPackage?.priceDisplay || '₹4,999 + GST'}.`
                       : isPayroll
                       ? 'Hi Reddington Global, I want to book the Payroll Package for ₹4,999 (upto 10 employees).'
                       : `Hi Reddington Global, I would like to schedule a ₹99 strategic consultation for ${serviceTitle || 'our enterprise operations'}.`

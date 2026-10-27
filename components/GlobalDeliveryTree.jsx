@@ -29,7 +29,7 @@ export default function GlobalDeliveryTree() {
         { name: 'Web Development', href: '/services/web-development' },
         { name: 'AI & Automation', href: '/services/saas-digital-solutions' },
         { name: 'SaaS & Applications', href: '/services/saas-digital-solutions' },
-        { name: 'APIs & Integrations', href: '/services/saas-digital-solutions#capabilities' },
+        { name: 'APIs & Integrations', href: '/services/web-development' },
         { name: 'Cloud', href: '/services/saas-digital-solutions#capabilities' },
       ],
     },

@@ -95,10 +95,11 @@ CORE PRACTICES & TRANSPARENT PRICING
    • STRICT PAYROLL RULE: Show ONLY this ₹4,999 package for payroll up to 10 employees. We provide payroll data and balance calculations only (client executes bank payouts).
    • URL: https://www.reddingtonglobal.com/services/payroll-compensation
 
-3. WEBSITE DEVELOPMENT SPECIAL PACKAGE:
-   • Basic Bundle: ₹4,999 + GST.
-   • Timeline: Live in 7 days guaranteed.
-   • Deliverables: Up to 5 pages (Home, About, Services, Gallery, Contact), mobile-responsive design, one-tap WhatsApp chat button & click-to-call, lead enquiry form routed to client inbox, Google Maps + basic SEO, SSL security, 30 days free post-launch support.
+3. WEBSITE DEVELOPMENT & API INTEGRATION PLANS (one-time, + GST, no monthly fees):
+   • Basic ₹4,999 (live in 7 days): Up to 5 pages, mobile-responsive design, WhatsApp chat button & click-to-call, lead enquiry form, Google Maps + basic SEO, SSL, 2 revisions, 30 days free support.
+   • Standard ₹9,999 (live in 10 days, MOST POPULAR): Everything in Basic + up to 10 pages, custom brand design, blog with easy editor, auto-reply emails + leads to Google Sheets, 1 API integration, SEO for 5 key pages, Google Business Profile + Analytics setup, 3 revisions, 60 days support.
+   • Premium ₹19,999 (live in 15–21 days): Everything in Standard + up to 20 pages or 50-product online store, up to 3 API integrations (Razorpay payments, WhatsApp Business alerts, appointment booking, Zoho/HubSpot CRM), admin panel + leads dashboard, full-site SEO, Google Ads & Meta Pixel tracking, 2 languages, 5 revisions, 90 days priority support.
+   • Add-ons: extra page ₹999, extra API integration ₹2,999, extra revision round ₹999. Domain & hosting billed to the client's own account.
    • Custom enterprise portals & full-stack web applications also available.
    • URL: https://www.reddingtonglobal.com/services/web-development
 
@@ -197,7 +198,7 @@ function getFallbackReply(messages, lastUserMsg) {
 
   // 4. Web Development & Engineering Intent (handles 'web site', 'website', 'web dev', 'landing page')
   if (/\b(web[\s-]*dev(?:elopment)?|web[\s-]*site|landing[\s-]*page|frontend|portal|next\.?js|react|ecommerce|e-commerce|wordpress|redesign|build\s+(?:a\s+)?site|software|app\s*dev)\b/i.test(normalized)) {
-    return "Our All-Inclusive Website Package is just **₹4,999 + GST**—delivered live in 7 days with up to 5 pages, mobile-responsive layout, WhatsApp CTA, and lead form: https://www.reddingtonglobal.com/services/web-development\n\nWhat type of website or business are you looking to launch?";
+    return "We have 3 website plans (one-time, + GST):\n• **Basic ₹4,999**: 5 pages, live in 7 days\n• **Standard ₹9,999**: 10 pages, custom design, blog & 1 API integration\n• **Premium ₹19,999**: payments, bookings, CRM & up to 3 API integrations\n\nCompare plans: https://www.reddingtonglobal.com/services/web-development#plans\n\nWhat type of website or business are you looking to launch?";
   }
 
   // 5. BPO Partnerships / Seat Filling
@@ -212,13 +213,13 @@ function getFallbackReply(messages, lastUserMsg) {
 
   // 7. Pricing & Packages Intent
   if (/\b(price|pricing|cost|how\s*much|fees?|charges?|rate\s*card|quote|packages?|4999|99|rates?)\b/i.test(normalized)) {
-    return "Our core starter packages are just **₹4,999 + GST** (Website Development live in 7 days, or Payroll for up to 10 staff), and **₹99** for a 1-on-1 Practice Director Strategy Session: https://www.reddingtonglobal.com/contact\n\nWhich practice can I share more details on?";
+    return "Websites come in 3 plans: **₹4,999 / ₹9,999 / ₹19,999 + GST** (https://www.reddingtonglobal.com/services/web-development#plans). Payroll for up to 10 staff is **₹4,999 + GST**, and a 1-on-1 Practice Director Strategy Session is **₹99**: https://www.reddingtonglobal.com/contact\n\nWhich practice can I share more details on?";
   }
 
   // 8. Affirmative Responses ("yes", "sure", "ok", "interested", "proceed", "book")
   if (['yes', 'yeah', 'sure', 'ok', 'okay', 'yup', 'yep', 'interested', 'yesplease', 'proceed', 'book', 'start'].includes(cleanMsg)) {
     if (allText.includes('web') || allText.includes('site')) {
-      return "Fantastic! You can book your ₹4,999 Website Package directly here: https://www.reddingtonglobal.com/services/web-development (or message us on WhatsApp: +91 98182 24995).\n\nDo you already have your domain or content ready?";
+      return "Fantastic! Pick your plan (Basic ₹4,999, Standard ₹9,999 or Premium ₹19,999) and book directly here: https://www.reddingtonglobal.com/services/web-development#plans (or message us on WhatsApp: +91 98182 24995).\n\nDo you already have your domain or content ready?";
     }
     if (allText.includes('payroll') || allText.includes('salary')) {
       return "Excellent! You can reserve your ₹4,999 Payroll Package here: https://www.reddingtonglobal.com/services/payroll-compensation (or WhatsApp +91 98182 24995).\n\nWould you like our onboarding checklist?";
