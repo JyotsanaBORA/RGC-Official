@@ -133,7 +133,7 @@ const OrderSchema = new mongoose.Schema(
     // Call Tracking / CRM Status
     callStatus: {
       type: String,
-      enum: ['pending', 'called', 'follow_up', 'no_answer', 'closed'],
+      enum: ['pending', 'called', 'follow_up', 'no_answer', 'wrong_number', 'not_interested', 'closed'],
       default: 'pending',
       index: true,
     },

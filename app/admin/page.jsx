@@ -863,26 +863,8 @@ export default function AdminPage() {
                               fontWeight: '700',
                               border: '1px solid #CBD5E1',
                               cursor: 'pointer',
-                              background:
-                                order.callStatus === 'called'
-                                  ? '#ECFDF5'
-                                  : order.callStatus === 'follow_up'
-                                  ? '#EFF6FF'
-                                  : order.callStatus === 'no_answer'
-                                  ? '#FEF2F2'
-                                  : order.callStatus === 'closed'
-                                  ? '#F1F5F9'
-                                  : '#FEF3C7',
-                              color:
-                                order.callStatus === 'called'
-                                  ? '#047857'
-                                  : order.callStatus === 'follow_up'
-                                  ? '#1D4ED8'
-                                  : order.callStatus === 'no_answer'
-                                  ? '#B91C1C'
-                                  : order.callStatus === 'closed'
-                                  ? '#475569'
-                                  : '#92400E',
+                              background: callStatusInfo(order.callStatus).bg,
+                              color: callStatusInfo(order.callStatus).color,
                             }}
                           >
                             {Object.entries(CALL_STATUS).map(([key, s]) => (
