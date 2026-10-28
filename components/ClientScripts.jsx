@@ -111,7 +111,7 @@ export default function ClientScripts() {
     document.querySelectorAll('.reveal, .reveal-card').forEach(el => revealObserver.observe(el));
 
     // ── Service card cursor spotlight ────────────────────────
-    const spotlightCards = finePointer ? [...document.querySelectorAll('.svc-mono-card, .svc-plan-card')] : [];
+    const spotlightCards = finePointer ? [...document.querySelectorAll('.svc-mono-card, .svc-plan-card, .wd-tile')] : [];
     const onCardMove = e => {
       const card = e.currentTarget;
       const r = card.getBoundingClientRect();

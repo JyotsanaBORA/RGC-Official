@@ -9,6 +9,9 @@ import ServiceFaqAccordion from '../../../components/ServiceFaqAccordion';
 import WebDevPoster from '../../../components/WebDevPoster';
 import ServicePlans from '../../../components/ServicePlans';
 import PayrollPoster from '../../../components/PayrollPoster';
+import WebDevCodeHero from '../../../components/WebDevCodeHero';
+import WebDevBuildStory from '../../../components/WebDevBuildStory';
+import WebDevIntegrations from '../../../components/WebDevIntegrations';
 import ServicePageViewTracker from '../../../components/ServicePageViewTracker';
 
 export async function generateStaticParams() {
@@ -129,7 +132,10 @@ export default function ServicePage({ params }) {
                 <p className="svc-dash__tagline reveal">{svc.tagline}</p>
 
                 {isWebDev ? (
-                  <WebDevPoster />
+                  <>
+                    <WebDevPoster />
+                    <WebDevCodeHero />
+                  </>
                 ) : isPayroll ? (
                   <PayrollPoster />
                 ) : (
@@ -261,6 +267,9 @@ export default function ServicePage({ params }) {
               {/* 2b. Indicative plans ("Starting @" / custom quote), discussed on the ₹99 consultation */}
               <ServicePlans serviceSlug={svc.slug} serviceTitle={svc.shortTitle || svc.title} />
 
+              {/* 2c. API integrations bento (Web Development only) */}
+              {isWebDev && <WebDevIntegrations />}
+
               {/* 3. The Enterprise Challenge vs. Reddington Solution (Excluded on web-dev to reduce content) */}
               {!isWebDev && svc.challengeVsSolution && (
                 <section className="svc-matrix-sec reveal">
@@ -348,38 +357,7 @@ export default function ServicePage({ params }) {
 
               {/* 5. Process Roadmap */}
               {isWebDev ? (
-                <section className="svc-journey-sec reveal">
-                  <div className="svc-sec-head">
-                    <span className="eyebrow" style={{ color: '#10B981' }}>SIMPLE, 3-STEP PROCESS</span>
-                    <h2 className="svc-sec-title">From consultation to live site.</h2>
-                    <p className="svc-sec-sub">
-                      Your exact timeline is confirmed on the call. Basic sites can go live in as little as 7 days.
-                    </p>
-                  </div>
-
-                  <div className="svc-process-timeline">
-                    <div className="svc-process-card">
-                      <div className="svc-process-badge">1</div>
-                      <div className="svc-process-day">STEP 1</div>
-                      <h4>Book a ₹99 consultation</h4>
-                      <p>Pick a plan you like (or not sure yet) and book your 1-on-1 call.</p>
-                    </div>
-
-                    <div className="svc-process-card">
-                      <div className="svc-process-badge">2</div>
-                      <div className="svc-process-day">STEP 2</div>
-                      <h4>Get your plan & quote</h4>
-                      <p>Our expert reviews your needs and recommends the right plan, timeline and price.</p>
-                    </div>
-
-                    <div className="svc-process-card">
-                      <div className="svc-process-badge">3</div>
-                      <div className="svc-process-day">STEP 3</div>
-                      <h4>We build & go live</h4>
-                      <p>You get preview links and revisions, then your site launches on WhatsApp, Maps and Google.</p>
-                    </div>
-                  </div>
-                </section>
+                <WebDevBuildStory />
               ) : isPayroll ? (
                 <section className="svc-journey-sec reveal">
                   <div className="svc-sec-head">
