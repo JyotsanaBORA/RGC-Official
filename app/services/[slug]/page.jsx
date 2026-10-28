@@ -171,7 +171,7 @@ export default function ServicePage({ params }) {
                       <div className="svc-trust-item">
                         <span className="svc-trust-icon">⚡</span>
                         <div>
-                          <strong>Live in 10–21 Days</strong>
+                          <strong>Live in 10–21 Days*</strong>
                           <small>Fixed turnaround for every plan</small>
                         </div>
                       </div>
@@ -544,6 +544,19 @@ export default function ServicePage({ params }) {
                   </div>
                 </div>
               </section>
+
+              {/* 9. Timeline & pricing disclaimer (Web Development) */}
+              {isWebDev && (
+                <aside className="svc-disclaimer reveal" aria-label="Disclaimer">
+                  <strong>*Disclaimer</strong>
+                  <ul>
+                    <li>The 10-day timeline is the fastest launch for a Basic website. It is an estimate, not a guarantee, and counts from when we receive your complete content (text, images, logo), approvals and the agreed advance payment.</li>
+                    <li>Larger sites, online stores, API integrations, extra revisions, or delays in sharing content or feedback will extend the timeline.</li>
+                    <li>Your exact plan, timeline (ETA) and quote are confirmed in writing after your ₹99 consultation.</li>
+                    <li>Plan prices are starting points and exclude GST. Domain, hosting and third-party subscriptions are billed separately at actual cost.</li>
+                  </ul>
+                </aside>
+              )}
             </div>
 
             {/* ════════════════════════════════════════════════════════════════
