@@ -171,7 +171,7 @@ export default function ServicePage({ params }) {
                       <div className="svc-trust-item">
                         <span className="svc-trust-icon">⚡</span>
                         <div>
-                          <strong>Live in 7–21 Days</strong>
+                          <strong>Live in 10–21 Days</strong>
                           <small>Fixed turnaround for every plan</small>
                         </div>
                       </div>

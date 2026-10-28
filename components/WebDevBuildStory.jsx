@@ -58,7 +58,7 @@ export default function WebDevBuildStory() {
         <span className="eyebrow" style={{ color: '#10B981' }}>HOW WE BUILD</span>
         <h2 className="svc-sec-title" id="wd-story-title">From consultation to live site.</h2>
         <p className="svc-sec-sub">
-          Your exact timeline is confirmed on the call. Basic sites can go live in as little as 7 days.
+          Your exact timeline is confirmed on the call. Basic sites can go live in as little as 10 days.
         </p>
       </div>
 

@@ -21,7 +21,7 @@ export default function WebDevPoster() {
       {/* ── Top Brand Bar ── */}
       <div className="rgc-poster__top">
         <span className="rgc-poster__brand">[ REDDINGTON GLOBAL ]</span>
-        <span className="rgc-poster__badge">LIVE IN AS LITTLE AS 7 DAYS</span>
+        <span className="rgc-poster__badge">LIVE IN AS LITTLE AS 10 DAYS</span>
       </div>
 
       {/* ── Hero Statement ── */}
