@@ -60,6 +60,10 @@ export default function AdminPage() {
     window.open('/api/cron/daily-leads?download=csv', '_blank');
   };
 
+  const handleDownloadAllXlsx = () => {
+    window.location.href = '/api/admin?export=xlsx';
+  };
+
   // Fetch admin data
   const fetchAdminData = async () => {
     try {
@@ -330,6 +334,25 @@ export default function AdminPage() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <button
+            onClick={handleDownloadAllXlsx}
+            title="Download every lead ever recorded as an Excel (.xlsx) file"
+            style={{
+              background: '#16A34A',
+              border: '1px solid #15803D',
+              padding: '8px 14px',
+              borderRadius: '6px',
+              fontSize: '13px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              color: '#FFFFFF',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            ⬇️ Download All Leads (Excel)
+          </button>
           <button
             onClick={handleDownloadCsv}
             title="Download last 24h leads in CSV for Excel"

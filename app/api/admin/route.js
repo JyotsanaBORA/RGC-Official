@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
+import { exportAllLeadsXlsx } from '../../../lib/reports/dailyLeadsReport';
 
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'admin@reddington2026';
@@ -20,6 +21,7 @@ function verifyAuth(req) {
 /**
  * GET /api/admin
  * Checks session and returns all orders with summary metrics.
+ * GET /api/admin?export=xlsx downloads every lead as an Excel workbook.
  */
 export async function GET(req) {
   if (!verifyAuth(req)) {
@@ -27,6 +29,17 @@ export async function GET(req) {
   }
 
   try {
+    if (req.nextUrl.searchParams.get('export') === 'xlsx') {
+      const { buffer, filename } = await exportAllLeadsXlsx();
+      return new NextResponse(buffer, {
+        headers: {
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'Content-Disposition': `attachment; filename="${filename}"`,
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+
     await connectDB();
     const orders = await Order.find({}).sort({ createdAt: -1 }).lean();
 
