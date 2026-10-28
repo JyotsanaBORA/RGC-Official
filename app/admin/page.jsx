@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { PAYMENT_STATUS, CALL_STATUS, paymentStatusInfo, callStatusInfo } from '../../lib/lead-status';
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -467,6 +468,61 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {/* Status Guide: what every payment & call status means */}
+        <details
+          style={{ background: '#FFFFFF', borderRadius: '12px', border: '1px solid #E2E8F0', marginBottom: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}
+        >
+          <summary style={{ padding: '14px 20px', cursor: 'pointer', fontSize: '14px', fontWeight: '700', color: '#0F172A' }}>
+            ℹ️ What do these statuses mean?{' '}
+            <span style={{ fontWeight: '500', color: '#64748B', fontSize: '12px' }}>
+              (click to open the guide)
+            </span>
+          </summary>
+          <div style={{ padding: '4px 20px 20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '20px' }}>
+            <div>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
+                Payment Status: ₹99 consultation payment
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                <tbody>
+                  {Object.entries(PAYMENT_STATUS).map(([key, s]) => (
+                    <tr key={key} style={{ borderTop: '1px solid #F1F5F9' }}>
+                      <td style={{ padding: '8px 10px 8px 0', verticalAlign: 'top', whiteSpace: 'nowrap', fontWeight: '700', color: '#0F172A' }}>
+                        {s.icon} {s.label}
+                      </td>
+                      <td style={{ padding: '8px 0', verticalAlign: 'top', color: '#475569', lineHeight: '1.45' }}>
+                        {s.meaning}
+                        <div style={{ color: '#047857', fontWeight: '600', marginTop: '2px' }}>→ {s.action}</div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
+                Call Status: your team&apos;s follow-up (set from the dropdown)
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                <tbody>
+                  {Object.entries(CALL_STATUS).map(([key, s]) => (
+                    <tr key={key} style={{ borderTop: '1px solid #F1F5F9' }}>
+                      <td style={{ padding: '8px 10px 8px 0', verticalAlign: 'top', whiteSpace: 'nowrap', fontWeight: '700', color: '#0F172A' }}>
+                        {s.icon} {s.label}
+                      </td>
+                      <td style={{ padding: '8px 0', verticalAlign: 'top', color: '#475569', lineHeight: '1.45' }}>{s.meaning}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div style={{ marginTop: '12px', padding: '10px 12px', borderRadius: '8px', background: '#FFFBEB', border: '1px solid #FDE68A', fontSize: '12px', color: '#92400E', lineHeight: '1.5' }}>
+                <strong>Priority order:</strong> ✓ Paid + Needs Call → ✕ Payment Failed → 📝 Left in Form → ⏳ Payment Started.
+                The &quot;Needs Call&quot; tab shows only paid clients still waiting for their call.
+              </div>
+            </div>
+          </div>
+        </details>
+
         {/* Filters & Search Toolbar */}
         <div style={{ background: '#FFFFFF', padding: '16px 20px', borderRadius: '12px', border: '1px solid #E2E8F0', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
           {/* Tabs */}
@@ -707,7 +763,10 @@ export default function AdminPage() {
                         </td>
 
                         {/* Payment Status */}
-                        <td style={{ padding: '16px 18px', verticalAlign: 'top', maxWidth: '240px' }}>
+                        <td
+                          style={{ padding: '16px 18px', verticalAlign: 'top', maxWidth: '240px' }}
+                          title={`${paymentStatusInfo(order.status).meaning} ${paymentStatusInfo(order.status).action}`}
+                        >
                           {isPaid ? (
                             <span
                               style={{
@@ -766,20 +825,25 @@ export default function AdminPage() {
                               </div>
                             </div>
                           ) : (
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                padding: '4px 10px',
-                                borderRadius: '999px',
-                                fontSize: '11px',
-                                fontWeight: '700',
-                                textTransform: 'uppercase',
-                                background: '#F1F5F9',
-                                color: '#475569',
-                              }}
-                            >
-                              ⏳ {order.status}
-                            </span>
+                            <div>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  padding: '4px 10px',
+                                  borderRadius: '999px',
+                                  fontSize: '11px',
+                                  fontWeight: '700',
+                                  textTransform: 'uppercase',
+                                  background: '#F1F5F9',
+                                  color: '#475569',
+                                }}
+                              >
+                                {paymentStatusInfo(order.status).icon} {paymentStatusInfo(order.status).label}
+                              </span>
+                              <div style={{ fontSize: '11px', color: '#475569', marginTop: '4px', lineHeight: '1.35' }}>
+                                {order.status === 'created' ? 'Opened payment, no result yet' : paymentStatusInfo(order.status).meaning}
+                              </div>
+                            </div>
                           )}
                           <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '6px' }}>
                             {order.paidAtIST || order.failedAtIST || order.createdAtIST || (order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-IN') : 'N/A')}
@@ -821,12 +885,15 @@ export default function AdminPage() {
                                   : '#92400E',
                             }}
                           >
-                            <option value="pending">📞 Needs Call</option>
-                            <option value="called">✅ Called / Briefed</option>
-                            <option value="follow_up">🔁 Follow-Up Needed</option>
-                            <option value="no_answer">📵 No Answer / Retry</option>
-                            <option value="closed">🔒 Completed / Closed</option>
+                            {Object.entries(CALL_STATUS).map(([key, s]) => (
+                              <option key={key} value={key} title={s.meaning}>
+                                {s.icon} {s.label}
+                              </option>
+                            ))}
                           </select>
+                          <div style={{ fontSize: '11px', color: '#64748B', marginTop: '4px', lineHeight: '1.35', maxWidth: '200px' }}>
+                            {callStatusInfo(order.callStatus).meaning}
+                          </div>
                           {order.calledAt && (
                             <div style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>
                               Updated {new Date(order.calledAt).toLocaleDateString('en-IN')}
