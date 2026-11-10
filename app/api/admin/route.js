@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { connectDB } from '../../../lib/mongodb';
 import Order from '../../../models/Order';
-import { exportAllLeadsXlsx } from '../../../lib/reports/dailyLeadsReport';
+import { exportAllLeadsXlsx, exportAllLeadsCsv } from '../../../lib/reports/dailyLeadsReport';
 
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'admin@reddington2026';
@@ -29,6 +29,17 @@ export async function GET(req) {
   }
 
   try {
+    if (req.nextUrl.searchParams.get('export') === 'csv') {
+      const { content, filename } = await exportAllLeadsCsv();
+      return new NextResponse(Buffer.from(content, 'utf-8'), {
+        headers: {
+          'Content-Type': 'text/csv; charset=utf-8',
+          'Content-Disposition': `attachment; filename="${filename}"`,
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+
     if (req.nextUrl.searchParams.get('export') === 'xlsx') {
       const { buffer, filename } = await exportAllLeadsXlsx();
       return new NextResponse(buffer, {
