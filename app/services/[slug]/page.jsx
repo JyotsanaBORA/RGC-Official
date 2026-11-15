@@ -539,7 +539,7 @@ export default function ServicePage({ params }) {
                   <div className="svc-verify-text">
                     <strong>Institutional Verification & Compliance Notice</strong>
                     <p>
-                      Reddington Global Consultancy Pvt Ltd (RGC) operates from 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India. All service bookings generate an automated GST-compliant tax invoice. All client data and IP are strictly protected under mutual non-disclosure agreements (NDA).
+                      Reddington Global Consultancy Pvt Ltd (RGC) operates from Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India. All service bookings generate an automated GST-compliant tax invoice. All client data and IP are strictly protected under mutual non-disclosure agreements (NDA).
                     </p>
                   </div>
                 </div>

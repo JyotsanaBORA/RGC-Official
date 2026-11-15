@@ -130,8 +130,9 @@ export default async function InvoicePage({ params }) {
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#94A3B8', letterSpacing: '0.05em', marginBottom: '6px' }}>ISSUED BY</div>
               <strong style={{ fontSize: '15px', color: '#0F172A' }}>Reddington Global Consultancy Pvt Ltd</strong>
               <div style={{ fontSize: '13px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
-                750 Udyog Vihar Phase 5, Sector 19<br />
-                Gurugram, Haryana 122016, India<br />
+                Unit 319, 3rd Floor, Suncity Success Tower<br />
+                Sector 65, Golf Course Extension Road<br />
+                Gurugram, Haryana 122101, India<br />
                 Email: sales@reddingtonglobal.com<br />
                 Contact: +91 98182 24995
               </div>

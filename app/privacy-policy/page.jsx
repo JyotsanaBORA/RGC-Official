@@ -12,7 +12,7 @@ const SECTIONS = [
     title: 'Who we are',
     body: [
       'This Privacy Policy explains how Reddington Global Consultancy Pvt Ltd ("Reddington Global", "we", "us") collects, uses and protects personal data when you visit www.reddingtonglobal.com, book a consultation, chat with our assistant, or contact us.',
-      'Registered office: 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India. We process personal data in line with applicable Indian law, including the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023.',
+      'Registered office: Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India. We process personal data in line with applicable Indian law, including the Information Technology Act, 2000 and the Digital Personal Data Protection Act, 2023.',
     ],
   },
   {
@@ -126,7 +126,7 @@ const SECTIONS = [
       [
         'Email: sales@reddingtonglobal.com',
         'Phone / WhatsApp: +91 98182 24995',
-        'Post: Reddington Global Consultancy Pvt Ltd, 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India',
+        'Post: Reddington Global Consultancy Pvt Ltd, Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India',
       ],
     ],
   },

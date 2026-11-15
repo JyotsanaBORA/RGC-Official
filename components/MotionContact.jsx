@@ -35,7 +35,7 @@ const CONTACTS = [
 const OFFICES = [
   {
     name: 'Office Address',
-    addr: '750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016',
+    addr: 'Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101',
     entities: ['RG Consultancy Pvt Ltd', 'BPO Operations Floor', 'MyCashBridge Fintech', 'RG Care Foundation'],
     href: 'https://www.reddingtonglobal.com/',
   },

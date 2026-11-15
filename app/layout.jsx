@@ -79,12 +79,13 @@ const jsonLd = {
   email: 'sales@reddingtonglobal.com',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '750 Udyog Vihar Phase 5, Sector 19',
+    streetAddress: 'Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road',
     addressLocality: 'Gurugram',
     addressRegion: 'Haryana',
-    postalCode: '122016',
+    postalCode: '122101',
     addressCountry: 'IN',
   },
+  hasMap: 'https://www.google.com/maps/search/?api=1&query=Suncity+Success+Tower+Sector+65+Golf+Course+Extension+Road+Gurugram',
   sameAs: ['https://www.linkedin.com/company/reddingtonglobal/'],
 };
 

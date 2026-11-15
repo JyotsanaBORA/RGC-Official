@@ -11,7 +11,7 @@ const SECTIONS = [
     id: 'acceptance',
     title: 'Acceptance of these terms',
     body: [
-      'These Terms & Conditions govern your use of www.reddingtonglobal.com and any consultation booked through it, operated by Reddington Global Consultancy Pvt Ltd ("Reddington Global", "we", "us"), 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India.',
+      'These Terms & Conditions govern your use of www.reddingtonglobal.com and any consultation booked through it, operated by Reddington Global Consultancy Pvt Ltd ("Reddington Global", "we", "us"), Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India.',
       'By using this website or booking a consultation, you agree to these terms and to our Privacy Policy. If you do not agree, please do not use the website.',
     ],
   },
@@ -133,7 +133,7 @@ const SECTIONS = [
       [
         'Email: sales@reddingtonglobal.com',
         'Phone / WhatsApp: +91 98182 24995',
-        'Post: Reddington Global Consultancy Pvt Ltd, 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India',
+        'Post: Reddington Global Consultancy Pvt Ltd, Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India',
       ],
     ],
   },

@@ -77,7 +77,7 @@ COMPANY & DIRECT SALES CHANNELS
 • Official Website: https://www.reddingtonglobal.com
 • Phone / WhatsApp Direct: +91 98182 24995 (Direct WhatsApp link: https://wa.me/919818224995)
 • Official Sales Email: sales@reddingtonglobal.com
-• Headquarters: 750 Udyog Vihar Phase 5, Sector 19, Gurugram, Haryana 122016, India
+• Headquarters: Unit 319, 3rd Floor, Suncity Success Tower, Sector 65, Golf Course Extension Road, Gurugram, Haryana 122101, India
 • Delivery Model: Dual-shore delivery (India & USA) ensuring 24/7 continuous operations, strict SLA governance, and cost optimization.
 
 ═════════════════════════════════════════════════════════════════════════════
