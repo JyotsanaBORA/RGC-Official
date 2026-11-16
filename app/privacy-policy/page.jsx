@@ -31,6 +31,7 @@ const SECTIONS = [
       [
         'Campaign data: how you reached us, such as UTM parameters, Meta (fbclid) and Google (gclid) click IDs, landing page and referrer.',
         'Usage data from analytics and advertising tools (Google Analytics / Tag Manager and Meta Pixel), such as pages viewed and actions taken.',
+        'Interaction data from Microsoft Clarity, such as clicks, scrolling and mouse movement, used to create heatmaps and session replays that show how visitors use the site. Text you type into form fields is masked and not captured.',
         'Technical data such as browser type, device and IP address, processed by our hosting and analytics providers.',
       ],
       'Form drafts: to help us follow up if a booking is interrupted, our booking forms save the contact details you have typed (name, email, phone) once you enter a phone number or email, even if you do not complete payment.',
@@ -63,6 +64,7 @@ const SECTIONS = [
         'Cloud hosting and database providers: to host this website and store booking records.',
         'Email service providers: to send invoices and confirmations.',
         'Google and Meta: analytics and advertising measurement.',
+        'Microsoft (Clarity): heatmaps and session replays to improve our website.',
         'AI providers (such as Groq or xAI): messages you type into our website chat assistant are sent to these providers to generate replies. Please do not share sensitive personal information in the chat.',
         'Professional advisers and authorities, where required by law or to protect our legal rights.',
       ],
@@ -73,7 +75,7 @@ const SECTIONS = [
     id: 'cookies',
     title: 'Cookies & tracking',
     body: [
-      'We use cookies and similar technologies for analytics and advertising (Google and Meta), and to remember your preferences, such as light or dark theme. You can block or delete cookies in your browser settings; some features may not work as intended if you do.',
+      'We use cookies and similar technologies for analytics and advertising (Google, Meta and Microsoft Clarity), and to remember your preferences, such as light or dark theme. You can block or delete cookies in your browser settings; some features may not work as intended if you do.',
     ],
   },
   {
@@ -139,7 +141,7 @@ export default function PrivacyPolicyPage() {
       title="Privacy"
       accent="Policy."
       intro="How we collect, use and protect your personal data."
-      updated="27 October 2026"
+      updated="16 November 2026"
       sections={SECTIONS}
     />
   );
