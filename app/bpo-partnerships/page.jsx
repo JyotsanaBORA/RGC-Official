@@ -4,7 +4,7 @@ import ClientScripts from '../../components/ClientScripts';
 import BpoPartnerForm from './BpoPartnerForm';
 
 export const metadata = {
-  title: 'BPO Partnerships & Campaign Opportunities | Reddington Global',
+  title: 'BPO Partnerships & Campaign Opportunities',
   description:
     'Reddington Global connects BPOs and call centers with high-yield campaign opportunities, operational assessment, and onboarding coordination.',
   openGraph: {
@@ -12,6 +12,7 @@ export const metadata = {
     description:
       'Connect your call center with the right enterprise campaigns. Sourcing, capability matching, commercial coordination, and onboarding support.',
     type: 'website',
+    images: [{ url: '/assets/img/rgc-logo-opt.png', width: 800, height: 456, alt: 'Reddington Global' }],
   },
 };
 

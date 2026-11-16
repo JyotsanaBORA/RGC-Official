@@ -1,14 +1,16 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 import MotionContact from '../../components/MotionContact';
 
 export const metadata = {
-  title: 'Contact Us — Reddington Global',
+  title: 'Contact Us',
   description: 'Get in touch with Reddington Global for expert consultancy @ ₹99. Delivery campus in Gurugram, India.',
 };
 
 export default function ContactPage() {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -26,7 +28,7 @@ export default function ContactPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Get In Touch</p>

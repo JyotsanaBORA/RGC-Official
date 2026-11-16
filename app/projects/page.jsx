@@ -1,13 +1,15 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 
 export const metadata = {
-  title: 'Projects — Reddington Global',
+  title: 'Projects',
   description: 'Execution stories from real operations — see how our teams collaborate, deploy, and scale delivery environments.',
 };
 
 export default function ProjectsPage() {
+  ReactDOM.preload('/assets/img/svc-bpo-opt.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">

@@ -1,14 +1,16 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 import MotionProcess from '../../components/MotionProcess';
 
 export const metadata = {
-  title: 'Our Process — Reddington Global',
+  title: 'Our Process',
   description: 'Discover our proven four-step operating framework — from discovery to ongoing optimisation — designed for measurable business impact.',
 };
 
 export default function ProcessPage() {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -26,7 +28,7 @@ export default function ProcessPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">How We Work</p>

@@ -1,14 +1,16 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 import MotionAbout from '../../components/MotionAbout';
 
 export const metadata = {
-  title: 'About Us — Reddington Global',
+  title: 'About Us',
   description: 'Learn about Reddington Global — specialized talent, 24/7 BPO operations, SaaS engineering, and statutory financial compliance under one unified partner.',
 };
 
 export default function AboutPage() {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -26,7 +28,7 @@ export default function AboutPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Who We Are</p>

@@ -9,11 +9,11 @@ import FloatingChatbot from '../components/FloatingChatbot';
 export const metadata = {
   metadataBase: new URL('https://www.reddingtonglobal.com'),
   title: {
-    default: 'Reddington Global Consultancy',
+    default: 'Reddington Global | BPO, Web Development & Bookkeeping',
     template: '%s | Reddington Global',
   },
   description:
-    'Reddington Global delivers enterprise BPO services (Sales, Back Office, Customer Care), strategic consultancy (SaaS, Bookkeeping & Accountancy, IT Services), and performance Digital Marketing for businesses worldwide.',
+    'Gurugram-based BPO, website development, bookkeeping, payroll and digital marketing services for growing businesses. Book a 1-on-1 consultation @ ₹99.',
   keywords:
     'BPO services, sales outsourcing, back office operations, customer services, SaaS solutions, bookkeeping, accountancy, IT services, digital marketing, consultancy, India, USA',
   alternates: {
@@ -41,8 +41,8 @@ export const metadata = {
     images: [
       {
         url: '/assets/img/rgc-logo-opt.png',
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 456,
         alt: 'Reddington Global Consultancy',
       },
     ],

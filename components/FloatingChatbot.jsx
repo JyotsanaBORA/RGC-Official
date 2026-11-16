@@ -323,7 +323,7 @@ export default function FloatingChatbot() {
       >
         <span className="floating-ai-btn__mascot-wrap">
           <img
-            src="/assets/img/mascot-symbol.png"
+            src="/assets/img/mascot-symbol.webp"
             alt="Argo - Reddington Mascot"
             className="floating-ai-btn__mascot-img"
           />
@@ -340,7 +340,7 @@ export default function FloatingChatbot() {
             <div className="floating-chat-header-info">
               <div className="floating-chat-avatar">
                 <img
-                  src="/assets/img/mascot-symbol.png"
+                  src="/assets/img/mascot-symbol.webp"
                   alt="Argo - Reddington AI Mascot"
                   className="floating-chat-avatar__img"
                 />
@@ -392,7 +392,7 @@ export default function FloatingChatbot() {
                 {m.role === 'assistant' && (
                   <div className="chat-bubble-avatar" aria-hidden="true">
                     <img
-                      src="/assets/img/mascot-symbol.png"
+                      src="/assets/img/mascot-symbol.webp"
                       alt="Argo"
                       className="chat-bubble-avatar__img"
                     />
@@ -408,7 +408,7 @@ export default function FloatingChatbot() {
               <div className="chat-bubble-row is-assistant">
                 <div className="chat-bubble-avatar" aria-hidden="true">
                   <img
-                    src="/assets/img/mascot-symbol.png"
+                    src="/assets/img/mascot-symbol.webp"
                     alt="Argo"
                     className="chat-bubble-avatar__img"
                   />

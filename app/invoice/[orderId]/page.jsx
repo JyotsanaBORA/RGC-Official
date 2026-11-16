@@ -3,7 +3,7 @@ import Order from '../../../models/Order';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Tax Invoice — Reddington Global',
+  title: 'Tax Invoice',
   robots: { index: false, follow: false },
 };
 

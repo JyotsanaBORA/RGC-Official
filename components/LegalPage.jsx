@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import SiteNav from './SiteNav';
 import SiteFooter from './SiteFooter';
 import ClientScripts from './ClientScripts';
@@ -7,6 +8,7 @@ import ClientScripts from './ClientScripts';
  * sections: [{ id, title, body: [string | string[]] }] — a string is a paragraph, an array is a bullet list.
  */
 export default function LegalPage({ eyebrow, title, accent, intro, updated, sections }) {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <div className="progress" id="progressBar" aria-hidden="true"></div>
@@ -14,7 +16,7 @@ export default function LegalPage({ eyebrow, title, accent, intro, updated, sect
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">{eyebrow}</p>

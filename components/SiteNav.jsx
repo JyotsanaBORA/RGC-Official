@@ -188,7 +188,7 @@ export default function SiteNav() {
             {/* Brand Logo */}
             <Link href="/" className="nav__brand-group" aria-label="Reddington Global home">
               <div className="nav__brand">
-                <img src="/assets/img/rgc-logo-opt.png" alt="Reddington Global" className="logo-img" />
+                <img src="/assets/img/rgc-logo-nav.webp" alt="Reddington Global" className="logo-img" width="260" height="148" />
               </div>
               <span className="nav__brand-text">
                 <span className="nav__brand-line">REDDINGTON GLOBAL</span>

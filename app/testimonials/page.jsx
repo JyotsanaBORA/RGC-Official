@@ -1,13 +1,15 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 
 export const metadata = {
-  title: 'Testimonials — Reddington Global',
+  title: 'Testimonials',
   description: 'Hear from the leaders and partners who trust Reddington Global to deliver operational excellence.',
 };
 
 export default function TestimonialsPage() {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -25,7 +27,7 @@ export default function TestimonialsPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Testimonials</p>

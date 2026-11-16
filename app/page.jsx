@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import ClientScripts from '../components/ClientScripts';
 import MotionServices from '../components/MotionServices';
 import GlobalDeliveryTree from '../components/GlobalDeliveryTree';
@@ -6,6 +7,7 @@ import SiteNav from '../components/SiteNav';
 import SiteFooter from '../components/SiteFooter';
 
 export default function Home() {
+  ReactDOM.preload('/assets/img/hero-poster.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       {/* ══ SVG Gradient Defs (shared across logo instances) ══ */}
@@ -38,6 +40,7 @@ export default function Home() {
             loop
             playsInline
             preload="auto"
+            poster="/assets/img/hero-poster.webp"
             className="hero__video"
           >
             <source src="/assets/video/hero_casual_backup.mp4" type="video/mp4" />

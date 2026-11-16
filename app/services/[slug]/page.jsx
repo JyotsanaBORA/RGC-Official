@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
   if (!svc) return {};
   const canonicalUrl = `https://www.reddingtonglobal.com/services/${svc.slug}`;
   return {
-    title: `${svc.title} — Reddington Global`,
+    title: svc.title,
     description: svc.tagline,
     alternates: {
       canonical: canonicalUrl,

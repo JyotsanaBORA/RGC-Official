@@ -1,14 +1,16 @@
+import ReactDOM from 'react-dom';
 import SiteNav from '../../components/SiteNav';
 import SiteFooter from '../../components/SiteFooter';
 import ClientScripts from '../../components/ClientScripts';
 import MotionTeam from '../../components/MotionTeam';
 
 export const metadata = {
-  title: 'Our Team — Reddington Global',
+  title: 'Our Team',
   description: 'Meet the leadership team at Reddington Global — experienced operators driving performance, compliance, and operational excellence.',
 };
 
 export default function TeamPage() {
+  ReactDOM.preload('/assets/img/who-we-are-hero.webp', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
@@ -26,7 +28,7 @@ export default function TeamPage() {
 
       <main>
         <section className="svc-hero">
-          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-opt.webp)' }}></div>
+          <div className="svc-hero__bg" style={{ backgroundImage: 'url(/assets/img/who-we-are-hero.webp)' }}></div>
           <div className="svc-hero__overlay"></div>
           <div className="container svc-hero__content">
             <p className="eyebrow">Leadership</p>

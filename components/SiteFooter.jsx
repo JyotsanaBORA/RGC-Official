@@ -9,7 +9,7 @@ export default function SiteFooter() {
     <footer className="footer">
       <div className="container footer__grid">
         <div className="footer__brand">
-          <img src="/assets/img/rgc-logo-opt.png" alt="Reddington Global" className="logo-img logo-img--footer" />
+          <img src="/assets/img/rgc-logo-nav.webp" alt="Reddington Global" className="logo-img logo-img--footer" width="260" height="148" loading="lazy" />
           <p>We focus on the needs of small to middle-market businesses to improve and grow their return.</p>
           <div className="footer__cert">
             <span>Certified by</span>

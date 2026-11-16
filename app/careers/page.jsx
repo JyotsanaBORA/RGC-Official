@@ -4,13 +4,14 @@ import ClientScripts from '../../components/ClientScripts';
 import CareerForm from './CareerForm';
 
 export const metadata = {
-  title: 'Careers — Reddington Global Consultancy',
+  title: 'Careers',
   description:
     'Join Reddington Global Consultancy. Discover rewarding career opportunities across BPO, recruitment, performance consulting, SaaS, and financial operations.',
   openGraph: {
     title: 'Careers at Reddington Global',
     description: 'Build your career with an industry-leading global consultancy and BPO firm.',
     type: 'website',
+    images: [{ url: '/assets/img/rgc-logo-opt.png', width: 800, height: 456, alt: 'Reddington Global' }],
   },
 };
 
