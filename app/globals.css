@@ -13479,16 +13479,9 @@ html.dark-theme .svc-mono-card__glow,
 
 .svc-plan-card__top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 8px;
-}
-
-.svc-plan-card__tier {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  color: var(--pl-muted);
 }
 
 .svc-plan-card__badge {

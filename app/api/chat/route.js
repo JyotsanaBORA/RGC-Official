@@ -101,8 +101,8 @@ PRICING MODEL (APPLIES TO EVERY SERVICE):
    • URL: https://www.reddingtonglobal.com/services/payroll-compensation
 
 3. WEBSITE DEVELOPMENT & API INTEGRATIONS (one-time, no monthly fees to us):
-   • Basic starting @ ₹4,999: up to 5 pages, mobile design, WhatsApp button, enquiry form, Maps, basic SEO, SSL, a 10–15 sec promo video with voiceover & music. Can go live in as little as 10 days.
-   • Standard starting @ ₹9,999 (most popular): custom brand design, blog, lead automation, an API integration, SEO for key pages, a 30 sec promo video + Instagram reel version with voiceover & music.
+   • Basic starting @ ₹4,999: up to 5 pages, mobile design, WhatsApp button, enquiry form, SSL, a 10–15 sec promo video with voiceover & music. Can go live in as little as 10 days.
+   • Standard starting @ ₹9,999 (most popular, live in about 15 days): custom brand design, blog, lead automation, an API integration, SEO for key pages, a 30 sec promo video + Instagram reel version with voiceover & music.
    • Premium starting @ ₹19,999: online store or larger site, payments (Razorpay), bookings, CRM / WhatsApp Business integrations, admin panel, a 60 sec promo video + Instagram reel versions with voiceover & music.
    • Exact plan, timeline and quote are confirmed on the ₹99 consultation. Domain & hosting are billed to the client's own account.
    • URL: https://www.reddingtonglobal.com/services/web-development#plans

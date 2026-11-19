@@ -79,7 +79,6 @@ export default function ServicePlans({ serviceSlug, serviceTitle }) {
               <div className="svc-plan-card__glow" aria-hidden="true"></div>
 
               <div className="svc-plan-card__top">
-                <span className="svc-plan-card__tier">TIER_0{i + 1}</span>
                 <span className="svc-plan-card__badge">{plan.badge}</span>
               </div>
 
