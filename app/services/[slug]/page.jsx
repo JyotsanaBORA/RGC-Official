@@ -553,7 +553,7 @@ export default function ServicePage({ params }) {
                     <li>The 10-day timeline is the fastest launch for a Basic website. It is an estimate, not a guarantee, and counts from when we receive your complete content (text, images, logo), approvals and the agreed advance payment.</li>
                     <li>Larger sites, online stores, API integrations, extra revisions, or delays in sharing content or feedback will extend the timeline.</li>
                     <li>Every plan includes a promotional video with voiceover and music: Basic 10–15 seconds; Standard 30 seconds plus an Instagram reel version; Premium 60 seconds plus Instagram reel versions. Each includes up to 2 revisions and is delivered together with your website by the agreed launch date.</li>
-                    <li>The promotional video is a short motion-graphics clip made from your logo, photos and licensed stock footage; on-site video shoots are available as an add-on.</li>
+                    <li>The promotional video is a short motion-graphics clip made from your logo, photos and licensed stock footage. On-site video shoots are not included.</li>
                     <li>Your exact plan, timeline (ETA) and quote are confirmed in writing after your ₹99 consultation.</li>
                     <li>Plan prices are starting points and exclude GST. Domain, hosting and third-party subscriptions are billed separately at actual cost.</li>
                   </ul>
